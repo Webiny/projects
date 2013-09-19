@@ -63,7 +63,7 @@ class ToolsHandler extends AbstractHandler
 
 			$queue->complete($webyId)->processQueue();
 		} catch (\Exception $e) {
-			$queue->abort($webyId)->processQueue();
+			$queue->abort($webyId, $e->getMessage())->processQueue();
 		}
 		die();
 	}

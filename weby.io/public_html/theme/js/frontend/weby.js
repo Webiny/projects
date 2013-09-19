@@ -49,10 +49,7 @@ function Weby() {
 	 * Returns a scrollbar width depending on browser
 	 */
 	this.getScrollBarOffset = function () {
-		if (_FF) {
-			return 18;
-		}
-		return 7;
+		return 18;
 	}
 
 	this.getBackground = function () {

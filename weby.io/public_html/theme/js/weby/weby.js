@@ -99,10 +99,6 @@ function Weby() {
      */
     this.getScrollBarOffset = function () {
 		return 18;
-        if (_FF) {
-            return 18;
-        }
-        return 7;
     }
 
     this.getBackground = function () {

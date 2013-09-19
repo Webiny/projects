@@ -47,9 +47,9 @@ class ScreenshotQueue
 		return $this;
 	}
 
-	public function abort($webyId) {
-		$query = "UPDATE {$this->db()->w_screenshot_queue} SET completed = NOW(), status = 'aborted' WHERE weby = ? AND status = 'running'";
-		$bind = [$webyId];
+	public function abort($webyId, $message = '') {
+		$query = "UPDATE {$this->db()->w_screenshot_queue} SET completed = NOW(), status = 'aborted', message = ? WHERE weby = ? AND status = 'running'";
+		$bind = [$webyId, $message];
 		$this->db()->execute($query, $bind);
 
 		return $this;

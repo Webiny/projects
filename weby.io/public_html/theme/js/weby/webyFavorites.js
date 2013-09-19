@@ -70,9 +70,7 @@ function WebyFavorites() {
             _loading.show();
         },
         requestEnd: function (e) {
-            console.log('asdsad')
             _loading.hide().setMessage("Loading favorites...")
-            console.log(e)
             if (e.type == "read" && e.response.count == 0) {
                 _dialog.find(".empty-list").show();
                 _dialog.find("h1").hide();
@@ -127,7 +125,6 @@ function WebyFavorites() {
     });
 
     _deleteDialog.find('[data-role="fav-btn-delete"]').click(function () {
-        console.log('current id je : ' + _currentWebyId)
         _deleteDialog.hide();
         favoritesDataSource.remove(favoritesDataSource.get(_currentWebyId));
         _loading.setMessage("Removing Weby...");
