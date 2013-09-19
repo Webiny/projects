@@ -19,6 +19,7 @@ class App
 
     public function init()
     {
+		// Working - yes it is
 		$this->logger('webiny_logger')->info("Booting Weby.io");
 		$this->_config = $this->config()->yaml(realpath(__DIR__) . '/config.yaml');
         $this->_config->mergeWith($this->config()->yaml(realpath(__DIR__) . '/routes.yaml'));

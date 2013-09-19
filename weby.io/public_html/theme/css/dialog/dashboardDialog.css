@@ -79,6 +79,7 @@
     float: left;
     width: 90px;
     height: 81px;
+	border: 4px solid #ffffff;
 }
 
 #dashboard-dialog .weby-data.left {

@@ -38,9 +38,10 @@
 /* ----------------- */
 
 #favorites-dialog .weby-thumbnail {
-    float: left;
     width: 90px;
     height: 81px;
+	border: 4px solid #ffffff;
+	float: left;
 }
 
 #favorites-dialog .favorites-list {
@@ -81,10 +82,6 @@
     -moz-border-radius-bottomright: 2px;
     background: white url(../../images/sprite2.png) no-repeat -170px -871px;
     line-height: normal;
-}
-
-#favorites-dialog .weby-thumbnail {
-    float: left;
 }
 
 #favorites-dialog .weby-data.left {
