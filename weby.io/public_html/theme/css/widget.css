@@ -166,6 +166,7 @@
 	vertical-align: middle;
 	display: inline;
 	width: 190px;
+	pointer-events:none;
 }
 
 .widget.active .widget-disabled-overlay {

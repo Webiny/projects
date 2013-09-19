@@ -145,7 +145,8 @@ class WebyEntity extends WebyEntityCrud
         if ($this->_images->keyExists($tag)) {
             return $this->_images->key($tag);
         }
-        return new WebyImage($this->_id, $tag);
+		$this->_images[$tag] = new WebyImage($this->_id, $tag);
+        return $this->_images[$tag];
     }
 
     /**

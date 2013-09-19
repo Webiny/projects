@@ -4,22 +4,31 @@ app:
     public_html: /var/www/newwebiny/projects/weby.io/public_html/
     theme_abs_path: /var/www/newwebiny/projects/weby.io/public_html/theme/
     theme_web_path: http://weby.com/theme/
-    storage_abs_path: /var/www/newwebiny/projects/weby.io/public_html/uploads/
-    storage_web_path: http://weby.com/uploads/
+    storage_abs_path: /var/www/newwebiny/projects/weby.io/public_html/storage/
+    storage_web_path: http://weby.com/storage/
     default_class: '\App\Handlers\PagesHandler'
     default_method: page404
     mode: development
-    content_validators: #will be randomly switched by the app
+    content_validators: # Will be randomly switched by the app
         - http://mrcina.ath.cx:8080
 
 database:
-    name: postgres
-    user: root
-    password: 'paveL!'
+    name: weby.io
+    user: adrian
+    password: 4ndr055!
     host: localhost
 
 caching_ttl: # TTL times for caches (in seconds)
-    - social_share_counts: 5
+    social_share_counts: 1
+    tag_search_queries: 5
 
 images:
-    dashboard: http://weby.com/theme/images/default/dashboard-thumb.jpg
+    dashboard: http://pavel910.homeftp.net/theme/images/default/my-weby.png
+    public_square: http://pavel910.homeftp.net/theme/images/default/my-weby.png
+
+other:
+    user_inactive_period: 5 #Sets the number of days which need to pass from users last sign in to proclaim him as inactive
+
+feedback_receivers: # Email addresses for every feedback type
+    general: [adrian1358@gmail.com]
+    bugs: [pavel@webiny.com, adrian@webiny.com]

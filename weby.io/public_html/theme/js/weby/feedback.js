@@ -11,6 +11,9 @@ function Feedback() {
     var _startContainer = _feedbackDialog.find('div.enter-message');
     var _endContainer = _feedbackDialog.find('div.end-message');
 
+    var _onClose = function(){};
+    var _onOpen = function(){};
+
     /**
      * Sends feedback
      */
@@ -77,6 +80,24 @@ function Feedback() {
     }).data("kendoTooltip");
 
     /**
+     * Store callback into private property
+     * @param callable
+     */
+    this.onClose = function(callable) {
+        _onClose = callable;
+        return this;
+    }
+
+    /**
+     * Store callback into private property
+     * @param callable
+     */
+    this.onOpen = function(callable) {
+        _onOpen = callable;
+        return this;
+    }
+
+    /**
      * Open feedback dialog
      */
     _feedbackOpener.click(function () {
@@ -84,7 +105,13 @@ function Feedback() {
             type: 'inline',
             width: 500,
             height: 'auto',
-            autoSize: false
+            autoSize: false,
+            afterClose: function () {
+                _onClose();
+            },
+            beforeShow: function() {
+                _onOpen();
+            }
         });
     });
 
@@ -100,5 +127,5 @@ function Feedback() {
 }
 
 $(function () {
-    new Feedback();
+    Feedback = new Feedback();
 });

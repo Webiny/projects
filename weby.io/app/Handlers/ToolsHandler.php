@@ -2,7 +2,7 @@
 
 namespace App\Handlers;
 
-use App\Entities\Favorite\FavoriteEntity;
+use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
 use App\Lib\AbstractHandler;
 use App\Lib\Screenshot;

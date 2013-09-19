@@ -68,5 +68,4 @@ var killListeners = function () {
 }
 
 process.on("SIGINT", killListeners);
-process.on("SIGKILL", killListeners);
 process.on("SIGHUP", killListeners);

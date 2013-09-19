@@ -40,7 +40,6 @@ function WebyTitleDialog() {
         _bindTagsFocus();
         _bindTagSearching();
         _bindRemoveTag();
-
         _descriptionLength.text(_calculateDescriptionLength());
     }
 

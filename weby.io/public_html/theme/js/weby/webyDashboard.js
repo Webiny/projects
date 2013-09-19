@@ -144,13 +144,18 @@ function WebyDashboard() {
             modal = false;
         }
 
-        $.fancybox($('#dashboard-dialog'), {
+        $.fancybox(_dialog, {
             modal: modal,
             type: 'inline',
-            width: 772,
             height: 456,
+            width: 772,
             autoSize: false
         });
         TimePassed.parse();
+    }
+
+
+    this.close = function () {
+        $.fancybox.close();
     }
 }
