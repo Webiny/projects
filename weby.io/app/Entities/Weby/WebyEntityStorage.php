@@ -15,7 +15,7 @@ abstract class WebyEntityStorage extends EntityAbstract
     use HttpTrait, StdLibTrait;
 
     protected $_id = '';
-    protected $_title = '';
+    protected $_title = 'Untitled';
     protected $_description = '';
     protected $_slug = 'untitled';
     protected $_tags = [];

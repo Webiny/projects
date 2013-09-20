@@ -14,7 +14,7 @@
                 {/foreach}
             </span>
             <div id="weby-tag-input" class="tags-editable has-tooltip"
-                 title="Your tag is too long (maximum 25 characters)" contenteditable="true"></div>
+                 title="Your tag is too long (maximum 25 characters)" contenteditable="true"></div><span class="tags-placeholder">Enter tags</span>
             <div id="weby-tags-dropdown">
                 <ul id="tags-list"></ul>
             </div>

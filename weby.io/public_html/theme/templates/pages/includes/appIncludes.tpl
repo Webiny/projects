@@ -3,6 +3,7 @@
     kendo.default.min.css,
     widget.css,
     loading.css,
+    webyDetails.css,
     widgets/textWidget.css,
     widgets/mapWidget.css,
     widgets/twitterWidget.css,

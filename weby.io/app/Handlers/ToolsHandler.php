@@ -10,10 +10,12 @@ use App\Lib\Stats;
 use App\Lib\UserTrait;
 use Webiny\Component\Http\HttpTrait;
 use Webiny\Component\Image\ImageTrait;
+use Webiny\Component\Logger\Logger;
 use Webiny\Component\Logger\LoggerTrait;
 use Webiny\Component\StdLib\StdLibTrait;
 use Webiny\Component\Storage\StorageTrait;
 use Webiny\Component\Storage\File\LocalFile;
+use App\Lib\Logger as WebyLogger;
 
 class ToolsHandler extends AbstractHandler
 {
@@ -33,7 +35,9 @@ class ToolsHandler extends AbstractHandler
                     $e['line'],
                     $browser
                 ]);
+            WebyLogger::getInstance()->logError($e['message'], $e['url'], $e['line'], $browser);
         }
+
         $this->ajaxResponse(false, 'Got it :)');
     }
 
@@ -170,7 +174,7 @@ class ToolsHandler extends AbstractHandler
 
     public function ajaxSearchTags()
     {
-        $search = $this->request()->query('search');
+        $search = strtolower($this->request()->query('search'));
         $result = WebyEntity::searchTags($search, true);
         if (!$result) {
             $result = json_encode([['id' => 0, 'tag' => $search]], true);

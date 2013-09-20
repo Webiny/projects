@@ -10,7 +10,7 @@ var AppClass = function (topOffset) {
 	var _viewportHeight;
 	var _viewportWidth;
 	var _topOffset = 98;
-	var _bottomOffset = 30;
+	var _bottomOffset = 27;
 	var _eventListeners = [];
 	var _noHeader = false;
 

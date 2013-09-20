@@ -12,9 +12,8 @@
     <title>{block name="title"}{/block} | Weby.io</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,400italic' rel='stylesheet' type='text/css'>
-
     {minify type="css"}
+        font.css,
         main.css,
         socialShare.css,
         headerMiddle.css,

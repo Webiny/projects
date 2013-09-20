@@ -72,7 +72,6 @@ function WebyFavorites() {
         requestEnd: function (e) {
             _loading.hide().setMessage("Loading favorites...")
             if (e.type == "read" && e.response.count == 0) {
-                console.log(e)
                 _dialog.find(".empty-list").show();
                 _dialog.find("h1").hide();
                 _dialog.find(".favorites-pager").hide();

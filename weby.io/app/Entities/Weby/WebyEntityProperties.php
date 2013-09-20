@@ -173,6 +173,7 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     }
 
     /**
+     * Gets the time at which this Weby was added to someone's favorites list
      * @return mixed
      */
     public function getAddedToFavoritesTime()

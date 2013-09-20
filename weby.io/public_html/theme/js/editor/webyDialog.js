@@ -103,6 +103,12 @@ function WebyTitleDialog() {
     var _bindTagSearching = function () {
         _tagsInput.on('input', function () {
             var search = $(this).text();
+
+            if (search.length == 0 && _tagsData.find('span').length == 0) {
+                _tagsWrapper.find('.tags-placeholder').show();
+            } else {
+                _tagsWrapper.find('.tags-placeholder').hide();
+            }
             if (search.length > 25) {
                 _tooltips.show(_tagsInput);
                 var restricted = search.substr(0, 25);
@@ -117,7 +123,7 @@ function WebyTitleDialog() {
 
             _timer = setTimeout(function () {
                 _requestTags(search)
-            }, 600)
+            }, 300)
         });
     }
 
@@ -182,6 +188,9 @@ function WebyTitleDialog() {
                             if (totalTags > 0) {
                                 _tagsDropdown.css('top', _tagsWrapper.height() + 20);
                                 _tagsDropdown.show();
+                            } else {
+                                _tagsList.empty();
+                                _tagsDropdown.hide();
                             }
                         } else {
                             _tagsDropdown.hide();
@@ -195,7 +204,11 @@ function WebyTitleDialog() {
         } else {
             if (search.length == 0) {
                 _clearTagsInput();
+            } else {
+                _tagsList.empty();
+                _tagsDropdown.hide();
             }
+
         }
     }
 
@@ -258,10 +271,16 @@ function WebyTitleDialog() {
             var tag = $(this).closest('span.weby-tag');
             _decrementTag(tag.attr('data-tag'));
             tag.remove();
+            if (_tagsData.find('span.weby-tag').length == 0) {
+                $('.tags-placeholder').show();
+            }
         })
 
         _tagsData.on('click', 'span.weby-tag', function () {
             $(this).remove();
+            if (_tagsData.find('span.weby-tag').length == 0) {
+                $('.tags-placeholder').show();
+            }
         })
     }
 
@@ -372,7 +391,11 @@ function WebyTitleDialog() {
                 break;
             case 8:
                 if (_tagsInput.text() == '' && _tagsData.find('span.weby-tag').length > 0) {
+                    _decrementTag(_tagsData.find('span.weby-tag:last').attr('data-tag'));
                     _tagsData.find('span.weby-tag:last').remove();
+                    if (_tagsData.find('span.weby-tag').length == 0) {
+                        _tagsWrapper.find('.tags-placeholder').show();
+                    }
                 }
                 break;
         }

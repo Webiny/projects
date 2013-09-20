@@ -1,15 +1,3 @@
-@font-face {
-	font-family: SourceSansPro;
-	src: url('../font/SourceSansPro-Regular.ttf');
-	font-weight: normal;
-}
-
-@font-face {
-	font-family: SourceSansPro;
-	src: url('../font/SourceSansPro-Bold.ttf');
-	font-weight: bold;
-}
-
 html, body {
 	margin: 0;
 	padding: 0;
@@ -24,7 +12,7 @@ body {
 	padding: 0 0;
 	position: relative;
 	overflow: hidden;
-	font: 12px 'Source Sans Pro', sans-serif;
+	font: 12px 'SourceSansPro', sans-serif;
 	color: #666666;
 	min-width: 1210px;
 	overflow: hidden;
@@ -228,6 +216,26 @@ body.unselectable * {
     height: 16px;
     display: inline-block;
     vertical-align: bottom;
+}
+
+::-webkit-input-placeholder {
+    color: gray;
+    font-family: Arial, sans-serif;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: gray;
+    font-family: Arial, sans-serif;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: gray;
+    font-family: Arial, sans-serif;
+}
+
+:-ms-input-placeholder {
+    color: gray;
+    font-family: Arial, sans-serif;
 }
 
 .footer{

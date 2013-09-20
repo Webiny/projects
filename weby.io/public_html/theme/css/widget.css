@@ -164,8 +164,9 @@
 	padding: 10px 20px;
 	text-align: center;
 	vertical-align: middle;
-	display: inline;
-	width: 190px;
+	display: block;
+	height: 17px;
+	width: 156px;
 	pointer-events:none;
 }
 

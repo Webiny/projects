@@ -37,11 +37,13 @@ WebyLogger =
 
     _initErrorObserver: function () {
         window.onerror = function (msg, url, line) {
+            //console.log(msg + ' ('+ url +')');
             // save error to queue
             var error = [];
             error.push({'message': msg, 'url':url, 'line':line});
             WebyLogger.errorQueue += JSON.stringify(error);
             WebyLogger.errorCount++;
+            return true;
         };
     },
 

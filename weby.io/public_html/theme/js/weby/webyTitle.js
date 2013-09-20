@@ -58,7 +58,11 @@ function WebyTitle() {
 		$(this).closest('[data-role="weby-title-share"]').toggleClass('active').find('form').toggle();
 	});
 
-    _share.find('.embed-code').click(function(){
+    _share.find('[data-role="weby-full-url"]').click(function(){
+        $(this).select();
+    });
+
+    _share.find('[data-role="weby-embed-code"]').click(function(){
         $(this).select();
     });
 

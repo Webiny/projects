@@ -25,6 +25,8 @@
     {include file="templates/pages/includes/title.tpl"}
 {/block}
 {block name="content"}
+    {include file="templates/pages/includes/webyDetails.tpl"}
+
     <div id="workspace">
         <div id="weby-background-video">
             <div id="player"></div>
@@ -36,6 +38,7 @@
             </div>
         </div>
     </div>
+
     {include file="templates/common/loading.tpl"}
     {include file="templates/common/dashboard.tpl"}
 {/block}

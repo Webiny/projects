@@ -1,5 +1,5 @@
 #toolbar {
-	height: 100%;
+	height: auto;
 	width: 41px;
 	z-index: 999999;
 	position: fixed;

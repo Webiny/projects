@@ -106,9 +106,7 @@ function Feedback() {
             width: 500,
             height: 'auto',
             autoSize: false,
-            afterClose: function () {
-                _onClose();
-            },
+            afterClose: _onClose,
             beforeShow: function() {
                 _onOpen();
             }

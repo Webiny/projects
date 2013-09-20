@@ -70,7 +70,7 @@ function VideoWidget() {
 		var width = 560;
 		var height = 315;
 		this.attachLoading();
-		this._html.resizable("option", "aspectRatio", width / height);
+		this.html().resizable("option", "aspectRatio", width / height);
 		this._previewUrl = 'https://i1.ytimg.com/vi/' + this._videoId + '/0.jpg';
 
 		this.checkUrl(this._previewUrl, function (data) {
@@ -114,7 +114,7 @@ function VideoWidget() {
 						});
 						$this.input().replaceWith(img);
 						$this.message().remove();
-						$this._html.resizable("option", "aspectRatio", data.width / data.height);
+						$this.html().resizable("option", "aspectRatio", data.width / data.height);
 					}
 				});
 			} else {
@@ -130,27 +130,29 @@ function VideoWidget() {
 	}
 
 	this.attachLoading = function () {
+		this._loadingContent = true;
 		this.showLoading('Let\'s see what we have here...', 'Validating your URL may take a few moments, please be patient.');
-		this._html.find('.widget-body > *:not(".loading")').hide();
+		this.html('.widget-body > *:not(".loading")').hide();
 	}
 
 	this.removeLoading = function () {
-		this._html.find('.widget-body .loading').remove();
-		this._html.find('.widget-body *').show();
+		this.html('.widget-body .loading').remove();
+		this.html('.widget-body *').show();
+		this._loadingContent = false;
 	}
 
 	this.createPlayOverlay = function () {
 		var $this = this;
-		var height = this._html.height();
-		var width = this._html.width();
+		var height = this.body('img').height();
+		var width = this.body('img').width();
 		var playOverlay = $('<div class="play-overlay"></div>');
 		playOverlay.height(height).width(width);
 		playOverlay.click(function () {
-			$this._html.find('.play-overlay').remove();
+			$this.html('.play-overlay').remove();
 			$this._insertIframe($this.getIframe());
 		});
 		this.body().prepend(playOverlay);
-		this._html.resizable("option", "alsoResize", '#video-preview-' + this._id + ', .widget[data-id=' + this._id + '] .play-overlay');
+		this.html().resizable("option", "alsoResize", '#video-preview-' + this._id + ', .widget[data-id=' + this._id + '] .play-overlay');
 		this.contentLoaded().showResizeHandle();
 	}
 
@@ -178,7 +180,7 @@ function VideoWidget() {
 		iframe.setAttribute("width", 0);
 		iframe.setAttribute("height", 0);
 
-		$this._html.find('.widget-body').append(iframe);
+		$this.html('.widget-body').append(iframe);
 
 		// Append LOADING screen (move to BaseWidget)
 		this.showLoading(this._loadingMessage, '', true);
@@ -189,15 +191,15 @@ function VideoWidget() {
 			$this.hideLoading();
 			jIframe.attr("height", iframeHeight);
 			jIframe.attr("width", iframeWidth);
-			$this._html.resizable("option", "aspectRatio", iframeWidth / iframeHeight);
+			$this.html().resizable("option", "aspectRatio", iframeWidth / iframeHeight);
 			$this.contentLoaded();
 		});
 
 		$this.showResizeHandle();
 		if ($this._alsoResize) {
-			$this._html.resizable("option", "alsoResize", $this._alsoResize);
+			$this.html().resizable("option", "alsoResize", $this._alsoResize);
 		}
-		App.fireEvent("widget.resize.stop", {element: $this._html});
+		App.fireEvent("widget.resize.stop", {element: $this.html()});
 	}
 
 	/**

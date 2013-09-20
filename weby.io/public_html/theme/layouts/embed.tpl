@@ -14,6 +14,7 @@
     <meta charset="utf-8">
 
     {minify type="css"}
+        font.css,
         embed.css,
         socialShare.css,
         weby.css,

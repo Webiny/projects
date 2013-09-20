@@ -10,9 +10,10 @@ var AppClass = function () {
     var _viewportHeight;
     var _viewportWidth;
     var _activeWidget = null
-    var _topOffset = 95;
-    var _bottomOffset = 30;
+    var _topOffset = 98;
+    var _bottomOffset = 27;
     var _eventListeners = [];
+    var _webyLogger = null;
 
     /**
      * Catch Ctrl+V key press
@@ -113,6 +114,8 @@ var AppClass = function () {
      * Application bootstrap
      */
     this.init = function () {
+        _webyLogger = WebyLogger.init();
+
         this.addEventListener(this);
         _appToolbar = new AppToolbar();
         _appToolbar.init();

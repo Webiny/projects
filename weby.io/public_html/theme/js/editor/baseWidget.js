@@ -542,6 +542,12 @@ BaseWidget.prototype = {
 			}
 			return;
 		}
+
+
+		if(this._loadingContent){
+			return;
+		}
+
 		this._isActive = true;
 		this.html().draggable("enable");
 		this.html().addClass('active');
@@ -969,7 +975,6 @@ BaseWidget.prototype = {
 	 * (Currently we only resize the interaction layer)
 	 */
 	_resize: function () {
-		this.html('span.text').css('line-height', this._html.outerHeight() + 'px');
 		this.html('.widget-disabled-overlay').css({
 			margin: -this._padding + 'px 0 0 -' + this._padding + 'px'
 		});
@@ -977,7 +982,8 @@ BaseWidget.prototype = {
 		var margin = (this._html.outerWidth() - 193) / 2 + 'px';
 		this.html('.widget-disabled-overlay span').css({
 			marginLeft: margin,
-			marginRight: margin
+			marginRight: margin,
+			marginTop: (this._html.outerHeight() / 2 - 20) + 'px'
 		});
 	},
 
