@@ -32,7 +32,6 @@
     frontend/app.js,
     frontend/webyDetails.js,
     frontend/baseWidget.js,
-    frontend/3rd/flip.js,
     frontend/widgets/textWidget.js,
     frontend/widgets/mapWidget.js,
     frontend/widgets/facebookWidget.js,

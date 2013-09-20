@@ -38,7 +38,9 @@ class WebyImage
 		$storage = $this->storage('local');
 		if($this->_key) {
 			$file = new LocalFile($this->_key, $storage);
-			$file->delete();
+			if($storage->keyExists($this->_key)){
+				$file->delete();
+			}
 		}
 		$this->_key = $key;
 

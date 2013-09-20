@@ -35,7 +35,7 @@ body.unselectable * {
 	-webkit-box-shadow: 0px -2px 6px 4px #a6a5a5;
 	box-shadow: 0px -2px 6px 4px #a6a5a5;
 	position: relative;
-	z-index: 10000;
+	z-index: 1000300;
 }
 
 .header ul {
