@@ -13,6 +13,11 @@ abstract class UserEntityProperties extends UserEntityStorage
     protected $_favoriteWebies = null;
 
     /**
+     * Favorite Webies of an user (array of WebyEntity objects)
+     */
+    protected $_followingUsers = null;
+
+    /**
      * @return mixed
      */
     public function getCreatedOn()
@@ -68,8 +73,37 @@ abstract class UserEntityProperties extends UserEntityStorage
         return $this->_username;
     }
 
-    public function completedOnboarding() {
+    /**
+     * Checks if user has completed onboarding process
+     * @return bool
+     */
+    public function completedOnboarding()
+    {
         return $this->_onboarding;
+    }
+
+    /**
+     * Gets all webies that this user is following
+     */
+    public function getFollowingUsers($objects = false)
+    {
+        if (is_null($this->_followingUsers)) {
+            $this->_followingUsers = $this->_sqlGetFollowingUsers();
+        }
+
+        if ($objects) {
+            if ($this->_followingUsers->count()) {
+                $user = new UserEntity();
+                $tmp = [];
+                foreach ($this->_followingUsers as $id) {
+                    $user->load($id);
+                    $tmp[] = clone $user;
+                }
+                $this->_followingUsers = $tmp;
+            }
+        }
+
+        return $this->_followingUsers;
     }
 
 }

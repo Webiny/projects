@@ -52,6 +52,7 @@ class PagesHandler extends AbstractHandler
             Stats::getInstance()->updateWebyEmbeddedHits($weby);
             return;
         }
+
 		$this->setTemplate('weby');
         Stats::getInstance()->updateWebyHits($weby);
     }

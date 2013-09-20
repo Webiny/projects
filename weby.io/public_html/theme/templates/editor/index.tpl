@@ -43,6 +43,7 @@
     <div id="toolbar">
         <ul></ul>
     </div>
+    <div id="drag-helper" style="position: absolute; width:0; height: 0;"></div>
     {include file="templates/editor/includes/loading.tpl"}
     {include file="templates/common/webyContent.tpl"}
     {include file="templates/common/linkWidgetTemplates.tpl"}

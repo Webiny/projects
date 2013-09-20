@@ -59,7 +59,8 @@ class Database
 		'w_screenshot_queue',
 		'w_email_queue',
 		'w_tags',
-		'w_weby2tag'
+		'w_weby2tag',
+        'w_follow'
 	);
 
 	/** Users table */
@@ -76,6 +77,9 @@ class Database
 
 	/** Favorites of users */
 	public $w_favorite;
+
+    /** Follows of users */
+    public $w_follow;
 
     /** Tags table */
     public $w_tags;

@@ -8,7 +8,7 @@ function LinkedInWidget() {
 	this._customOnLoadHandler = true;
 
 	this.getHTML = function () {
-		this._html = '<input type="text" placeholder="Enter a public profile URL of a LinkedIn member" value="gorancandrlic"/>' +
+		this._html = '<input type="text" placeholder="Enter a public profile URL of a LinkedIn member" value="www.linkedin.com/in/marissamayer"/>' +
 			'<span class="message"></span>';
 		return BaseWidget.prototype.getHTML.call(this);
 	};
@@ -36,6 +36,7 @@ function LinkedInWidget() {
 			width: width+'px',
 			height: height+'px'
 		});
+		this._loadingContent = false;
 		this.contentLoaded();
 	}
 

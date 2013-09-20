@@ -10,7 +10,7 @@ function GoogleDriveWidget() {
 	this._loadingMessage = 'Loading your GoogleDrive file...';
 
 	this.getHTML = function () {
-		this._html = '<textarea type="text" placeholder="Paste a GoogleDrive embed code">https://docs.google.com/spreadsheet/pub?key=0AjdjFGIeoFTCdDdKN1gtYVROUllhY3BZYms2ZTBocUE&output=html&widget=true</textarea>' +
+		this._html = '<textarea type="text" placeholder="Paste a GoogleDrive embed code">https://docs.google.com/presentation/d/1GKx3W44LS_mbLr2MKg0iQ1wnlEA_xHOSsWQ6KC56A8Q/pub?start=false&loop=false&delayms=3000</textarea>' +
 			'<span class="message"></span>';
 		return BaseIframeWidget.prototype.getHTML.call(this);
 	};

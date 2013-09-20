@@ -42,8 +42,8 @@ abstract class WebyEntityStorage extends EntityAbstract
     {
         if ($this->_id == '') {
             $this->_id = uniqid();
-            $query = 'INSERT INTO ' . $this->_getDb()->w_weby . ' (id, title, slug, content, settings, "user", share_count, created_on)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, NOW())';
+            $query = 'INSERT INTO ' . $this->_getDb()->w_weby . ' (id, title, slug, content, settings, "user", share_count, created_on, modified_on)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())';
             $bind = [
                 $this->_id,
                 $this->_title,
@@ -153,13 +153,6 @@ abstract class WebyEntityStorage extends EntityAbstract
         return $ids;
     }
 
-    protected function _sql()
-    {
-        $query = "SELECT value FROM {$this->_getDb()->w_stat_by_ref} WHERE ref_type=? AND ref_id=?";
-        $bind = ['hit_weby', $this->_id];
-        return $this->_getDb()->execute($query, $bind)->fetchValue();
-    }
-
     protected function _sqlGetHitCount()
     {
         $query = "SELECT value FROM {$this->_getDb()->w_stat_by_ref} WHERE ref_type=? AND ref_id=?";
@@ -167,11 +160,13 @@ abstract class WebyEntityStorage extends EntityAbstract
         return $this->_getDb()->execute($query, $bind)->fetchValue();
     }
 
-    protected function _sqlGetFavoriteCount()
-    {
-        $query = "SELECT COUNT(weby) FROM {$this->_getDb()->w_favorite} WHERE weby=?";
+    /**
+     * Finds all users that have this Weby in their favorites list
+     */
+    protected function _sqlGetUsersFavorited($limit) {
+        $query = "SELECT \"user\", count(*) OVER() total_count FROM {$this->_getDb()->w_favorite} WHERE weby=? LIMIT $limit";
         $bind = [$this->_id];
-        return $this->_getDb()->execute($query, $bind)->fetchValue();
+        return self::_getDb()->execute($query, $bind)->fetchAll();
     }
 
     protected static function _sqlGetWebiesByTags($tags)

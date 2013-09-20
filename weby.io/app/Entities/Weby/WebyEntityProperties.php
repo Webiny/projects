@@ -11,7 +11,7 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     /**
      * Total count of times somebody put this Weby to his favorite's list
      */
-    protected $_favoriteCount = null;
+    protected $_favoriteCount = 0;
 
     /**
      * Here we can store the time when this Weby was added to favorites (used by users favorites section, when
@@ -19,6 +19,11 @@ abstract class WebyEntityProperties extends WebyEntityStorage
      * This variable is always empty, except if Weby is request via \App\Entities\User\UserEntity->getFavoriteWebies();
      */
     protected $_addedToFavoritesTime = '';
+
+    /**
+     * This stores all users that have put this Weby to their favorite lists
+     */
+    protected $_usersFavorited = null;
 
     /**
      * @return int
@@ -51,13 +56,13 @@ abstract class WebyEntityProperties extends WebyEntityStorage
         return $this->_content;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getSettings()
-	{
-		return $this->_settings;
-	}
+    /**
+     * @return string
+     */
+    public function getSettings()
+    {
+        return $this->_settings;
+    }
 
     /**
      * @return string
@@ -90,6 +95,7 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     {
         return $this->_title == '' ? 'Untitled' : $this->_title;
     }
+
     /**
      * @return string
      */
@@ -107,7 +113,7 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     {
         if ($rawArray) {
             $tmp = [];
-            foreach($this->_tags as $tag) {
+            foreach ($this->_tags as $tag) {
                 $tmp[] = ['id' => $tag['id'], 'tag' => $tag['tag']];
             }
             return $tmp;
@@ -115,13 +121,13 @@ abstract class WebyEntityProperties extends WebyEntityStorage
         return $this->_tags;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getStorageFolder()
-	{
-		return $this->_storage;
-	}
+    /**
+     * @return string
+     */
+    public function getStorageFolder()
+    {
+        return $this->_storage;
+    }
 
     /**
      * @return UserEntity
@@ -135,6 +141,29 @@ abstract class WebyEntityProperties extends WebyEntityStorage
         }
         return $this->_user;
     }
+
+    /**
+     * Returns all users that put this Weby into their favorites list
+     */
+    public function getUsersFavorited($limit = 5)
+    {
+        if (is_null($this->_usersFavorited)) {
+            $this->_usersFavorited = [];
+            $users = $this->_sqlGetUsersFavorited($limit);
+            if ($users->count()) {
+                $user = new UserEntity();
+                $tmp = [];
+                $this->_favoriteCount = $users[0]['total_count'];
+                foreach ($users as $u) {
+                    $user->load($u['user']);
+                    $tmp[] = clone $user;
+                }
+                $this->_usersFavorited = $tmp;
+            }
+        }
+        return $this->_usersFavorited;
+    }
+
 
     /**
      * @return null
@@ -156,7 +185,8 @@ abstract class WebyEntityProperties extends WebyEntityStorage
      * Gets total hits of Weby
      * @return int
      */
-    public function getTotalHits() {
+    public function getTotalHits()
+    {
         return $this->_hits + $this->_hitsEmbedded;
     }
 
@@ -166,10 +196,17 @@ abstract class WebyEntityProperties extends WebyEntityStorage
      */
     public function getFavoriteCount()
     {
-        if(!$this->_favoriteCount) {
-            $this->_favoriteCount = $this->_sqlGetFavoriteCount();
+        if (!$this->_favoriteCount) {
+            $this->getUsersFavorited();
         }
         return $this->_favoriteCount;
+    }
+
+    /**
+     * This just outputs "and x more users..." message (on frontend, Weby details bar)
+     */
+    public function getCountOfMoreUsers() {
+        return $this->_favoriteCount-count($this->_usersFavorited);
     }
 
     /**
@@ -196,7 +233,8 @@ abstract class WebyEntityProperties extends WebyEntityStorage
      * @param $counts
      * @return $this
      */
-    public function setShareCount($counts) {
+    public function setShareCount($counts)
+    {
         $this->_shareCount = is_array($counts) ? serialize($counts) : $counts;
         return $this;
     }
@@ -206,7 +244,8 @@ abstract class WebyEntityProperties extends WebyEntityStorage
      * @param $time
      * @return $this
      */
-    public function setAddedToFavoritesTime($time) {
+    public function setAddedToFavoritesTime($time)
+    {
         $this->_addedToFavoritesTime = $time;
         return $this;
     }

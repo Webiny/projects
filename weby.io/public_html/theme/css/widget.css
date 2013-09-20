@@ -80,6 +80,7 @@
 .mouse-icon.flicker:before {
 	background-position: -60px -585px;
 }
+
 .mouse-icon.weby:before {
 	background-position: -60px -624px;
 }
@@ -133,6 +134,7 @@
 	font-size: 12px;
 	font-weight: 400;
 	margin: 0 0;
+	float: left;
 }
 
 .loading p span.main-text {
@@ -141,6 +143,14 @@
 	font-weight: 400;
 	margin: 0 0;
 	display: block;
+}
+
+.loading p span.not-loading {
+	float: left;
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+	margin-top: 2px;
 }
 
 .widget-disabled-overlay {
@@ -167,7 +177,7 @@
 	display: block;
 	height: 17px;
 	width: 156px;
-	pointer-events:none;
+	pointer-events: none;
 }
 
 .widget.active .widget-disabled-overlay {

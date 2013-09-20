@@ -73,7 +73,7 @@ function FlickerWidget() {
 		});
 	}
 
-	var test = '<a href="http://www.flickr.com/photos/expeditions/9571701710/" title="Yes, I Got Soaked!  :) by Laura Travels, on Flickr"><img src="http://farm8.staticflickr.com/7355/9571701710_77bf085723.jpg" width="500" height="333" alt="Yes, I Got Soaked!  :)"></a>';
+	var test = '<a href="http://www.flickr.com/photos/23706006@N03/9292664208/" title="_KSP7164.jpg by Kornelije Sajler, on Flickr"><img src="http://farm6.staticflickr.com/5453/9292664208_d3ce24d35e.jpg" width="500" height="333" alt="_KSP7164.jpg"></a>';
 }
 
 FlickerWidget.prototype = new BaseWidget();

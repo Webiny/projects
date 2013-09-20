@@ -10,7 +10,7 @@ function GooglePlusWidget() {
 	this._customOnLoadHandler = 'onIframeLoaded';
 
     this.getHTML = function () {
-        this._html = '<textarea type="text" placeholder="Paste a Google+ embed code or post URL">https://plus.google.com/112697084889067842727/posts/KnD3eNUi5dW</textarea>' +
+        this._html = '<textarea type="text" placeholder="Paste a Google+ embed code or post URL">https://plus.google.com/106534048061626372350/posts/PoS6chWGT4T</textarea>' +
             '<span class="message"></span>';
         return BaseIframeWidget.prototype.getHTML.call(this);
     };

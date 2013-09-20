@@ -431,6 +431,12 @@ function WebyTitleDialog() {
 
     this.webyLoaded = function () {
         init();
+
+        if (_tagsData.find('span').length == 0) {
+            _tagsWrapper.find('.tags-placeholder').show();
+        } else {
+            _tagsWrapper.find('.tags-placeholder').hide();
+        }
     }
 
     /**

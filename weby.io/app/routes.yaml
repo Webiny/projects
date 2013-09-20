@@ -12,6 +12,7 @@ routes:
     - ['tools/favorites', \App\Handlers\ToolsHandler, ajaxGetFavorites]
     - ['tools/tags', \App\Handlers\ToolsHandler, ajaxSearchTags]
     - ['tools/feedback', \App\Handlers\ToolsHandler, ajaxSendFeedback]
+    - ['/^tools\/follow\/([0-9]*)$/', \App\Handlers\ToolsHandler, ajaxToggleFollowing]
     - ['/^tools\/favorite\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, ajaxToggleFavorite]
     - ['tools/log', \App\Handlers\ToolsHandler, log]
     - ['tools/parse-link', \App\Handlers\LinksHandler, parse]

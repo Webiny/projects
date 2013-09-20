@@ -12,7 +12,7 @@ function VideoWidget() {
 	this._inputElement = 'textarea';
 
 	this.getHTML = function () {
-		this._html = '<textarea placeholder="Paste a Youtube or Vimeo link here">https://vimeo.com/69722654</textarea>' +
+		this._html = '<textarea placeholder="Paste a Youtube or Vimeo link here">http://vimeo.com/58546834</textarea>' +
 			'<span class="message"></span>';
 		return BaseWidget.prototype.getHTML.call(this);
 	};

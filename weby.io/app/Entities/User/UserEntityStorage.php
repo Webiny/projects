@@ -115,6 +115,45 @@ abstract class UserEntityStorage extends EntityAbstract
 		return self::_getDb()->execute($query, $bind)->fetchArray();
 	}
 
+    /**
+     * Gets all users that this user is following
+     * @internal param $webyId
+     * @return bool|ArrayObject
+     */
+    protected function _sqlGetFollowingUsers() {
+        $query = "SELECT followed_user FROM {$this->_getDb()->w_follow} WHERE \"user\"=?";
+        $bind = array($this->_id);
+        return $this->_getDb()->execute($query, $bind)->fetchColumn();
+    }
+
+    /**
+     * Gets all users that this user is following
+     * @internal param $webyId
+     * @param $userId
+     * @return bool|ArrayObject
+     */
+    protected function _sqlFollowUser($userId) {
+        $query = "INSERT INTO {$this->_getDb()->w_follow} (\"user\", followed_user, created_on) VALUES (?,?, NOW())";
+        $bind = array($this->_id, $userId);
+        return $this->_getDb()->execute($query, $bind);
+    }
+
+    /**
+     * Gets all users that this user is following
+     * @internal param $webyId
+     * @param $userId
+     * @return bool|ArrayObject
+     */
+    protected function _sqlUnfollowUser($userId) {
+        $query = "DELETE FROM {$this->_getDb()->w_follow} WHERE \"user\"=? AND followed_user=?";
+        $bind = array($this->_id, $userId);
+        return $this->_getDb()->execute($query, $bind);
+    }
+
+    /**
+     * Marks current user - completed onboarding
+     * @return DatabaseResult
+     */
     protected function _sqlMarkOnboardingDone(){
         $query = "UPDATE ".self::_getDb()->w_user." SET onboarding=1::bit WHERE id=?";
         $bind = array($this->_id);

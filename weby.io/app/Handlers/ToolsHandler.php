@@ -80,6 +80,50 @@ class ToolsHandler extends AbstractHandler
 			$weby->getImage($tag)->setKey($key)->save();
 		}
 	}
+
+    /**
+     * Toggle given Weby (loaded by passed id) from user's favorites list
+     */
+    public function ajaxToggleFavorite($id)
+    {
+            $weby = new WebyEntity();
+            if (!$weby->load($id)) {
+            $this->ajaxResponse(true, 'Could not find Weby!');
+        }
+
+        // If we got a valid favorite, that means we are deleting it
+        if ($this->user()->inFavorites($weby)) {
+            $this->user()->deleteFromFavorites($weby);
+            $this->ajaxResponse(false);
+        }
+
+        // In other case, we are creating a new favorite
+        $this->user()->addToFavorites($weby);
+        $this->ajaxResponse(false);
+    }
+
+
+    /**
+     * Toggle given Weby (loaded by passed id) from user's favorites list
+     */
+    public function ajaxToggleFollowing($id)
+    {
+        $user = new UserEntity();
+        if (!$user->load($id)) {
+            $this->ajaxResponse(true, 'Could not find user!');
+        }
+
+        // If we got a valid user, that means we are deleting it
+        if ($this->user()->isFollowing($user)) {
+            $this->user()->unfollow($user);
+            $this->ajaxResponse(false);
+        }
+
+        // In other case, we are creating a new favorite
+        $this->user()->follow($user);
+        $this->ajaxResponse(false);
+    }
+
     /**
      * Sends general feedback to email (addresses are in config.yaml)
      */

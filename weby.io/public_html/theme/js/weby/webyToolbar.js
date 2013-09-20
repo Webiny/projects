@@ -130,6 +130,9 @@ function WebyToolbar() {
 		max: 100,
 		showButtons: false,
 		tickPlacement: 'none',
+		tooltip: {
+			enabled: false
+		},
 		slide: function (e) {
 			_activeWidget.setOpacity(e.value / 100);
 		}
@@ -140,6 +143,9 @@ function WebyToolbar() {
 		max: 20,
 		showButtons: false,
 		tickPlacement: 'none',
+		tooltip: {
+			enabled: false
+		},
 		slide: function (e) {
 			_activeWidget.setRadius(e.value);
 		}
@@ -150,6 +156,9 @@ function WebyToolbar() {
 		max: 50,
 		showButtons: false,
 		tickPlacement: 'none',
+		tooltip: {
+			enabled: false
+		},
 		slide: function (e) {
 			_activeWidget.setPadding(e.value);
 		}
@@ -160,6 +169,9 @@ function WebyToolbar() {
 		max: 50,
 		showButtons: false,
 		tickPlacement: 'none',
+		tooltip: {
+			enabled: false
+		},
 		slide: function (e) {
 			_activeWidget.setShadowDistance(e.value);
 		}
@@ -170,6 +182,9 @@ function WebyToolbar() {
 		max: 50,
 		showButtons: false,
 		tickPlacement: 'none',
+		tooltip: {
+			enabled: false
+		},
 		slide: function (e) {
 			_activeWidget.setShadowSpread(e.value);
 		}

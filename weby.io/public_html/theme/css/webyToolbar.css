@@ -40,13 +40,13 @@
 	width: 68px;
 	cursor: pointer;
 	float: left;
-	background: url(../images/sprite2.png) 0 0 no-repeat;
+	background: #f25b2b url(../images/sprite2.png) 0 0 no-repeat;
 	text-decoration: none;
 	text-indent: -9999px;
 }
 
 #weby-toolbar-wrapper .tool-icon:hover {
-	opacity: 0.85;
+	background-color: #FD6D40;
 }
 
 #weby-toolbar-wrapper .bring-to-front {
@@ -71,11 +71,21 @@
 }
 
 #weby-toolbar-wrapper .background {
+	background-color: #27b6ac;
 	background-position: -106px -94px;
 }
 
+#weby-toolbar-wrapper .background:hover{
+	background-color: #52C7BE;
+}
+
 #weby-toolbar-wrapper .document {
+	background-color: #27b6ac;
 	background-position: -174px -94px;
+}
+
+#weby-toolbar-wrapper .document:hover {
+	background-color: #52C7BE;
 }
 
 #weby-toolbar-wrapper ul {
@@ -203,8 +213,7 @@
 #weby-toolbar-wrapper div.menu .combo-box ul li a {
 	padding: 5px 10px;
 	display: block;
-	background-color: #fff;
-	background-image: none;
+	background: #fff none;
 }
 
 #weby-toolbar-wrapper div.menu .combo-box ul li a:hover {

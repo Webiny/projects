@@ -9,7 +9,7 @@ function TwitterWidget() {
 	this._parser = null;
 
 	this.getHTML = function () {
-		this._html = '<textarea class="tweet-embed" placeholder="Paste your Tweet embed code here"></textarea>' +
+		this._html = '<textarea class="tweet-embed" placeholder="Paste your Tweet embed code here">https://twitter.com/Fascinatingpics/status/286206794005610496</textarea>' +
 			'<span class="message"></span>';
 		return BaseWidget.prototype.getHTML.call(this);
 	};

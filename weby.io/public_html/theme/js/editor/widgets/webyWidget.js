@@ -41,7 +41,7 @@ function WebyWidget() {
 		}
 	};
 
-	test = 'http://pavel910.homeftp.net/pavel910/my-super-new-and-cool-weby/523748782e9c6/';
+	test = ''; //http://pavel910.homeftp.net/pavel910/my-super-new-and-cool-weby/523748782e9c6/';
 }
 
 WebyWidget.prototype = new BaseIframeWidget();

@@ -11,12 +11,7 @@
 	display: inline-block;
 	width: 74px;
 	height: 101px;
-	background-image: url("../../images/file_widget_types1.png");
-}
-
-.link-widget-details {
-	display: inline-block;
-	vertical-align: top;
+	background-image: url("../../images/sprite-icons.png");
 }
 
 .link-widget-error {
@@ -39,122 +34,146 @@
 	cursor: pointer;
 }
 
-.link-widget-image {
-	width: 400px;
-	height: auto;
-}
-
 /*	----- LINK EMBED ----- */
-.link-widget .link {
-	float: left;
-	margin-bottom: 3px;
+.link-widget .file, .link-widget .link{
+	width: 340px;
+	overflow: hidden;
 }
 
-.link-widget .link img {
-	height: 80px;
-	width: 120px;
+
+.link-widget .file a.file-icon{
+	background-image: url("../../images/sprite-icons.png");
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 65px;
+	height: 65px;
 	float: left;
-	margin-right:10px;
+	margin-top: 7px;
 }
 
-.link-widget .link .website {
+.link-widget .file .link-widget-file-details{
 	float: left;
-	width: 268px;
-}
-
-.link-widget .link .website a.title {
-	width: 100%;
+	padding-left: 10px;
+	font-size: 12px;
+	color: #666666;
+	width: 265px;
 	display: block;
-	font-size: 15px;
-	font-weight: bold;
+	overflow: hidden;
 }
 
-.link-widget .link .website .description {
-	line-height: 19px;
+.link-widget .file .link-widget-file-details tr td:first-child{
+	width: 60px;
+	padding-right: 5px;
+	font-weight: 600;
 }
 
-/*  ----- FILE TYPES -----  */
-
-.link-widget-type-icon.type-dbx {
-	background-position: -990px -237px;
+.link-widget .link .link-img{
+	display: block;
+	float: left;
+	line-height: 0;
 }
 
-.link-widget-type-icon.type-gdrv {
-	background-position: -999px -118px;
+.link-widget .link .website{
+	float: left;
+	padding-left: 10px;
+	font-size: 12px;
+	color: #666666;
+	width: 213px;
+	display: block;
+	overflow: hidden;
 }
 
-.link-widget-type-icon.type-css {
-	background-position: -274px -1px;
+.link-widget .file .link-widget-file-details tr{
+	white-space: nowrap;
 }
 
-.link-widget-type-icon.type-dmg {
-	background-position: -2px -1px;
+.link-widget .file a.icon-pdf{
+	background-position: 50% 0px;
 }
 
-.link-widget-type-icon.type-rtf {
-	background-position: -544px -1px;
+.link-widget .file a.icon-avi{
+	background-position: 50% -109px;
 }
 
-.link-widget-type-icon.type-exe {
-	background-position: -729px -1px;
+.link-widget .file a.icon-css{
+	background-position: 50% -217px;
 }
 
-.link-widget-type-icon.type-doc {
-	background-position: -184px -236px;
+.link-widget .file a.icon-dbx{
+	background-position: 50% -322px;
 }
 
-.link-widget-type-icon.type-html {
-	background-position: -364px -1px;
+.link-widget .file a.icon-xls{
+	background-position: 50% -430px;
 }
 
-.link-widget-type-icon.type-pdf {
-	background-position: -94px -236px;
+.link-widget .file a.icon-flv{
+	background-position: 50% -538px;
 }
 
-.link-widget-type-icon.type-ppt {
-	background-position: -273px -236px;
+.link-widget .file a.icon-gdrv{
+	background-position: 50% -647px;
 }
 
-.link-widget-type-icon.type-psd {
-	background-position: -900px -236px;
+.link-widget .file a.icon-mov{
+	background-position: 50% -753px;
 }
 
-.link-widget-type-icon.type-rar {
-	background-position: -94px -1px;
+.link-widget .file a.icon-mp3{
+	background-position: 50% -860px;
 }
 
-.link-widget-type-icon.type-txt {
-	background-position: -454px -1px;
+.link-widget .file a.icon-mp4{
+	background-position: 50% -969px;
 }
 
-.link-widget-type-icon.type-xls {
-	background-position: -4px -236px;
+.link-widget .file a.icon-mpeg{
+	background-position: 50% -1075px;
 }
 
-.link-widget-type-icon.type-zip {
-	background-position: -184px -1px;
+.link-widget .file a.icon-ppt{
+	background-position: 50% -1184px;
 }
 
-.link-widget-type-icon.type-mov {
-	background-position: 0px -353px;
+.link-widget .file a.icon-psd{
+	background-position: 50% -1290px;
 }
 
-.link-widget-type-icon.type-mpeg {
-	background-position: -90px -353px;
+.link-widget .file a.icon-rar{
+	background-position: 50% -1399px;
 }
 
-.link-widget-type-icon.type-mp4 {
-	background-position: -360px -353px;
+.link-widget .file a.icon-rtf{
+	background-position: 50% -1507px;
 }
 
-.link-widget-type-icon.type-avi {
-	background-position: -540px -353px;
+.link-widget .file a.icon-txt{
+	background-position: 50% -1615px;
 }
 
-.link-widget-type-icon.type-mp3 {
-	background-position: -630px -353px;
+.link-widget .file a.icon-wav{
+	background-position: 50% -1720px;
 }
 
-.link-widget-type-icon.type-wav {
-	background-position: -720px -353px;
+.link-widget .file a.icon-doc{
+	background-position: 50% -1829px;
+}
+
+.link-widget .file a.icon-zip{
+	background-position: 50% -1936px;
+}
+
+.link-widget .website a{
+	text-decoration: none;
+	color: #666;
+	font-size: 14px;
+	margin-bottom: 10px;
+	display: block;
+	font-weight: 600;
+}
+
+.link-widget .website span.description{
+	height: 47px;
+	overflow: hidden;
+	display: block;
 }

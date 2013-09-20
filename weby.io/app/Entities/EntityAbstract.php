@@ -35,7 +35,7 @@ abstract class EntityAbstract implements \ArrayAccess
 
 		if(!$data) {
 			$this->_id = false;
-			return $this;
+			return false;
 		}
 		$this->_populateFromDb($data);
 		$this->_onAfterLoad();

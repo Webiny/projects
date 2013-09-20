@@ -99,6 +99,9 @@ function WebyVideoBackground(el) {
 		max: 100,
 		showButtons: false,
 		tickPlacement: 'none',
+		tooltip: {
+			enabled: false
+		},
 		slide: function (e) {
 			_volume = e.value;
 			_player.setVolume(_volume);
@@ -122,7 +125,6 @@ function WebyVideoBackground(el) {
 		var parser = new VideoParser();
 		var videoId = parser.parse(video);
 		if (videoId && parser.getVideoType() == 'youtube') {
-			// @TODO: Check if video exists
 			$this.setVideo(videoId).render();
 			_applyBtn.hide();
 			_removeBtn.show();
@@ -142,6 +144,7 @@ function WebyVideoBackground(el) {
 				playlist: _video,
 				controls: 0,
 				showinfo: 0,
+				iv_load_policy: 3,
 				modestbranding: 1,
 				wmode: 'transparent'
 			},
@@ -151,6 +154,9 @@ function WebyVideoBackground(el) {
 					e.target.setLoop(true);
 					e.target.playVideo();
 					App.fireEvent("video.background.ready");
+				},
+				onError: function(){
+					// Do nothing
 				}
 			}
 		});

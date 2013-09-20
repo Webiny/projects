@@ -251,7 +251,6 @@ WebyPatterns.PATTERNS = [
 	{"name": "retro_intro.png"},
 	{"name": "ricepaper.png"},
 	{"name": "ricepaper2.png"},
-	{"name": "rip_jobs.png"},
 	{"name": "robots.png"},
 	{"name": "rockywall.png"},
 	{"name": "rough_diagonal.png"},

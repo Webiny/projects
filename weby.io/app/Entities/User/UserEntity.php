@@ -95,10 +95,9 @@ class UserEntity extends UserEntityCrud
         if (is_null($this->_favoriteWebies)) {
             $this->_favoriteWebies = $this->arr();
             $favorites = $this->_sqlGetFavoriteWebies();
-            if ($favorites) {
-                $weby = new WebyEntity();
-                foreach ($favorites as $data) {
-                    $weby->load($data['weby']);
+            $weby = new WebyEntity();
+            foreach ($favorites as $data) {
+                if ($weby->load($data['weby'])) {
                     $weby->setAddedToFavoritesTime($data['created_on']);
                     $this->_favoriteWebies[$data['weby']] = clone $weby;
                 }
@@ -159,4 +158,28 @@ class UserEntity extends UserEntityCrud
         $this->_sqlAddToFavorites($weby->getId(), $weby->getUser()->getId());
     }
 
+    /**
+     * Checks if user is following given user
+     */
+    public function isFollowing(UserEntity $user)
+    {
+        $this->getFollowingUsers();
+        return $this->arr($this->_followingUsers)->inArray($user->getId()) ? true : false;
+    }
+
+    /**
+     * Follow user
+     */
+    public function follow(UserEntity $user)
+    {
+        $this->_sqlFollowUser($user->getId());
+    }
+
+    /**
+     * Unfollow user
+     */
+    public function unfollow(UserEntity $user)
+    {
+        $this->_sqlUnfollowUser($user->getId());
+    }
 }

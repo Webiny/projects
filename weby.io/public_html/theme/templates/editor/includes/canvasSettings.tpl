@@ -89,8 +89,7 @@
     <div id="cnv-video" class="tab">
         <span class="error-message"></span>
         <input type="text" data-role="input-youtube" class="settings-input"
-               value="https://www.youtube.com/watch?v=kr_gROZmTtA"
-               placeholder="Paste a Youtube video URL" />
+               value="" placeholder="Paste a Youtube video URL" />
         <div class="volume-control" data-role="video-volume-control">
             <span class="title">Volume:</span>
             <input data-role="k-slider-video-volume"/>

@@ -94,6 +94,7 @@ function LinkWidget() {
 			$this._contentType = r.data['contentType'];
 			$this._contentSize = r.data['contentLength'];
 
+			$this._loadingContent = true;
 
 			// If requested file is a html page
 			if ($this._contentType == 'text/html') {
@@ -108,6 +109,7 @@ function LinkWidget() {
 						$this._imageUrl = data.data.imageUrl;
 						$this.body().html($this.generateLinkEmbed());
 						$this.contentLoaded();
+						$this._loadingContent = false;
 						$this.html('.resize-handle').remove();
 					} else {
 						$this.showError();
@@ -120,6 +122,7 @@ function LinkWidget() {
 					$this._contentType = 'N/A';
 					$this.body().html($this.generateFileInfo());
 					$this.contentLoaded();
+					$this._loadingContent = false;
 				}
 
 				var tpl = LinkTool.ALLOWED_TYPES[$this._contentType].tpl;
@@ -130,6 +133,7 @@ function LinkWidget() {
 					$this.body().html(content);
 					$this.contentLoaded().html('.resize-handle').remove();
 					$this._isResizable = false;
+					$this._loadingContent = false;
 				} else {
 					$this._linkType = 'image';
 					var img = $($this.generateImage());
@@ -140,6 +144,7 @@ function LinkWidget() {
 						$this._html.resizable("option", "alsoResize", '#' + $(this).attr("id"));
 						$this.contentLoaded();
 						$this.showResizeHandle();
+						$this._loadingContent = false;
 					});
 					$this.body().append(img);
 				}
@@ -182,6 +187,7 @@ function LinkWidget() {
 						$this.contentLoaded().html('.resize-handle').remove();
 						$this._isResizable = false;
 						$this._linkType = 'file';
+						$this._loadingContent = false;
 					}
 				}
 			).build();
@@ -199,7 +205,7 @@ function LinkWidget() {
 				success: function (files) {
 					// Prepare data for template
 					$this._linkUrl = files[0].link;
-					$this._host = 'dropbox.com';
+					$this._fileHost = 'dropbox.com';
 					$this._fileName = files[0].name;
 					$this._contentType = 'dropbox';
 					$this._contentSize = App.formatFileSize(files[0].bytes);
@@ -209,6 +215,7 @@ function LinkWidget() {
 					$this.contentLoaded().html('.resize-handle').remove();
 					$this._isResizable = false;
 					$this._linkType = 'file';
+					$this._loadingContent = false;
 				},
 				// Gives us direct links to uploaded files
 				linkType: "direct"

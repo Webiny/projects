@@ -85,6 +85,7 @@ var BaseIframeWidget = function () {
 				if (data.urlExists) {
 					$this._embedUrl = targetUrl;
 					var iframe = $this.getIframe();
+					$this._loadingContent = true;
 					$this._insertIframe(iframe);
 				} else {
 					$this.hideLoading();

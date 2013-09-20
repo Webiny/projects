@@ -69,7 +69,7 @@ function MapWidget() {
 	}
 
 	this.getHTML = function () {
-		this._html = '<input class="address" type="text" placeholder="Type your desired address here" value="Tibljaška cesta 11"/>' +
+		this._html = '<input class="address" type="text" placeholder="Type your desired address here" value="Piccadilly Circus, London, United Kingdom"/>' +
 			'<span class="message"></span>' +
 			'<div class="map" style="width:100%;"></div>';
 		return BaseWidget.prototype.getHTML.call(this);
