@@ -172,6 +172,7 @@ pip-log.txt
 
 library/
 code_backup/
+PSD/
 public_html/cache/minify/*
 public_html/cache/smarty/compile/*
 public_html/uploads/*

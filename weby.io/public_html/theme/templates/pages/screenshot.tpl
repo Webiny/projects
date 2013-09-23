@@ -2,7 +2,7 @@
 
 {block name="title"}{$weby.title}{/block}
 {block name="head"}
-    {include file="templates/pages/includes/appIncludes.tpl"}
+    {include file="templates/pages/includes/screenshotIncludes.tpl"}
     {include file="templates/pages/includes/appRemoteIncludes.tpl"}
     {include file="templates/common/linkWidgetTemplates.tpl"}
     <script type="text/javascript" id="initScript">

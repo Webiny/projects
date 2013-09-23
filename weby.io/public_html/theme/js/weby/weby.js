@@ -242,7 +242,11 @@ function Weby() {
 			data = $.extend(data, options);
 		}
 
-        if (takeScreenshot != undefined) {
+		if(typeof takeScreenshot == "undefined"){
+			takeScreenshot = false;
+		}
+
+        if (takeScreenshot) {
             data['takeScreenshot'] = true;
         }
 
@@ -259,7 +263,7 @@ function Weby() {
             url: WEB + 'editor/save/',
             data: data,
             method: 'POST',
-            async: takeScreenshot == undefined,
+            async: !takeScreenshot,
             success: function (data) {
 				if(typeof data != 'object'){
 					window.location = WEB;

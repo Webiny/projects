@@ -84,9 +84,9 @@ function WebyTitleDialog(parent) {
                 App.getWeby().setTags(generateTagsJson());
                 App.getWeby().setDescription(_descriptionInput.val());
 
+				parent.viewportResize();
                 App.getWeby().save(false, {tagLog: _tagsLog});
                 App.getDashboard().refreshDataSource();
-				parent.viewportResize();
                 $.fancybox.close();
                 _clearTagsInput();
             } else {

@@ -13,7 +13,7 @@ $(function () {
 	contentValidator = $('[data-role="content-validator"]').text();
 	onboardingComplete = $('[data-role="onboarding-complete"]').text();
 	weby = JSON.parse($('[data-role="weby"]').html());
-	//$('.bootstrap').remove();
+	$('.bootstrap').remove();
 
 	// Initialize app
 	App = new AppClass();

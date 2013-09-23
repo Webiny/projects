@@ -32,11 +32,12 @@
     {include file="templates/common/linkWidgetTemplates.tpl"}
     {include file="templates/editor/includes/webyToolbar.tpl"}
     {include file="templates/common/dashboard.tpl"}
-    <div id="outer-widgets" style="display:none">
-        <p>There are some widgets located outside of your new canvas.<br/> Would you like to move them inside your new
-            canvas?</p>
-        <button id="button-move-widgets">Yes, sure!</button>
-        <button id="button-dont-move-widgets">No, leave them.</button>
+    <div id="outer-widgets" class="dialog" style="display:none">
+        <img src="{$viewObject.themeWebPath}images/widgets-too-far.png" />
+        <p class="buttons">
+            <span id="button-dont-move-widgets" class="button">No, leave them.</span>
+            <span id="button-move-widgets" class="button main" data-role="weby-dialog-save">Yes, sure!</span>
+        </p>
     </div>
     {include file="templates/common/favorites.tpl"}
     {if !$viewObject.user->completedOnboarding()}

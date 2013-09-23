@@ -642,7 +642,10 @@ BaseWidget.prototype = {
 
 		this._isContentLoaded = true;
 
-		this.addInteractionOverlay();
+		if(!this._isEditable){
+			this.addInteractionOverlay();
+		}
+
 		if (this._isActive) {
 			this.showTools();
 			App.getWeby().getToolbar().widgetActivated(this);

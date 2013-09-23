@@ -10,10 +10,10 @@
     <div class="delete-confirmation" style="display:none">
         <div class="overlay"></div>
         <div class="message">
-            Nooo, you really want to remove your Weby?
+            <img src="{$viewObject.themeWebPath}images/remove-weby.png" />
         </div>
         <div class="actions">
-            <a href="javascript:void(0)" data-role="btn-cancel"><span class="button">Cancel</span></a>
+            <a href="javascript:void(0)" data-role="btn-cancel"><span class="button">No, keep it!</span></a>
             <a href="javascript:void(0)" data-role="btn-delete"><span class="button">Yes, remove it!</span></a>
         </div>
     </div>

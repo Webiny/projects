@@ -15,8 +15,8 @@ function TextWidget() {
 		return BaseWidget.prototype.getHTML.call(this);
 	};
 
-	this.onActivate = function(){
-		if(this._firstActivate){
+	this.onActivate = function () {
+		if (this._firstActivate) {
 			this._firstActivate = false;
 			this.controls().css("visibility", "hidden");
 		}
@@ -26,7 +26,7 @@ function TextWidget() {
 		this.body(".text-editable").blur();
 	}
 
-	this.remove = function(){
+	this.remove = function () {
 		this.body(".text-editable").blur().data("kendoEditor").destroy();
 		BaseWidget.prototype.remove.call(this);
 	}
@@ -45,8 +45,8 @@ function TextWidget() {
 		this._createEditor();
 		App.deactivateTool();
 		this.html(".text-editable").width(this.html().width() - 2).height(this.html().height() - 2);
-		if(this._firstActivate){
-			this.html(".text-editable").click();
+		if (this._firstActivate) {
+			this.makeEditable().body('.widget-disabled-overlay').remove();
 		}
 		this.contentLoaded();
 	}

@@ -144,7 +144,10 @@ function WebyBackground(settings) {
 				return;
 			});
 			$(':focus').blur();
-			$.fancybox($('#outer-widgets'), {modal: true});
+			$.fancybox($('#outer-widgets'),{
+				modal: true,
+				width: 'auto'
+			});
 		} else {
 			_applyCanvasSize(width, height);
 		}

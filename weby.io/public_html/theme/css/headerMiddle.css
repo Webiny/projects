@@ -18,6 +18,11 @@
 	width: auto;
 }
 
+.header .header-middle-wrap ::-webkit-scrollbar{
+	width:6px;
+	height:6px;
+}
+
 .header .header-middle-wrap h2 {
 	min-width: 0px;
 	overflow: hidden;

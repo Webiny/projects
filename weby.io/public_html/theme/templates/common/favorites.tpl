@@ -1,5 +1,4 @@
 <div class="dialog favorites-dialog" id="favorites-dialog" style="display: none">
-
     <div class="dialog-loading">
         <div class="overlay"></div>
         <span class="load-icon"></span>
@@ -11,11 +10,11 @@
     <div class="delete-confirmation" style="display:none">
         <div class="overlay"></div>
         <div class="message">
-            Delete Weby from favorites?
+            <img src="{$viewObject.themeWebPath}images/remove-favorite.png" />
         </div>
-        <div class="actions">
-            <a href="javascript:void(0)" data-role="fav-btn-cancel"><span class="button">Cancel</span></a>
-            <a href="javascript:void(0)" data-role="fav-btn-delete"><span class="button">Yes, remove it!</span></a>
+        <div class="actions buttons">
+            <span id="button-dont-move-widgets" data-role="fav-btn-cancel" class="button">No, I changed my mind.</span>
+            <span id="button-move-widgets" data-role="fav-btn-delete" class="button main" data-role="weby-dialog-save">Yes, remove it!</span>
         </div>
     </div>
     <h1>My Favorites</h1>
@@ -25,7 +24,7 @@
     </div>
     <ul class="favorites-list"></ul>
     <div class="favorites-footer">
-        <div class="favorites-pager"></div>
+        <div class="webies-pager favorites-pager"></div>
     </div>
 </div>
 
