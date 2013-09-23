@@ -24,7 +24,7 @@ class UsersHandler extends AbstractHandler
     {
         // Get data from OAuth service
         $serviceData = $this->request()->session('oauth_user')->get('oauth2_user');
-		
+
         // Load user by email
         $user = UserEntity::getByEmail($serviceData->email);
 
@@ -64,9 +64,57 @@ class UsersHandler extends AbstractHandler
     /**
      * Marks user - has completed introduction tour of Weby.io
      */
-    public function markOnboardingDone() {
+    public function markOnboardingDone()
+    {
         $this->user()->markOnboardingDone();
         die();
+    }
+
+    /**
+     * Toggle given Weby (loaded by passed id) from user's favorites list
+     */
+    public function ajaxToggleFavorite($id)
+    {
+        $weby = new WebyEntity();
+        if (!$weby->load($id)) {
+            $this->ajaxResponse(true, 'Could not find Weby!');
+        }
+
+        // If we got a valid favorite, that means we are deleting it
+        if ($this->user()->inFavorites($weby)) {
+            $this->user()->deleteFromFavorites($weby);
+        } else {
+            // In other case, we are creating a new favorite
+            $this->user()->addToFavorites($weby);
+        }
+
+        $data = [
+            'favoritesCount' => View::formattedNumber($weby->getFavoriteCount()),
+            'favoritedBy' => $weby->getUsersFavorited(true)
+        ];
+        $this->ajaxResponse(false, '', $data);
+    }
+
+
+    /**
+     * Toggle given Weby (loaded by passed id) from user's follow list
+     */
+    public function ajaxToggleFollowing($id)
+    {
+        $user = new UserEntity();
+        if (!$user->load($id)) {
+            $this->ajaxResponse(true, 'Could not find user!');
+        }
+
+        // If we got a valid user, that means we are deleting it
+        if ($this->user()->isFollowing($user)) {
+            $this->user()->unfollow($user);
+            $this->ajaxResponse(false);
+        }
+
+        // In other case, we are creating a new favorite
+        $this->user()->follow($user);
+        $this->ajaxResponse(false, '', ['followersCount' => View::formattedNumber($user->getFollowingUsersCount())]);
     }
 
     /**
@@ -81,7 +129,7 @@ class UsersHandler extends AbstractHandler
         $data = [
             $user->getEmail() => [
                 '{fullname}' => $user->getFirstName() . ' ' . $user->getLastName()
-                ]
+            ]
         ];
 
         // Let's build our message

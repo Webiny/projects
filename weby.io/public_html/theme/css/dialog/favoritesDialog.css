@@ -84,6 +84,20 @@
     line-height: normal;
 }
 
+.dialog .tag-info {
+    color: #f25b2b;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 1px 2px 0 2px;
+    padding: 0 4px 0 2px;
+    display: inline-block;
+    height: 16px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: white;
+    line-height: normal;
+}
+
 #favorites-dialog .weby-data.left {
     float: left;
     width: 375px;

@@ -35,7 +35,7 @@ body.unselectable * {
 	-webkit-box-shadow: 0px -2px 6px 4px #a6a5a5;
 	box-shadow: 0px -2px 6px 4px #a6a5a5;
 	position: relative;
-	z-index: 1000300;
+	z-index: 1000100;
 }
 
 .header ul {
@@ -208,14 +208,6 @@ body.unselectable * {
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
 }
 
-.load-icon {
-	background-image: url(../images/load.gif);
-	width: 16px;
-	height: 16px;
-	display: inline-block;
-	vertical-align: bottom;
-}
-
 ::-webkit-input-placeholder {
 	color: gray;
 	font-family: Arial, sans-serif;
@@ -306,4 +298,12 @@ body.unselectable * {
 
 .fancybox-inner {
 	overflow: hidden !important;
+}
+
+.k-widget k-tooltip k-slider-tooltip{
+	display:none !important;
+}
+
+.bootstrap{
+	display:none;
 }

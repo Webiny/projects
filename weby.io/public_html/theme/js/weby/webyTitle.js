@@ -69,6 +69,7 @@ function WebyTitle() {
 	this.viewportResize = function (data) {
 		_title.css('width', 0);
 		_url.css('width', 0);
+
 		var width = _headerRight.position().left - _titlePosition;
 		var titleWidth = _title[0].scrollWidth;
 		var urlWidth = _url[0].scrollWidth;
@@ -106,8 +107,13 @@ function WebyTitle() {
 		return this;
     }
 
-    this.setEmbedCode = function(value) {
-        _embedCode.val('<iframe src="' + value + '?embed=true"></iframe>');
+    this.setEmbedCode = function() {
+        _embedCode.val('<div class="weby-embed" data-weby="' + App.getWeby().getPublicUrl() + '" ' +
+            'data-width="400" data-height="400"></div><script async src="' + WEB + 'embed.js" charset="utf-8"></script>');
+    }
+
+    this.webyLoaded = function() {
+        this.setEmbedCode();
     }
 
 	this.viewportResize();

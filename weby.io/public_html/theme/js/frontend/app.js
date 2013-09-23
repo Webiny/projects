@@ -27,6 +27,11 @@ var AppClass = function (topOffset) {
 			App.fireEvent("document.mouse.move", e);
 		});
 
+		if("WebyDashboard" in window && "WebyFavorites" in window){
+			_dashboard = new WebyDashboard();
+			_favorites = new WebyFavorites();
+		}
+
 		_content.bind({
 			mouseleave: function () {
 				_webyDrag.stopDrag();

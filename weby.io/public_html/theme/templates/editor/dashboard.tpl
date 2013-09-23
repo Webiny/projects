@@ -2,7 +2,7 @@
 
 {block name="title"}Dashboard{/block}
 {block name="head"}
-    {include file="templates/editor/includes/editorIncludes.tpl"}
+    {include file="templates/editor/includes/dashboardIncludes.tpl"}
     <script type="text/javascript" id="initScript">
         {literal}
         /*var observer = setInterval(function () {

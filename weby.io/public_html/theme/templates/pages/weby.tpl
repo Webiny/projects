@@ -4,9 +4,10 @@
 {block name="head"}
     <meta property="og:site_name" content="Weby.io"/>
     <meta property="og:title" content="{$weby.title}"/>
-    <!-- TODO: when images are done, insert their paths here -->
     <meta property="og:image" content="{$weby->getImage('original-screenshot')}"/>
     <meta property="og:description" content="Created with Weby.io"/>
+    {if !$weby.metaFollow}{/if}
+    <meta name="robots" content="noindex, nofollow">
     <link data-page-subject="true" href="{$weby->getImage('original-screenshot')}" rel="image_src"/>
     {include file="templates/pages/includes/appIncludes.tpl"}
     {include file="templates/pages/includes/appRemoteIncludes.tpl"}
@@ -26,7 +27,6 @@
 {/block}
 {block name="content"}
     {include file="templates/pages/includes/webyDetails.tpl"}
-
     <div id="workspace">
         <div id="weby-background-video">
             <div id="player"></div>
@@ -38,13 +38,20 @@
             </div>
         </div>
     </div>
-
     {include file="templates/common/loading.tpl"}
     {include file="templates/common/dashboard.tpl"}
 {/block}
 {block name="headerRightTools"}
+    {if $viewObject.user}
+        <li class="my-webies">
+            <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
+        </li>
+    {/if}
+
     {include file="templates/common/socialShare.tpl"}
     {if $viewObject.user}
         {include file="templates/common/userOptions.tpl"}
+    {else}
+        {include file="templates/pages/includes/authorization.tpl"}
     {/if}
 {/block}

@@ -57,6 +57,20 @@
     background-color: #f25b2b;
 }
 
+.dialog .tag-info {
+    color: #f25b2b;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 1px 2px 0 2px;
+    padding: 0 4px 0 2px;
+    display: inline-block;
+    height: 16px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: white;
+    line-height: normal;
+}
+
 #dashboard-dialog .weby-tag.white {
     color: #f25b2b;
     font-size: 12px;

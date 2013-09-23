@@ -3,9 +3,9 @@
 namespace App\Entities\Weby;
 
 use App\AppTrait;
-use App\Entities\Favorite\FavoriteEntity;
 use App\Entities\User\UserEntity;
 use App\Lib\UserTrait;
+use Webiny\Component\StdLib;
 
 class WebyEntity extends WebyEntityCrud
 {
@@ -43,11 +43,25 @@ class WebyEntity extends WebyEntityCrud
      * Searches for tags
      * @param $search
      * @param bool $json
+     * @param bool $addSearchingTag
      * @return bool|\Webiny\Component\StdLib\StdObject\ArrayObject\ArrayObject
      */
-    public static function searchTags($search, $json = false)
+    public static function searchTags($search, $json = false, $addSearchingTag = false)
     {
-        $data = self::_sqlSearchTags(strtolower($search));
+        $data = self::_sqlSearchTags($search);
+        $found = false;
+
+        foreach ($data as $array) {
+            if ($array['tag'] == $search) {
+                $found = true;
+                break;
+            }
+        }
+        if ($addSearchingTag && !$found) {
+            if (!$data->inArray($search)) {
+                $data->append(self::arr(['id' => 0, 'tag' => $search]));
+            }
+        }
         if ($data->count()) {
             if ($json) {
                 $tmp = [];
@@ -66,18 +80,20 @@ class WebyEntity extends WebyEntityCrud
      * @param $tag
      * @return bool|Mixed
      */
-    public static function insertTag($tag) {
+    public static function insertTag($tag)
+    {
         return self::_sqlInsertTag($tag);
     }
+
     /**
      * Check if this Weby it in current user's favorites list
      * @return bool
      */
     public function inUsersFavorites()
     {
-		if($this->user()){
-			return $this->user()->inFavorites($this);
-		}
+        if ($this->user()) {
+            return $this->user()->inFavorites($this);
+        }
         return false;
     }
 
@@ -100,15 +116,6 @@ class WebyEntity extends WebyEntityCrud
             ->getUsername() . '/' . $this->getSlug() . '/' . $this->getId() . '/';
     }
 
-    /**
-     * Generates embed-code
-     * @return string
-     */
-    public function getEmbedCode()
-    {
-        return '<iframe src="' .$this->app()->getConfig()->app->web_path . $this->getUser()
-            ->getUsername() . '/' . $this->getSlug() . '/' . $this->getId() . '/?embed=true"></iframe>';
-    }
 
     /**
      * Returns WebyEntity object to JSON
@@ -120,19 +127,20 @@ class WebyEntity extends WebyEntityCrud
 
     }
 
-	/**
-	 * Gets share counts for every social service (Facebook, Google, Twitter)
-	 * @return Array Array with keys [facebook], [google] & [twitter], and counts as values
-	 */
-	public function getShareCount() {
-		// First, try to get data from cache or social service
-		$social = SocialData::getInstance();
-		$data = $social->getAllShareCount($this);
-		
-		// If that didn't succeed for some reason, return database data
-		return $data ? $data : unserialize($this->_shareCount);
+    /**
+     * Gets share counts for every social service (Facebook, Google, Twitter)
+     * @return Array Array with keys [facebook], [google] & [twitter], and counts as values
+     */
+    public function getShareCount()
+    {
+        // First, try to get data from cache or social service
+        $social = SocialData::getInstance();
+        $data = $social->getAllShareCount($this);
 
-	}
+        // If that didn't succeed for some reason, return database data
+        return $data ? $data : unserialize($this->_shareCount);
+
+    }
 
     /**
      * @param $tag
@@ -145,7 +153,7 @@ class WebyEntity extends WebyEntityCrud
         if ($this->_images->keyExists($tag)) {
             return $this->_images->key($tag);
         }
-		$this->_images[$tag] = new WebyImage($this->_id, $tag);
+        $this->_images[$tag] = new WebyImage($this->_id, $tag);
         return $this->_images[$tag];
     }
 
@@ -158,15 +166,16 @@ class WebyEntity extends WebyEntityCrud
         return [
             'id' => $this->_id,
             'username' => $this->getUser()->getUsername(),
-			'avatar' => $this->getUser()->getAvatarUrl(),
+            'avatar' => $this->getUser()->getAvatarUrl(),
             'title' => $this->_title,
             'description' => $this->_description,
             'slug' => $this->_slug,
             'publicUrl' => $this->getPublicUrl(),
+            'metaFollow' => $this->getMetaFollow(),
             'tags' => $this->getTags(true),
             'content' => $this->_content,
             'settings' => $this->_settings,
-			'share' => $this->getShareCount()
+            'share' => $this->getShareCount()
         ];
     }
 
@@ -186,7 +195,7 @@ class WebyEntity extends WebyEntityCrud
      * @internal  param array $options
      * @return string
      */
-    protected function _toSlug($str)
+    protected static function _toSlug($str)
     {
         // Make sure string is in UTF-8 and strip invalid UTF-8 characters
         $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());

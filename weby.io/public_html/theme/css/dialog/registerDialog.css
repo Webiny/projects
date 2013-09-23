@@ -1,0 +1,94 @@
+
+.register-dialog{
+    background-color: #f25b2b;
+    width: 320px;
+    padding: 20px;
+    float: left;
+    margin-left: 30px;
+    position: relative;
+}
+
+.register-dialog ul{
+    list-style: none;
+    margin: 0 0;
+    padding: 10px 0 0 0;
+    overflow: hidden;
+}
+
+.register-dialog ul li{
+    display: block;
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+.register-dialog ul li a.icon{
+    width: 48px;
+    height: 45px;
+    display:inline-block;
+    float: left;
+    padding: 0 0;
+    background-image: url(../images/sprite2.png);
+    background-repeat: no-repeat;
+}
+
+.register-dialog ul li.signin-facebook a.icon{
+    background-color: #4966a1;
+    border-bottom: 3px solid #3a5181;
+    background-position: -78px -290px;
+}
+
+.register-dialog ul li.signin-linkedin a.icon{
+    background-color: #1884bb;
+    border-bottom: 3px solid #146f9a;
+    background-position: -150px -290px;
+}
+
+.register-dialog ul li.signin-google a.icon{
+    background-color: #dd211c;
+    border-bottom: 3px solid #be1d18;
+    background-position: -216px -290px;
+}
+
+.register-dialog ul li a{
+    text-decoration: none;
+    font-size: 26px;
+    font-weight: 400;
+    float: left;
+    height: 45px;
+    line-height: 1.8;
+    padding: 0 8px;
+    background-color: #fff;
+    width: 256px;
+    display: inline-block;
+    border-bottom: 3px solid #cccccc;
+}
+
+.register-dialog ul li.signin-facebook a{
+    color: #4966a1;
+}
+
+.register-dialog ul li.signin-linkedin a{
+    color: #1884bb;
+}
+
+.register-dialog ul li.signin-google a{
+    color: #dd211c;
+}
+
+.register-dialog ul li.signin-facebook a:hover{
+    background-color: #4966a1;
+    color: #fff;
+    border-bottom: 3px solid #3a5181;
+}
+
+.register-dialog ul li.signin-linkedin a:hover{
+    background-color: #1884bb;
+    color: #fff;
+    border-bottom: 3px solid #146f9a;
+}
+
+.register-dialog ul li.signin-google a:hover{
+    background-color: #dd211c;
+    color: #fff;
+    border-bottom: 3px solid #be1d18;
+}

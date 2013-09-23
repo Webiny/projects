@@ -122,6 +122,16 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     }
 
     /**
+     * Returns tags in array or JSON form
+     * @internal param bool $rawArray
+     * @return string
+     */
+    public function getNumberOfTags()
+    {
+        return $this->_tags->count();
+    }
+
+    /**
      * @return string
      */
     public function getStorageFolder()
@@ -144,8 +154,11 @@ abstract class WebyEntityProperties extends WebyEntityStorage
 
     /**
      * Returns all users that put this Weby into their favorites list
+     * @param bool $raw         Returns native array
+     * @param int $limit
+     * @return array|null
      */
-    public function getUsersFavorited($limit = 5)
+    public function getUsersFavorited($raw = false, $limit = 5)
     {
         if (is_null($this->_usersFavorited)) {
             $this->_usersFavorited = [];
@@ -160,6 +173,17 @@ abstract class WebyEntityProperties extends WebyEntityStorage
                 }
                 $this->_usersFavorited = $tmp;
             }
+        }
+        if ($raw) {
+            $tmp = [];
+            foreach ($this->_usersFavorited as $u) {
+                $tmp[] = [
+                    'id' => $u['id'],
+                    'username' => $u['username'],
+                    'avatarUrl' => $u['avatarUrl']
+                ];
+            }
+            return $tmp;
         }
         return $this->_usersFavorited;
     }
@@ -205,8 +229,9 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     /**
      * This just outputs "and x more users..." message (on frontend, Weby details bar)
      */
-    public function getCountOfMoreUsers() {
-        return $this->_favoriteCount-count($this->_usersFavorited);
+    public function getCountOfMoreUsers()
+    {
+        return $this->_favoriteCount - count($this->_usersFavorited);
     }
 
     /**
@@ -216,6 +241,16 @@ abstract class WebyEntityProperties extends WebyEntityStorage
     public function getAddedToFavoritesTime()
     {
         return $this->_addedToFavoritesTime;
+    }
+
+    /**
+     * Based on status of Weby, this flag can make Weby not available to the search engines by
+     * putting meta data in the head of Weby page (robots => nofollow, noindex)
+     * @return mixed
+     */
+    public function getMetaFollow()
+    {
+        return $this->_metaFollow;
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Entities\Weby;
 
-
 use App\Entities\EntityAbstract;
 use App\Entities\User\ServiceType;
 use App\Entities\User\UserEntity;
@@ -23,6 +22,7 @@ abstract class WebyEntityStorage extends EntityAbstract
     protected $_settings = [];
     protected $_user = 0;
     protected $_shareCount = '';
+    protected $_metaFollow = 0;
     protected $_deleted = false;
     protected $_hits = 0;
     protected $_hitsEmbedded = 0;
@@ -62,7 +62,8 @@ abstract class WebyEntityStorage extends EntityAbstract
             return $this->_getDb()->execute($query, $bind);
         }
 
-        $query = "UPDATE {$this->_getDb()->w_weby} SET title=?, description=?, slug=?, content=?, settings=?, share_count=?, deleted=?, modified_on=NOW() WHERE id=?";
+        $query = "UPDATE {$this->_getDb()->w_weby} SET title=?, description=?, slug=?, content=?, settings=?,
+                    share_count=?, deleted=?, meta_follow=?, modified_on=NOW() WHERE id=?";
         $bind = [
             $this->_title,
             $this->_description,
@@ -71,6 +72,7 @@ abstract class WebyEntityStorage extends EntityAbstract
             json_encode($this->_settings),
             is_array($this->_shareCount) ? serialize($this->_shareCount) : $this->_shareCount,
             (int)$this->_deleted,
+            $this->_metaFollow,
             $this->_id
         ];
 
@@ -164,8 +166,10 @@ abstract class WebyEntityStorage extends EntityAbstract
      * Finds all users that have this Weby in their favorites list
      */
     protected function _sqlGetUsersFavorited($limit) {
-        $query = "SELECT \"user\", count(*) OVER() total_count FROM {$this->_getDb()->w_favorite} WHERE weby=? LIMIT $limit";
+        $query = "SELECT \"user\", count(*) OVER() total_count FROM {$this->_getDb()->w_favorite}
+                    WHERE weby=? ORDER BY created_on DESC LIMIT $limit";
         $bind = [$this->_id];
+
         return self::_getDb()->execute($query, $bind)->fetchAll();
     }
 

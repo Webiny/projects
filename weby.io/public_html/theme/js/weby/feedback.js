@@ -1,4 +1,4 @@
-function Feedback() {
+function FeedbackClass() {
 
     var _feedbackDialog = $('#feedback-dialog');
     var _feedbackOpener = $('[data-role="feedback-open"]');
@@ -125,5 +125,5 @@ function Feedback() {
 }
 
 $(function () {
-    Feedback = new Feedback();
+    Feedback = new FeedbackClass();
 });

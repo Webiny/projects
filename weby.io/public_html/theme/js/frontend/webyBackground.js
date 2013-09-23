@@ -47,7 +47,7 @@ function WebyBackground(settings) {
 	this.render = function () {
 		this.applyCanvasSize(_canvasWidth, _canvasHeight, 'spin');
 		for (var i in _backgrounds) {
-			if(i == 'video'){
+			if (i == 'video') {
 				continue;
 			} else {
 				_backgrounds[i].render();
@@ -76,12 +76,12 @@ function WebyBackground(settings) {
 			if (typeof duration == "undefined") {
 				duration = 500;
 			}
-			if(type == 'spin'){
+			if (type == 'spin') {
 				duration = 0;
 			}
 			var data = {};
 			data[dimension] = size;
-			if(WebyBackground.ANIMATE){
+			if (WebyBackground.ANIMATE) {
 				App.fireEvent("weby.background.before.resize");
 				el.animate(data, {duration: duration, queue: false, complete: function () {
 					App.fireEvent("weby.background.resized");
@@ -101,7 +101,7 @@ function WebyBackground(settings) {
 			_resize(App.getContentWrapper(), "width", App.getViewportWidth() + 'px');
 		}
 
-		if (height <= App.getViewportHeight() - App.getHeader().height()) {
+		if (height <= App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset() - App.getWeby().getScrollBarOffset()) {
 			_resize(App.getContent(), "height", height + 'px');
 			_resize(App.getContentWrapper(), "height", height + App.getWeby().getScrollBarOffset() + 'px');
 		} else {
@@ -112,18 +112,18 @@ function WebyBackground(settings) {
 		return this;
 	}
 
-	this.recalculateContentSize = function(){
+	this.recalculateContentSize = function () {
 		this.setContentSize(_canvasWidth, _canvasHeight, 'change');
 	}
 
-	this.webyLoaded = function(){
+	this.webyLoaded = function () {
 		_backgrounds.image.webyLoaded();
 		_backgrounds.video.render();
 	}
 
 	this.webyBackgroundResized = function () {
 		for (var i in _backgrounds) {
-			if("webyBackgroundResized" in _backgrounds[i]){
+			if ("webyBackgroundResized" in _backgrounds[i]) {
 				_backgrounds[i].webyBackgroundResized();
 			}
 		}

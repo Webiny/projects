@@ -18,6 +18,7 @@ function Weby() {
     var _description = '';
     var _slug = '';
     var _publicUrl = '';
+    var _metaFollow = 0;
     var _tags = [];
 
     var _webySave = new WebySave();
@@ -44,6 +45,7 @@ function Weby() {
             _title = weby.title;
             _slug = weby.slug;
             _tags = weby.tags;
+            _metaFollow = weby.metaFollow;
             _description = weby.description;
             _publicUrl = weby.publicUrl;
 
@@ -166,7 +168,7 @@ function Weby() {
         _widgets[newWidget.getId()] = newWidget;
     };
 
-    // Getters & setters
+    // Getters & setters (Weby object)
     this.getId = function () {
         return _webyId;
     };
@@ -185,6 +187,10 @@ function Weby() {
 
     this.getDescription = function () {
         return _description;
+    };
+
+    this.getMetaFollow = function () {
+        return _metaFollow;
     };
 
     this.getTags = function () {
@@ -206,6 +212,11 @@ function Weby() {
         return this;
     };
 
+    this.setMetaFollow = function (value) {
+        _metaFollow = value;
+        return this;
+    };
+
     this.save = function (takeScreenshot, options) {
         if (!_webyId) {
             return;
@@ -218,6 +229,7 @@ function Weby() {
             id: _webyId,
             title: _title,
             description: _description,
+            metaFollow: _metaFollow,
             tags: _tags,
             content: [],
             settings: settings,
@@ -344,7 +356,7 @@ function Weby() {
     }
 
     this.widgetCreated = function (widget) {
-        var type = widget.constructor.name.replace('Widget', '').toLowerCase();
+        var type = widget.getConstructorName().replace('Widget', '').toLowerCase();
         if (!_counter.hasOwnProperty(type)) {
             _counter[type] = 0;
         }
@@ -352,7 +364,7 @@ function Weby() {
     };
 
     this.widgetDeleted = function (widget) {
-        var type = widget.constructor.name.replace('Widget', '').toLowerCase();
+        var type = widget.getConstructorName().replace('Widget', '').toLowerCase();
         if (!_counter.hasOwnProperty(type)) {
             _counter[type] = 0;
         }

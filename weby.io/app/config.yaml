@@ -23,8 +23,7 @@ caching_ttl: # TTL times for caches (in seconds)
     tag_search_queries: 5
 
 images:
-    dashboard: http://pavel910.homeftp.net/theme/images/default/my-weby.png
-    public_square: http://pavel910.homeftp.net/theme/images/default/my-weby.png
+    dashboard: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
 
 other:
     user_inactive_period: 5 #Sets the number of days which need to pass from users last sign in to proclaim him as inactive

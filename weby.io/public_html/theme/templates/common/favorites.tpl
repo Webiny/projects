@@ -3,6 +3,7 @@
     <div class="dialog-loading">
         <div class="overlay"></div>
         <span class="load-icon"></span>
+
         <div class="text">
             Loading...
         </div>
@@ -35,16 +36,21 @@
 
             <div class="weby-data left">
                 <h2>${title}</h2>
-
+                #if(tags.length == 0){#
+                <p>No tags</p>
+                #}else{#
                 <h3>Tags</h3>
                 <ul class="tags-list">
                     #for(var x=0; x < tags.length; x++){#
                     <li class="weby-tag white">#= tags[x].tag #</li>
                     #}#
                 </ul>
+                #}#
             </div>
             <div class="weby-actions right">
-                <p>Added <time class="passed" datetime="${addedToFavoritesTime}">${addedToFavoritesTime}</time></p>
+                <p>Added
+                    <time class="passed" datetime="${addedToFavoritesTime}">${addedToFavoritesTime}</time>
+                </p>
                 <p>
                     <span class="tag-info">${hits} hits</span>
                     <span class="tag-info">${favorites} favorites</span></p>

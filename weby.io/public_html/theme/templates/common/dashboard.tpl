@@ -37,13 +37,16 @@
 
             <div class="weby-data left">
                 <h2>${title}</h2>
-
-                <h3>Tags</h3>
-                <ul class="tags-list">
-                    #for(var x=0; x < tags.length; x++){#
-                    <li class="weby-tag white">#= tags[x].tag #</li>
-                    #}#
-                </ul>
+                #if(tags.length == 0){#
+                    <p>No tags</p>
+                #}else{#
+                    <h3>Tags</h3>
+                    <ul class="tags-list">
+                        #for(var x=0; x < tags.length; x++){#
+                        <li class="weby-tag white">#= tags[x].tag #</li>
+                        #}#
+                    </ul>
+                #}#
             </div>
             <div class="weby-actions right">
                 <p>Edited <time class="passed" datetime="${modified_on}">${modified_on}</time></p>

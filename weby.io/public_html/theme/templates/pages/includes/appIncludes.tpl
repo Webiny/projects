@@ -13,7 +13,7 @@
     loading.css
 {/minify}
 
-{minify type="js"}
+{minify type="js" obfuscate="true"}
     mouseEvent.js,
     frontend/weby.js,
     weby/webyLogger.js,
@@ -21,7 +21,7 @@
     weby/webyTitle.js,
     weby/webyDashboard.js,
     weby/webyFavorites.js,
-    weby/webySocialShare.js,
+    frontend/webySocialShare.js,
     frontend/webyBackground.js,
     weby/webyDocumentBackground.js,
     weby/webyColorBackground.js,
@@ -30,6 +30,8 @@
     weby/webyVideoBackground.js,
     weby/progress.js,
     frontend/app.js,
+    frontend/flip.js,
+    frontend/registration.js,
     frontend/webyDetails.js,
     frontend/baseWidget.js,
     frontend/widgets/textWidget.js,

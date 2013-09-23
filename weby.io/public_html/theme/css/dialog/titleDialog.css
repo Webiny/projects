@@ -37,8 +37,8 @@
 }
 
 #weby-tags-wrapper {
-    width: 450px;
-    padding: 10px;
+    width: 435px;
+    padding: 10px 25px 10px 10px;
     margin: 10px 0 10px 0;
     border-style: none;
     border-bottom: 3px solid #dc420e;
@@ -60,12 +60,19 @@
     margin: 3px 0 0;
 }
 
+#weby-dialog .load-icon {
+    margin-left: 3px;
+    position: absolute;
+    right: 4px;
+    top: 15px;
+}
+
 #weby-tags-wrapper .tags-placeholder {
     font-family: Arial, sans-serif;
     color: gray;
     padding: 0;
     margin: 0;
-    width:200px;
+    width: 200px;
     position: absolute;
     left: 11px;
     top: 13px;
@@ -96,7 +103,7 @@
     list-style: none;
     display: block;
     margin: 0;
-    padding: 4px;
+    padding: 0;
 }
 
 #tags-list .tag-selected {
@@ -106,40 +113,11 @@
 
 #tags-list li {
     color: black;
+	padding: 5px;
 }
 
 #tags-list li:hover {
     cursor: pointer;
-}
-
-.dialog h2 {
-    font-size: 24px;
-    font-weight: 400;
-    color: #fff;
-    margin: 0 0 7px 0;
-    padding: 0;
-}
-
-.dialog .tag-info {
-    color: #f25b2b;
-    font-size: 12px;
-    font-weight: bold;
-    margin: 1px 2px 0 2px;
-    padding: 0 4px 0 2px;
-    display: inline-block;
-    height: 16px;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    background-color: white;
-    line-height: normal;
-}
-
-.dialog .dialog-loading {
-    position: absolute;
-    width: 200px;
-    height: 40px;
-    left: 320px;
-    top: 20px;
 }
 
 #weby-dialog #weby-description-length {
@@ -150,10 +128,6 @@
     color: #f25b2b;
     font-size: 13px;
     font-weight: bold;
-}
-
-.dialog .dialog-loading .text {
-    display: inline-block;
 }
 
 .dialog .k-animation-container {

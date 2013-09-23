@@ -34,9 +34,10 @@
 	border-left: 1px solid #e5e5e5;
 	background: url("../images/sprite2.png") no-repeat -140px -600px;
 	min-width: 210px;
+
 }
 
-.header .header-middle .edit-title {
+.editor .header .header-middle .edit-title {
 	float: left;
 	cursor: pointer;
 }

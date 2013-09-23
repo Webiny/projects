@@ -8,6 +8,7 @@ use App\Lib\AbstractHandler;
 use App\Lib\Screenshot;
 use App\Lib\Stats;
 use App\Lib\UserTrait;
+use App\Lib\View;
 use Webiny\Component\Http\HttpTrait;
 use Webiny\Component\Image\ImageTrait;
 use Webiny\Component\Logger\Logger;
@@ -19,7 +20,7 @@ use App\Lib\Logger as WebyLogger;
 
 class ToolsHandler extends AbstractHandler
 {
-	use HttpTrait, LoggerTrait, UserTrait, StorageTrait, StdLibTrait, ImageTrait;
+    use HttpTrait, LoggerTrait, UserTrait, StorageTrait, StdLibTrait, ImageTrait;
 
     /**
      * Log JS exception
@@ -41,87 +42,46 @@ class ToolsHandler extends AbstractHandler
         $this->ajaxResponse(false, 'Got it :)');
     }
 
-	public function takeScreenshot($webyId) {
-		if($this->request()->getClientIp() != '127.0.0.1' && $this->request()->getClientIp() != '192.168.249.129'){
-			//$this->request()->redirect($this->app()->getConfig()->app->web_path);
-		}
-		$weby = new WebyEntity();
-		$weby->load($webyId);
-
-		$screenshot = new Screenshot\Screenshot();
-		$queue = new Screenshot\ScreenshotQueue();
-
-		$storage = $this->storage('local');
-
-		$key = $weby->getStorageFolder() . '/original-screenshot-' . time() . '.jpg';
-		$path = $storage->getAbsolutePath($key);
-		try {
-			$screenshot->takeScreenshot($weby, $path);
-			$weby->getImage('original-screenshot')->setKey($key)->save();
-
-			// Create different image sizes
-			$this->_createSize($weby, $storage, 90, 81, 'dashboard');
-			$this->_createSize($weby, $storage, 215, 180, 'frontend-square');
-			$this->_createSize($weby, $storage, 215, 512, 'frontend-vertical');
-			$this->_createSize($weby, $storage, 515, 180, 'frontend-horizontal');
-
-			$queue->complete($webyId)->processQueue();
-		} catch (\Exception $e) {
-			$queue->abort($webyId, $e->getMessage())->processQueue();
-		}
-		die();
-	}
-
-	private function _createSize($weby, $storage, $width, $height, $tag) {
-		$key = $weby->getStorageFolder() . '/' . $tag . '-' . time() . '.jpg';
-		$imageObj = $this->image($weby->getImage('original-screenshot')->getFile());
-		$thumbImage = new LocalFile($key, $storage);
-		if($imageObj->thumbnail($width, $height, 'crop')->save($thumbImage)) {
-			$weby->getImage($tag)->setKey($key)->save();
-		}
-	}
-
-    /**
-     * Toggle given Weby (loaded by passed id) from user's favorites list
-     */
-    public function ajaxToggleFavorite($id)
+    public function takeScreenshot($webyId)
     {
-            $weby = new WebyEntity();
-            if (!$weby->load($id)) {
-            $this->ajaxResponse(true, 'Could not find Weby!');
+        if ($this->request()->getClientIp() != '127.0.0.1' && $this->request()->getClientIp() != '192.241.180.184') {
+            $this->request()->redirect($this->app()->getConfig()->app->web_path);
         }
+        $weby = new WebyEntity();
+        $weby->load($webyId);
 
-        // If we got a valid favorite, that means we are deleting it
-        if ($this->user()->inFavorites($weby)) {
-            $this->user()->deleteFromFavorites($weby);
-            $this->ajaxResponse(false);
+        $screenshot = new Screenshot\Screenshot();
+        $queue = new Screenshot\ScreenshotQueue();
+
+        $storage = $this->storage('local');
+
+        $key = $weby->getStorageFolder() . '/original-screenshot-' . time() . '.jpg';
+        $path = $storage->getAbsolutePath($key);
+        try {
+            $screenshot->takeScreenshot($weby, $path);
+            $weby->getImage('original-screenshot')->setKey($key)->save();
+
+            // Create different image sizes
+            $this->_createSize($weby, $storage, 90, 81, 'dashboard');
+            $this->_createSize($weby, $storage, 215, 180, 'frontend-square');
+            $this->_createSize($weby, $storage, 215, 512, 'frontend-vertical');
+            $this->_createSize($weby, $storage, 515, 180, 'frontend-horizontal');
+
+            $queue->complete($webyId)->processQueue();
+        } catch (\Exception $e) {
+            $queue->abort($webyId, $e->getMessage())->processQueue();
         }
-
-        // In other case, we are creating a new favorite
-        $this->user()->addToFavorites($weby);
-        $this->ajaxResponse(false);
+        die();
     }
 
-
-    /**
-     * Toggle given Weby (loaded by passed id) from user's favorites list
-     */
-    public function ajaxToggleFollowing($id)
+    private function _createSize($weby, $storage, $width, $height, $tag)
     {
-        $user = new UserEntity();
-        if (!$user->load($id)) {
-            $this->ajaxResponse(true, 'Could not find user!');
+        $key = $weby->getStorageFolder() . '/' . $tag . '-' . time() . '.jpg';
+        $imageObj = $this->image($weby->getImage('original-screenshot')->getFile());
+        $thumbImage = new LocalFile($key, $storage);
+        if ($imageObj->thumbnail($width, $height, 'crop')->save($thumbImage)) {
+            $weby->getImage($tag)->setKey($key)->save();
         }
-
-        // If we got a valid user, that means we are deleting it
-        if ($this->user()->isFollowing($user)) {
-            $this->user()->unfollow($user);
-            $this->ajaxResponse(false);
-        }
-
-        // In other case, we are creating a new favorite
-        $this->user()->follow($user);
-        $this->ajaxResponse(false);
     }
 
     /**
@@ -132,7 +92,7 @@ class ToolsHandler extends AbstractHandler
         $data = [];
         $data['name'] = $this->user() ? $this->user()->getFirstName() . ' ' . $this->user()->getLastName() : $this->request('name');
         $data['email'] = $this->user() ? $this->user()->getEmail() : $this->request('email');
-        $data['message'] =  $this->request()->post('message');
+        $data['message'] = $this->request()->post('message');
 
         $config = $this->app()->getConfig();
         $absPath = $config->app->theme_abs_path;
@@ -218,11 +178,9 @@ class ToolsHandler extends AbstractHandler
 
     public function ajaxSearchTags()
     {
-        $search = strtolower($this->request()->query('search'));
-        $result = WebyEntity::searchTags($search, true);
-        if (!$result) {
-            $result = json_encode([['id' => 0, 'tag' => $search]], true);
-        }
+        $search = $this->request()->post('search');
+        $this->_sanitizeInput($search, true);
+        $result = WebyEntity::searchTags($search, true, true);
         header('Content-type: application/json; charset=utf-8;');
         die($result);
     }

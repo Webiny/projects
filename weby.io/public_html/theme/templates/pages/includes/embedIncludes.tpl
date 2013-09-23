@@ -11,13 +11,11 @@
     jquery.fancybox.css
 {/minify}
 
-{minify type="js"}
+{minify type="js" obfuscate="true"}
     mouseEvent.js,
     frontend/weby.js,
     weby/webyLogger.js,
-    weby/webyTitle.js,
     weby/webyDrag.js,
-    weby/webyDashboard.js,
     embed/webySocialShare.js,
     frontend/webyBackground.js,
     weby/webyDocumentBackground.js,

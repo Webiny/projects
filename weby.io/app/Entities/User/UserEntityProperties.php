@@ -82,28 +82,4 @@ abstract class UserEntityProperties extends UserEntityStorage
         return $this->_onboarding;
     }
 
-    /**
-     * Gets all webies that this user is following
-     */
-    public function getFollowingUsers($objects = false)
-    {
-        if (is_null($this->_followingUsers)) {
-            $this->_followingUsers = $this->_sqlGetFollowingUsers();
-        }
-
-        if ($objects) {
-            if ($this->_followingUsers->count()) {
-                $user = new UserEntity();
-                $tmp = [];
-                foreach ($this->_followingUsers as $id) {
-                    $user->load($id);
-                    $tmp[] = clone $user;
-                }
-                $this->_followingUsers = $tmp;
-            }
-        }
-
-        return $this->_followingUsers;
-    }
-
 }

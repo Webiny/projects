@@ -1,59 +1,62 @@
-.header-right ul li.facebook a, .header-right ul li.twitter a, .header-right ul li.gplus a, .header .embed-header-right .social-menu ul li.facebook a, .header .embed-header-right .social-menu ul li.twitter a, .header .embed-header-right .social-menu ul li.gplus a{
-	width: 40px;
-	height: 30px;
-	display: inline-block;
+.header-right ul li.facebook a, .header-right ul li.twitter a, .header-right ul li.gplus a, .header .embed-header-right .social-menu ul li.facebook a, .header .embed-header-right .social-menu ul li.twitter a, .header .embed-header-right .social-menu ul li.gplus a {
+    width: 40px;
+    height: 30px;
+    display: inline-block;
 }
 
-.header-right ul li.facebook, .header .embed-header-right .social-menu ul li.facebook{
-	background-color: #4a67a3;
+.header-right ul li.facebook, .header .embed-header-right .social-menu ul li.facebook {
+    background-color: #4a67a3;
 }
 
-.header-right ul li.facebook a, .header .embed-header-right .social-menu ul li.facebook a{
-	background-image: url("../images/sprite2.png");
-	background-repeat: no-repeat;
-	background-position: -81px -297px;
+.header-right ul li.facebook a, .header .embed-header-right .social-menu ul li.facebook a {
+    background-image: url("../images/sprite2.png");
+    background-repeat: no-repeat;
+    background-position: -81px -297px;
 }
 
-.header-right ul li span.social-counter, .header .embed-header-right .social-menu ul li span.social-counter{
-	display: block !important;
-	line-height: 1.4;
-	width: 40px;
-	height: 16px;
-	color: #fff;
-	font-size: 12px;
-	text-align: center;
+.header-right ul .social-share-icon:hover {
+    opacity: 0.9;
+}
+.header-right ul li span.social-counter, .header .embed-header-right .social-menu ul li span.social-counter {
+    display: block !important;
+    line-height: 1.4;
+    width: 40px;
+    height: 16px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
 }
 
-.header-right ul li.facebook span.social-counter, .header .embed-header-right .social-menu ul li.facebook span.social-counter{
-	background-color: #3d5887;
+.header-right ul li.facebook span.social-counter, .header .embed-header-right .social-menu ul li.facebook span.social-counter {
+    background-color: #3d5887;
 }
 
-.header-right ul li.twitter span.social-counter, .header .embed-header-right .social-menu ul li.twitter span.social-counter{
-	background-color: #2995d6;
+.header-right ul li.twitter span.social-counter, .header .embed-header-right .social-menu ul li.twitter span.social-counter {
+    background-color: #2995d6;
 }
 
-.header-right ul li.gplus span.social-counter, .header .embed-header-right .social-menu ul li.gplus span.social-counter{
-	background-color: #dc211a;
+.header-right ul li.gplus span.social-counter, .header .embed-header-right .social-menu ul li.gplus span.social-counter {
+    background-color: #dc211a;
 }
 
-.header-right ul li.twitter, .header .embed-header-right .social-menu ul li.twitter{
-	background-color: #5aacde;
-	margin-left: 5px;
+.header-right ul li.twitter, .header .embed-header-right .social-menu ul li.twitter {
+    background-color: #5aacde;
+    margin-left: 5px;
 }
 
-.header-right ul li.twitter a, .header .embed-header-right .social-menu ul li.twitter a{
-	background-image: url("../images/sprite2.png");
-	background-repeat: no-repeat;
-	background-position: -155px -297px;
+.header-right ul li.twitter a, .header .embed-header-right .social-menu ul li.twitter a {
+    background-image: url("../images/sprite2.png");
+    background-repeat: no-repeat;
+    background-position: -155px -297px;
 }
 
-.header-right ul li.gplus, .header .embed-header-right .social-menu ul li.gplus{
-	background-color: #e63a36;
-	margin-left: 5px;
+.header-right ul li.gplus, .header .embed-header-right .social-menu ul li.gplus {
+    background-color: #e63a36;
+    margin-left: 5px;
 }
 
-.header-right ul li.gplus a, .header .embed-header-right .social-menu ul li.gplus a{
-	background-image: url("../images/sprite2.png");
-	background-repeat: no-repeat;
-	background-position: -222px -298px;
+.header-right ul li.gplus a, .header .embed-header-right .social-menu ul li.gplus a {
+    background-image: url("../images/sprite2.png");
+    background-repeat: no-repeat;
+    background-position: -222px -298px;
 }

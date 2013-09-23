@@ -1,5 +1,4 @@
 <li class="dropdown">
-    {*<div class="user-dropdown-wrapper">*}
     <span class="user-photo">
             <a href="{$viewObject.webPath}">
                 <img src="{$viewObject.user.avatarUrl}" id="user-avatar">
@@ -18,5 +17,4 @@
             <a href="{$viewObject.webPath}logout">Sign out</a>
         </li>
     </ul>
-    {*</div>*}
 </li>

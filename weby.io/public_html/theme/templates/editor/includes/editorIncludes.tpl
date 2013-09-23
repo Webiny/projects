@@ -15,7 +15,8 @@
     introjs.min.css
 {/minify}
 
-{minify type="js"}
+{minify type="js" obfuscate="true"}
+    editor/init.js,
     mouseEvent.js,
     weby/weby.js,
     weby/webySave.js,
@@ -27,7 +28,6 @@
     weby/webyToolbar.js,
     weby/webyDashboard.js,
     weby/webyFavorites.js,
-    weby/webySocialShare.js,
     weby/webyBackground.js,
     weby/webyDocumentBackground.js,
     weby/webyColorBackground.js,
@@ -44,6 +44,7 @@
     editor/intro.min.js,
     editor/intro.js,
     editor/webyDialog.js,
+    editor/webySocialShare.js,
     editor/tools/textTool.js,
     editor/tools/mapTool.js,
     editor/tools/instagramTool.js,

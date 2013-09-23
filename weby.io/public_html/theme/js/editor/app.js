@@ -114,7 +114,7 @@ var AppClass = function () {
      * Application bootstrap
      */
     this.init = function () {
-        _webyLogger = WebyLogger.init();
+        //_webyLogger = WebyLogger.init();
 
         this.addEventListener(this);
         _appToolbar = new AppToolbar();
@@ -235,6 +235,10 @@ var AppClass = function () {
         this.addEventListener(_weby);
         _weby.init();
     }
+
+	this.setContentValidator = function(url){
+		 BaseWidget.CONTENT_VALIDATOR = url;
+	}
 
     this.addEventListener = function (obj) {
         _eventListeners.push(obj);

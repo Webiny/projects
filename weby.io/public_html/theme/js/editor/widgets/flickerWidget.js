@@ -50,11 +50,12 @@ function FlickerWidget() {
 
 	this.getSaveData = function () {
 		return {
-			flickerCode: this._flickerCode
+			flickerCode: encodeURIComponent(this._flickerCode)
 		}
 	}
 
 	this.getEditHTML = function () {
+		this._flickerCode = decodeURIComponent(this._flickerCode);
 		this._html = this._getEmbedCode();
 		return BaseWidget.prototype.getHTML.call(this);
 	};

@@ -6,14 +6,16 @@ routes:
     - ['', \App\Handlers\PagesHandler, index]
     - ['about', \App\Handlers\PagesHandler, about]
 
+    # USER
+    - ['/^tools\/follow\/([0-9]*)$/', \App\Handlers\UsersHandler, ajaxToggleFollowing]
+    - ['/^tools\/favorite\/([a-z0-9]*)$/', \App\Handlers\UsersHandler, ajaxToggleFavorite]
+
     # TOOLS
     - ['tools/webies', \App\Handlers\ToolsHandler, ajaxGetWebies]
     - ['tools/webies/tags', \App\Handlers\ToolsHandler, ajaxGetWebiesByTags] # Gets Webies by tags (used also by WP widget)
     - ['tools/favorites', \App\Handlers\ToolsHandler, ajaxGetFavorites]
     - ['tools/tags', \App\Handlers\ToolsHandler, ajaxSearchTags]
     - ['tools/feedback', \App\Handlers\ToolsHandler, ajaxSendFeedback]
-    - ['/^tools\/follow\/([0-9]*)$/', \App\Handlers\ToolsHandler, ajaxToggleFollowing]
-    - ['/^tools\/favorite\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, ajaxToggleFavorite]
     - ['tools/log', \App\Handlers\ToolsHandler, log]
     - ['tools/parse-link', \App\Handlers\LinksHandler, parse]
     - ['/^tools\/delete-weby\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, deleteWeby]

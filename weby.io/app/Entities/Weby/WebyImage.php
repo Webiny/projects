@@ -52,7 +52,8 @@ class WebyImage
 	 */
 	public function getUrl(){
 		if(!$this->_key){
-			$tag = $this->str($this->_tag)->replace('-', '_')->val();
+    		$tag = $this->str($this->_tag)->replace('-', '_')->val();
+
 			return $this->app()->getConfig()->images->{$tag};
 		}
 

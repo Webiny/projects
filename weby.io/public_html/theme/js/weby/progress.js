@@ -8,10 +8,12 @@ function WebyProgress() {
 	var _curStep = 0;
 	var _stepWidth = 0;
 
+	_el = $('.loading-overlay');
+	_progress =  _el.find('.percentage');
+	_el.find('.progressbar').show();
+
 	this.startLoading = function () {
-		_el = $('.loading-overlay');
-		_progress =  _el.find('.percentage');
-		_el.find('.progressbar').show();
+
 	}
 
 	this.setMessage = function (message) {
@@ -37,17 +39,18 @@ function WebyProgress() {
 	}
 
 	this.viewportResize = function(){
+		var viewportWidth = $(window).width();
+		var viewportHeight = $(window).height();
+		$('.loading-overlay').css({
+			height: viewportHeight - 125,
+			width: viewportWidth
+		});
+		$('.loading-title').css({
+			top: ($('.loading-overlay').height() / 2 - $('.loading-title').outerHeight(true) / 2) - 10 + 'px',
+			left: ($('.loading-overlay').width() / 2 - $('.loading-title').outerWidth(true) / 2) + 'px'
+		});
 		_stepWidth = Math.round(_el.find('.progressbar').width() * 1000 / _steps) / 1000;
 	}
 
-	var viewportWidth = $(window).width();
-	var viewportHeight = $(window).height();
-	$('.loading-overlay').css({
-		height: viewportHeight - 125,
-		width: viewportWidth
-	});
-	$('.loading-title').css({
-		top: ($('.loading-overlay').height() / 2 - $('.loading-title').outerHeight(true) / 2) - 10 + 'px',
-		left: ($('.loading-overlay').width() / 2 - $('.loading-title').outerWidth(true) / 2) + 'px'
-	});
+	this.viewportResize();
 }

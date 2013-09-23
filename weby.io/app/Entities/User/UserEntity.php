@@ -182,4 +182,36 @@ class UserEntity extends UserEntityCrud
     {
         $this->_sqlUnfollowUser($user->getId());
     }
+
+    /**
+     * Gets all users that this user is following
+     */
+    public function getFollowingUsers($objects = false)
+    {
+        if (is_null($this->_followingUsers)) {
+            $this->_followingUsers = $this->_sqlGetFollowingUsers();
+        }
+
+        if ($objects) {
+            if ($this->_followingUsers->count()) {
+                $user = new UserEntity();
+                $tmp = [];
+                foreach ($this->_followingUsers as $id) {
+                    $user->load($id);
+                    $tmp[] = clone $user;
+                }
+                $this->_followingUsers = $tmp;
+            }
+        }
+
+        return $this->_followingUsers;
+    }
+
+    /**
+     * Gets count of users that are following this user
+     * @return int
+     */
+    public function getFollowingUsersCount() {
+        return $this->arr($this->getFollowingUsers())->count();
+    }
 }

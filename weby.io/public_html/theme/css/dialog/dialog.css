@@ -17,11 +17,39 @@
     position: relative;
 }
 
+.dialog .dialog-loading {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    left: 320px;
+    top: 20px;
+}
+
+.load-icon {
+    background-image: url(../../images/load.gif);
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.dialog .dialog-loading .text {
+    display: inline-block;
+}
+
 .dialog h1 {
     color: #fff;
     font-weight: 400;
     font-size: 26px;
     margin: 0;
+}
+
+.dialog h2 {
+    font-size: 24px;
+    font-weight: 400;
+    color: #fff;
+    margin: 0 0 7px 0;
+    padding: 0;
 }
 
 .dialog input, .dialog textarea {
@@ -84,6 +112,14 @@
 
 .k-callout-s {
     border-top-color: #27b6ac !important;
+}
+
+.k-callout-e {
+    border-left-color: #27b6ac !important;
+}
+
+.k-callout-n {
+    border-bottom-color: #27b6ac !important;
 }
 
 .k-popup {

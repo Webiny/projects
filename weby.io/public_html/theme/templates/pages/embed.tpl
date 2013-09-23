@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="footer embed-footer">
-        <a href="">weby.io/mywebb</a>
+        <a href="{$weby->getPublicUrl()}" target="_blank">{$weby->getPublicUrl()}</a>
     </div>
     <span id="lazyLoad" style="display:none">
         <!--

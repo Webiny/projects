@@ -17,10 +17,10 @@ function WebyTitleDialog() {
     var _descriptionLength = $('#weby-description-length');
     var _tagsDropdown = $('#weby-tags-dropdown');
     var _tagsList = $('#tags-list');
+    var _tagsSearchValue = $('#tag-search-value');
     var _tagsLog = {};
     var _editing = false;
     var _timer = false;
-
 
     // Tooltips
     var _tooltips = _webyDialog.kendoTooltip({
@@ -65,6 +65,7 @@ function WebyTitleDialog() {
                 afterClose: function () {
                     _clearTagsInput();
                     _cancelAllChanges();
+                    _editing = false;
                 }
             });
         });
@@ -72,9 +73,6 @@ function WebyTitleDialog() {
         // Closing dialog
         $('[data-role="weby-dialog-close"]').click(function () {
             $.fancybox.close();
-            _editing = false;
-            _clearTagsInput();
-            _cancelAllChanges();
         });
 
         // Save button
@@ -82,6 +80,7 @@ function WebyTitleDialog() {
             if (_titleInput.val() != '') {
                 _editing = false;
                 App.getWeby().setTitle(_titleInput.val());
+                App.getWeby().setMetaFollow(1);
                 App.getWeby().setTags(generateTagsJson());
                 App.getWeby().setDescription(_descriptionInput.val());
 
@@ -102,13 +101,10 @@ function WebyTitleDialog() {
      */
     var _bindTagSearching = function () {
         _tagsInput.on('input', function () {
-            var search = $(this).text();
-
-            if (search.length == 0 && _tagsData.find('span').length == 0) {
-                _tagsWrapper.find('.tags-placeholder').show();
-            } else {
-                _tagsWrapper.find('.tags-placeholder').hide();
-            }
+            _tagsSearchValue.val(_tagsInput.text());
+            var search = _tagsSearchValue.val();
+            _tagsWrapper.find('.load-icon').hide();
+            _togglePlaceholder();
             if (search.length > 25) {
                 _tooltips.show(_tagsInput);
                 var restricted = search.substr(0, 25);
@@ -127,6 +123,15 @@ function WebyTitleDialog() {
         });
     }
 
+    // Checks if there is content (tags) - if no tags, show placeholder
+    var _togglePlaceholder = function () {
+        var search = _tagsInput.text();
+        if (search.length == 0 && _tagsData.find('span').length == 0) {
+            _tagsWrapper.find('.tags-placeholder').show();
+        } else {
+            _tagsWrapper.find('.tags-placeholder').hide();
+        }
+    }
 
     /**
      * Sets cursor to the end of content editable (holy shit)
@@ -161,9 +166,13 @@ function WebyTitleDialog() {
         if (search.length > 2) {
             if (_tagsData.find('span.weby-tag').length < 10) {
                 var duplicateTag, maxTags = 5, totalTags = 0;
+                _tagsWrapper.find('.load-icon').show();
                 $.ajax({
-                    url: WEB + 'tools/tags/?search=' + search,
+                    url: WEB + 'tools/tags/?search=',
+                    method: 'post',
+                    data: {search: $.trim(search)},
                     success: function (response) {
+                        _tagsWrapper.find('.load-icon').hide();
                         if (response) {
                             _tagsList.empty();
                             for (var i in response) {
@@ -178,7 +187,7 @@ function WebyTitleDialog() {
                                     });
                                 }
                                 if (!duplicateTag) {
-                                    _tagsList.append('<li data-tag="' + response[i].tag + '" data-id="' + response[i].id + '">' + response[i].tag + '</li>')
+                                    _tagsList.append('<li class="suggested-tag" data-tag="' + response[i].tag + '" data-id="' + response[i].id + '">' + response[i].tag + '</li>')
                                     totalTags++;
                                 }
                                 if (totalTags == maxTags) {
@@ -268,19 +277,26 @@ function WebyTitleDialog() {
 
     var _bindRemoveTag = function () {
         _tagsData.on('click', 'span.remove-tag', function () {
+            _clearTagsInput();
             var tag = $(this).closest('span.weby-tag');
             _decrementTag(tag.attr('data-tag'));
             tag.remove();
             if (_tagsData.find('span.weby-tag').length == 0) {
                 $('.tags-placeholder').show();
             }
+
+            console.log(_tagsLog);
         })
 
-        _tagsData.on('click', 'span.weby-tag', function () {
+        _tagsData.on('click', '.weby-tag', function () {
+            _decrementTag($(this).attr('data-tag'));
             $(this).remove();
+            _clearTagsInput();
             if (_tagsData.find('span.weby-tag').length == 0) {
                 $('.tags-placeholder').show();
             }
+            console.log(_tagsLog);
+
         })
     }
 
@@ -324,9 +340,15 @@ function WebyTitleDialog() {
      * @private
      */
     var _cancelAllChanges = function () {
-        _titleInput.val(App.getWeby().getTitle());
+        if (App.getWeby().getMetaFollow() == 1) {
+            _titleInput.val(App.getWeby().getTitle());
+        } else {
+            _titleInput.val('');
+
+        }
         _descriptionInput.val(App.getWeby().getDescription());
         _refreshTagData(App.getWeby().getTags());
+        _togglePlaceholder();
         _tagsLog = {};
     }
 
@@ -343,7 +365,7 @@ function WebyTitleDialog() {
         var event = e || window.event;
         var charCode = event.which || event.keyCode;
         switch (charCode) {
-            case 13:
+            case 13: // Enter key
                 if (_timer == false && _tagsList.find('li').length > 0) {
                     if (_tagsList.find('li.tag-selected').length == 0) {
                         addToList(_tagsList.find('li:first').data('id'), _tagsList.find('li:first').data('tag'));
@@ -355,7 +377,7 @@ function WebyTitleDialog() {
                     e.preventDefault();
                 }
                 break;
-            case 40:
+            case 40: // Arrow key (up)
                 if (_tagsList.find('li').length > 0) {
                     e.preventDefault();
                     var suggestedTags = _tagsList.find('li');
@@ -372,7 +394,7 @@ function WebyTitleDialog() {
                     }
                 }
                 break;
-            case 38:
+            case 38: // Arrow key (down)
                 if (_tagsList.find('li').length > 0) {
                     e.preventDefault();
                     var suggestedTags = _tagsList.find('li');
@@ -389,25 +411,31 @@ function WebyTitleDialog() {
                     }
                 }
                 break;
-            case 8:
+            case 8: // Backspace key (deleting tag)
                 if (_tagsInput.text() == '' && _tagsData.find('span.weby-tag').length > 0) {
                     _decrementTag(_tagsData.find('span.weby-tag:last').attr('data-tag'));
                     _tagsData.find('span.weby-tag:last').remove();
                     if (_tagsData.find('span.weby-tag').length == 0) {
                         _tagsWrapper.find('.tags-placeholder').show();
                     }
+                    console.log(_tagsLog);
+
                 }
+                break;
+            case 27: // Esc key
+                $.fancybox.close();
                 break;
         }
     });
 
-
-    /**
-     * When user hovers over an item in list, add appropriate class
-     */
-    _tagsList.on('hover', 'li', function () {
-        _tagsList.find('li').removeClass('tag-selected');
-        $(this).addClass('tag-selected');
+    _webyDialog.find('input, textarea').keydown(function (e) {
+        var event = e || window.event;
+        var charCode = event.which || event.keyCode;
+        switch (charCode) {
+            case 27: // Esc key
+                $.fancybox.close();
+                break;
+        }
     });
 
     /**
@@ -416,6 +444,14 @@ function WebyTitleDialog() {
     _tagsList.on('click', 'li', function () {
         addToList($(this).data('id'), $(this).data('tag'));
         _clearTagsInput();
+    });
+
+    /**
+     * When user hovers over an item in list, add appropriate class
+     */
+    _tagsList.on('mouseover', 'li.suggested-tag', function () {
+        _tagsList.find('li').removeClass('tag-selected');
+        $(this).addClass('tag-selected');
     });
 
     /**
@@ -452,7 +488,7 @@ function WebyTitleDialog() {
         App.getWeby().getWebyTitle().setTitle(data.title);
         App.getWeby().getWebyTitle().setUrl(data.publicUrl);
         App.getWeby().getWebyTitle().setFullUrl(data.publicUrl);
-        App.getWeby().getWebyTitle().setEmbedCode(data.publicUrl);
+        App.getWeby().getWebyTitle().setEmbedCode();
         _refreshTagData(data.tags);
         _editing = false;
         _tagsLog = {};

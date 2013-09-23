@@ -8,11 +8,12 @@
  * JS and CSS files are compressed automatically, if you do not want to compress a file, put 'source://' in front of the file name.
  * PHP files are first loaded over HTTP and than the output is populated into the minified file.
  */
-
 namespace App\Lib\Minify;
+set_time_limit(0);
 
 //this class is required for minifying javascript files
 use App\AppTrait;
+use App\Lib\UglifyPHP\JS;
 use Webiny\Component\StdLib\StdLibTrait;
 
 class Minify
@@ -32,6 +33,7 @@ class Minify
     public $debug = false; // for debugging
     public $jsFolder = '';
     public $cssFolder = '';
+	public $fromCache = false;
 
     private $files = array();
     private $group_name = '';
@@ -41,7 +43,6 @@ class Minify
     private $themeWebPath = '';
 
     private $customCacheFolder = false;
-
 
     /**
      * Minify constructor
@@ -198,7 +199,7 @@ class Minify
             return false;
         }
 
-        $this->doMinify();
+        return $this->doMinify();
     }
 
     public function reset()
@@ -228,7 +229,7 @@ class Minify
 
         if ($this->minify && $this->caching && file_exists($cache)) {
             $fileTime = filemtime($cache);
-            $fromCache = true;
+            $this->fromCache = $fromCache = true;
         }
 
         $this->debug('Cache was last created on: ' . date('d.m.Y H:i:s', $fileTime));
@@ -274,7 +275,7 @@ class Minify
 
         unset($output);
 
-        return;
+        return $cache;
     }
 
     /**
@@ -466,7 +467,6 @@ class Minify
         } else {
             $minifiedJs .= "\n";
         }
-
         return $minifiedJs;
     }
 

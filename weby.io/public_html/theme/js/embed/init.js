@@ -20,5 +20,5 @@ $(function () {
 		$(this).html("Preparing Weby...");
 		$('head').prepend(scripts);
 	});
-	/*$('#initScript').remove();*/
+	$('#initScript').remove();
 });
