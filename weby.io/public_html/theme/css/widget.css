@@ -133,8 +133,7 @@
 	color: #666;
 	font-size: 12px;
 	font-weight: 400;
-	margin: 0 0;
-	float: left;
+	margin: 0 auto;
 }
 
 .loading p span.main-text {

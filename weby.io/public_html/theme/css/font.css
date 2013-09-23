@@ -1,4 +1,4 @@
-/*@font-face {
+@font-face {
 	font-family: SourceSansPro;
 	src: url('../font/SourceSansPro-Regular.ttf');
 	font-weight: normal;
@@ -8,10 +8,10 @@
 	font-family: SourceSansPro;
 	src: url('../font/SourceSansPro-Bold.ttf');
 	font-weight: bold;
-}*/
+}
 
 
-@font-face {
+/*@font-face {
   font-family: 'SourceSansPro';
   font-style: normal;
   font-weight: 200;
@@ -52,4 +52,4 @@
   font-style: italic;
   font-weight: 400;
   src: url(http://themes.googleusercontent.com/static/fonts/sourcesanspro/v5/M2Jd71oPJhLKp0zdtTvoMzNrcjQuD0pTu1za2FULaMs.woff) format('woff');
-}
+}*/

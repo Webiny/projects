@@ -1150,7 +1150,7 @@ BaseWidget.prototype = {
 	},
 
 	getConstructorName: function(){
-		return this.constructor.name;
+		return this.constructor.toString().match(/function ([A-Z]{1}[a-zA-Z]*)/)[1];
 	}
 };
 

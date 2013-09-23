@@ -3,7 +3,7 @@
  * @constructor
  */
 
-function WebyTitleDialog() {
+function WebyTitleDialog(parent) {
 
     App.addEventListener(this);
 
@@ -86,6 +86,7 @@ function WebyTitleDialog() {
 
                 App.getWeby().save(false, {tagLog: _tagsLog});
                 App.getDashboard().refreshDataSource();
+				parent.viewportResize();
                 $.fancybox.close();
                 _clearTagsInput();
             } else {

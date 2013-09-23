@@ -12,13 +12,11 @@
 {/block}
 
 {block name="headerRightTools"}
-    {assign var="editor" value="true"}
-        <li class="my-webies">
-            <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
-        </li>
-        {include file="templates/common/socialShare.tpl"}
-        {include file="templates/common/userOptions.tpl"}
-        </div>
+    <li class="my-webies">
+        <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
+    </li>
+    {include file="templates/common/socialShare.tpl"}
+    {include file="templates/common/userOptions.tpl"}
 {/block}
 
 {block name="content"}
@@ -40,7 +38,7 @@
         <button id="button-move-widgets">Yes, sure!</button>
         <button id="button-dont-move-widgets">No, leave them.</button>
     </div>
-    {include file="templates/common/favorites.tpl"}đ
+    {include file="templates/common/favorites.tpl"}
     {if !$viewObject.user->completedOnboarding()}
         {include file="templates/editor/includes/introDialog.tpl"}
     {/if}

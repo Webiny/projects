@@ -254,4 +254,13 @@ abstract class WebyEntityStorage extends EntityAbstract
         return $this->_getDb()->execute($query, $bind)->fetchAll();
     }
 
+    /**
+     * Removes tags associations with Weby
+     * @return bool|ArrayObject
+     */
+    protected function _sqlRemoveTags() {
+        $query = "DELETE FROM {$this->_getDb()->w_weby2tag} WHERE weby = ?";
+        $bind = [$this->_id];
+        return $this->_getDb()->execute($query, $bind);
+    }
 }

@@ -261,6 +261,10 @@ function Weby() {
             method: 'POST',
             async: takeScreenshot == undefined,
             success: function (data) {
+				if(typeof data != 'object'){
+					window.location = WEB;
+					return;
+				}
                 if (!data.error) {
                     // Update Weby data
                     _title = data.data.title;

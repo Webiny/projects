@@ -85,6 +85,7 @@ function WebyDashboard() {
                         _dialog.find(".empty-list").show();
                         _dialog.find("h1").hide();
                         _dialog.find(".webies-pager").hide();
+                        $this.open(true);
                     }
                 } else {
                     this.read();

@@ -47,7 +47,7 @@ function WebyTitle() {
      * Weby title, tags and description dialog
      */
     if ("WebyTitleDialog" in window) {
-        var _dialog = new WebyTitleDialog();
+        var _dialog = new WebyTitleDialog(this);
     }
 
 	_share.find('span').click(function(){
@@ -97,7 +97,7 @@ function WebyTitle() {
     }
 
     this.setUrl = function(value) {
-        _url.text(value);
+        _url.html('<a target="_blank" href="' + value + '">' + value + '</a>');
 		return this;
     }
 

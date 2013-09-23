@@ -134,4 +134,29 @@
     background: url('../../images/sprite2.png') -166px -804px !important
 }
 
+
+.webies-pager.k-pager-wrap > .k-link:hover{
+	border: none;
+	background-image: none;
+	background-color: #a8320b;
+}
+
+.webies-pager .k-pager-numbers .k-link{
+	border: none;
+	line-height:22px;
+	padding: 0 7px;
+}
+
+.webies-pager .k-pager-numbers .k-link:hover {
+	border: none;
+	background-image: none;
+	background-color: #a8320b;
+}
+
+.webies-pager .k-pager-numbers .k-state-selected {
+	border: none;
+	background-image:none;
+	background-color: #dc420e;
+}
+
 /* ----------------------------- End of dialog CSS ----------------------------- */

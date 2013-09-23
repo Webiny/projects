@@ -1,5 +1,5 @@
 .weby-tag {
-    background: #27b6ac url("../../images/sprite3.png") no-repeat -6px -3px;
+    background: #27b6ac url("../../images/sprite3.png") no-repeat -20px -11px;
     border: none;
     color: white;
     height: 18px;
@@ -32,7 +32,7 @@
     width: 9px;
     background: url('../../images/sprite3.png');
     background-repeat: none;
-    background-position: 15px 12px;
+    background-position: 29px 64px;
     margin: 2px 0 0 3px;
 }
 
@@ -136,7 +136,7 @@
 
 #weby-dialog #weby-description-field {
     margin-top: 0px;
-    min-height: 60px;
-    font-size: 13px;
+    min-height: 95px;
+    font-size: 16px;
     overflow: auto;
 }

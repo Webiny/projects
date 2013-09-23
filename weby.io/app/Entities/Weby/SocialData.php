@@ -85,11 +85,12 @@ class SocialData
      */
     private function _getTwitterShareCount(WebyEntity $weby)
     {
+        $asd = "http://cdn.api.twitter.com/1/urls/count.json?url=" . urlencode($weby->getPublicUrl() . '?utm_source=share-twitter&utm_medium=social&utm_campaign=' . $weby->getSlug() . '-' . $weby->getId());
         $content = self::_parse("http://cdn.api.twitter.com/1/urls/count.json?url=" . urlencode($weby->getPublicUrl() . '?utm_source=share-twitter&utm_medium=social&utm_campaign=' . $weby->getSlug() . '-' . $weby->getId()));
         $json = json_decode($content, true);
         
         $result['count'] = $json['count'];
-        return isset($result['count']) ? $result['count'] : false;
+        return isset($result['count']) ? $result['count'] : 0;
     }
 
     /**
@@ -102,7 +103,7 @@ class SocialData
     {
         $content = self::_parse("http://graph.facebook.com/?id=" . urlencode($weby->getPublicUrl() . '?utm_source=share-facebook&utm_medium=social&utm_campaign=' . $weby->getSlug() . '-' . $weby->getId()));
         $json = json_decode($content, true);
-        return isset($json['shares']) ? $json['shares'] : false;
+        return isset($json['shares']) ? $json['shares'] : 0;
     }
 
     /**
@@ -161,7 +162,7 @@ class SocialData
         $curl_results = curl_exec($curl);
         curl_close($curl);
         $json = json_decode($curl_results, true);
-        return isset($json[0]['result']['metadata']['globalCounts']['count']) ? intval($json[0]['result']['metadata']['globalCounts']['count']) : false;
+        return isset($json[0]['result']['metadata']['globalCounts']['count']) ? intval($json[0]['result']['metadata']['globalCounts']['count']) : 0;
     }
 
     /**

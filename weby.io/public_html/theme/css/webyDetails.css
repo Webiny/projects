@@ -5,7 +5,7 @@
 }
 
 .header-right ul li.register-btn a {
-    width: 132px;
+    width: 182px;
     height: 47px;
     background-image: url("../images/sprite2.png");
     background-repeat: no-repeat;
@@ -36,7 +36,7 @@
 .weby-details .favorites-icon {
     background-image: url("../images/sprite2.png");
     background-repeat: no-repeat;
-    background-position: -147px -1609px;
+    background-position: -159px -1609px;
     float: left;
     width: 30px;
     height: 37px;
@@ -48,7 +48,9 @@
 }
 
 .weby-details .favorites-icon.added {
-    background-position: -177px -1609px;
+    background-image: url("../images/sprite3.png");
+    background-repeat: no-repeat;
+    background-position: -10px -53px;
 }
 
 .weby-details .weby-stats {
@@ -73,7 +75,7 @@
 }
 
 .weby-details .details-arrow a.shown {
-    background: url("../images/sprite2.png") no-repeat -168px -1727px;
+    background: url("../images/sprite2.png") no-repeat -166px -1722px;
 }
 
 .weby-details .details-arrow a:hover {
@@ -102,6 +104,15 @@
 }
 
 
+.weby-details .loading-following {
+    background-image: url(../images/load.gif);
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 62px;
+    left: 95px;
+}
+
 .weby-details .favorites {
     border-bottom: 1px solid #323232;
     padding-bottom: 10px;
@@ -124,6 +135,10 @@
     color: #fff;
     line-height: 1.5;
     display: block;
+}
+
+.weby-details .user-info {
+    position: relative;
 }
 
 .weby-details .user-info, .weby-details .favorited-by, .weby-details .tags {

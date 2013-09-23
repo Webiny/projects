@@ -85,4 +85,14 @@ abstract class WebyEntityCrud extends WebyEntityProperties
             }
         }
     }
+
+    protected function _onAfterDelete() {
+        // Deletes associations (tags -> weby)
+        $this->_sqlRemoveTags();
+
+        // Update counts for deleted tags
+        foreach($this->_tags as $tag) {
+            $this->_sqlUpdateTagCount($tag['tag'], -1);
+        }
+    }
 }

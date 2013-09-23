@@ -12,7 +12,8 @@ body {
 	padding: 0 0;
 	position: relative;
 	overflow: hidden;
-	font: 12px 'SourceSansPro', sans-serif;
+	font-size: 12px;
+	font-family: SourceSansPro;
 	color: #666666;
 	min-width: 1210px;
 	overflow: hidden;

@@ -8,8 +8,8 @@ function WebyDetails() {
 
 
     var _addToFavoritesButton = $('[data-role="add-to-favorites"]');
-    var _favoritesAddMsg = 'Add to favorites';
-    var _favoritesRemoveMsg = 'Remove from favorites';
+    var _favoritesAddMsg = '<div style="padding: 5px">Add to favorites</div>';
+    var _favoritesRemoveMsg = '<div style="padding: 5px">Remove to favorites</div>';
 
     var _tooltips = _webyDetails.kendoTooltip({
         filter: ".has-tooltip",
@@ -29,6 +29,9 @@ function WebyDetails() {
     _followButton.on('click', function () {
         $.ajax({
             url: WEB + 'tools/follow/' + _followButton.attr('data-id'),
+            beforeSend: function () {
+                _webyDetails.find('.loading-following').show();
+            },
             success: function (r) {
                 _followButton.toggleClass('follow-btn').toggleClass('unfollow-btn');
                 if (_followButton.hasClass('follow-btn')) {
@@ -38,6 +41,7 @@ function WebyDetails() {
                 }
                 var followersCount = typeof r.data.followersCount == 'undefined' ? 0 : r.data.followersCount;
                 _webyDetails.find('.followers-count').text(followersCount);
+                _webyDetails.find('.loading-following').hide();
             }
         })
     });
@@ -67,6 +71,7 @@ function WebyDetails() {
                 // Change tooltip
                 var tooltipMsg = _addToFavoritesButton.attr('data-tooltip') == _favoritesAddMsg ? _favoritesRemoveMsg : _favoritesAddMsg;
                 _addToFavoritesButton.attr('data-tooltip', tooltipMsg);
+
                 _tooltips.refresh();
 
                 // Update count of favorites

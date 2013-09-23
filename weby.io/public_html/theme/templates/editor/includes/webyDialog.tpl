@@ -14,9 +14,7 @@
         <span id="weby-tags-wrapper" class="has-tooltip" title="Maximum 10 tags allowed.">
             <span class="weby-tags">
                 {foreach from=$weby.tags item=tag}
-                    <span data-tag="{$tag.tag}" data-id="{$tag.id}" class="weby-tag">{$tag.tag}
-                        <span class="remove-tag"></span>
-                    </span>
+                    <span data-tag="{$tag.tag}" data-id="{$tag.id}" class="weby-tag">{$tag.tag}<span class="remove-tag"></span></span>
                 {/foreach}
             </span>
             <span style="display: none;" class="load-icon tags-loading"></span>

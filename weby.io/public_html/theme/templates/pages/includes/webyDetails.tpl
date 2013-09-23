@@ -1,6 +1,6 @@
 <div class="weby-details" id="weby-details">
     <div class="details-arrow">
-        {if $weby.tags->count()}<a data-role="show-full-details" href="javascript:void(0);"></a>{/if}
+        {if $weby.tags->count()}<a class="shown" data-role="show-full-details" href="javascript:void(0);"></a>{/if}
     </div>
 
     <div class="favorites">
@@ -28,27 +28,28 @@
             </span>
         </div>
     </div>
-    <div class="full-weby-data" style="display:none;">
-        <div class="user-info">
-            <div>
-                <span class="user-photo"><img src="{$weby.user.avatarUrl}"></span>
-
-                <p class="user-name">{$weby.user.username}</p>
-
-                <p class="user-name"><b class="followers-count">{$weby.user.followingUsersCount|formattedNumber}</b>
-                    followers</p>
-            </div>
-            {if $viewObject.user.id != $weby.user.id && $viewObject.user}
-                {if $viewObject.user->isFollowing($weby.user)}
-                    <a data-role="follow-user" data-id="{$weby.user.id}" class="unfollow-btn"
-                       href="javascript: void(0);">Unfollow</a>
-                {else}
-                    <a data-role="follow-user" data-id="{$weby.user.id}" class="follow-btn" href="javascript: void(0);">Follow
-                        me</a>
-                {/if}
-            {/if}
-        </div>
+    <div class="full-weby-data">
         <div class="flip-front">
+            <div class="user-info">
+                <div style="display: none" class="loading-following"></div>
+                <div>
+                    <span class="user-photo"><img src="{$weby.user.avatarUrl}"></span>
+
+                    <p class="user-name">{$weby.user.username}</p>
+
+                    <p class="user-name"><b class="followers-count">{$weby.user.followingUsersCount|formattedNumber}</b>
+                        followers</p>
+                </div>
+                {if $viewObject.user.id != $weby.user.id && $viewObject.user}
+                    {if $viewObject.user->isFollowing($weby.user)}
+                        <a data-role="follow-user" data-id="{$weby.user.id}" class="unfollow-btn"
+                           href="javascript: void(0);">Unfollow</a>
+                    {else}
+                        <a data-role="follow-user" data-id="{$weby.user.id}" class="follow-btn" href="javascript: void(0);">Follow
+                            me</a>
+                    {/if}
+                {/if}
+            </div>
             <div class="favorited-by" {if $weby.favoriteCount==0}style='display:none'{/if}>
                 <h2>Favorited by</h2>
                 <ul>
@@ -63,7 +64,7 @@
                     <a class="view-all" href="javascript:void(0);">...and {$weby.countOfMoreUsers} more.</a>
                 {/if}
             </div>
-            <div class="tags flip-behind" style="">
+            <div class="tags flip-behind" {if $weby.numberOfTags == 0}style="display: none"{/if}">
                 <h2>
                     Tags
                 </h2>
@@ -72,7 +73,7 @@
                     {$tag.tag|truncate:17}
                 </span>
                     {if $smarty.foreach.tagsFront.index == 4 && $weby.numberOfTags > 5}
-                        <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">view all tags</a>
+                        <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">view all tags &raquo;</a>
                         {break}
                     {/if}
                 {/foreach}
@@ -87,7 +88,7 @@
             {$tag.tag|truncate:17}
                 </span>
             {/foreach}
-            <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">view less tags</a>
+            <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">&laquo; view less tags</a>
         </div>
     </div>
 </div>

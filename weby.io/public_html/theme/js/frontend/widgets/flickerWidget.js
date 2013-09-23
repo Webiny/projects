@@ -4,7 +4,7 @@ function FlickerWidget() {
 	this._widgetClass = 'flicker-widget';
 
 	this.getHTML = function () {
-		this._html = this._flickerCode;
+		this._html = decodeURIComponent(this._flickerCode);
 		return BaseWidget.prototype.getHTML.call(this);
 	};
 }
