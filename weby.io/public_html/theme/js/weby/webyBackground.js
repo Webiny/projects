@@ -25,6 +25,16 @@ function WebyBackground(settings) {
 		for (var i in _backgrounds) {
 			data[i] = _backgrounds[i].save();
 		}
+
+		// Make sure positive values get stored
+		if(_canvasHeight < 600) {
+			_canvasHeight = App.getContent()[0].scrollHeight;
+		}
+
+		if(_canvasWidth < 600) {
+			_canvasWidth = App.getContent()[0].scrollWidth;
+		}
+
 		data.canvasWidth = _canvasWidth;
 		data.canvasHeight = _canvasHeight;
 		return data;
