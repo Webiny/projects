@@ -57,8 +57,8 @@ function WebyToolbar() {
 	});
 
 	$('#canvas-settings').tabs({
-		activate: function( event, ui ) {
-			if(ui.newTab[0].hasAttribute('data-tab') && ui.newTab.attr('data-tab') == 'video'){
+		activate: function (event, ui) {
+			if (ui.newTab[0].hasAttribute('data-tab') && ui.newTab.attr('data-tab') == 'video') {
 				App.getWeby().getBackground().getVideoBackground().hideErrorMessage();
 			}
 		}
@@ -133,6 +133,9 @@ function WebyToolbar() {
 		tooltip: {
 			enabled: false
 		},
+		change: function (e) {
+			_activeWidget.setOpacity(e.value / 100);
+		},
 		slide: function (e) {
 			_activeWidget.setOpacity(e.value / 100);
 		}
@@ -145,6 +148,9 @@ function WebyToolbar() {
 		tickPlacement: 'none',
 		tooltip: {
 			enabled: false
+		},
+		change: function (e) {
+			_activeWidget.setRadius(e.value);
 		},
 		slide: function (e) {
 			_activeWidget.setRadius(e.value);
@@ -159,6 +165,9 @@ function WebyToolbar() {
 		tooltip: {
 			enabled: false
 		},
+		change: function (e) {
+			_activeWidget.setPadding(e.value);
+		},
 		slide: function (e) {
 			_activeWidget.setPadding(e.value);
 		}
@@ -172,6 +181,9 @@ function WebyToolbar() {
 		tooltip: {
 			enabled: false
 		},
+		change: function (e) {
+			_activeWidget.setShadowDistance(e.value);
+		},
 		slide: function (e) {
 			_activeWidget.setShadowDistance(e.value);
 		}
@@ -184,6 +196,9 @@ function WebyToolbar() {
 		tickPlacement: 'none',
 		tooltip: {
 			enabled: false
+		},
+		change: function (e) {
+			_activeWidget.setShadowSpread(e.value);
 		},
 		slide: function (e) {
 			_activeWidget.setShadowSpread(e.value);
@@ -302,6 +317,22 @@ function WebyToolbar() {
 		}
 	}).data("kendoNumericTextBox");
 
+	// Select input value on focus
+	$("#canvas-width").focus(function () {
+		var $this = this;
+		setTimeout(function () {
+			$this.select();
+		})
+	});
+
+	// Select input value on focus
+	$("#canvas-height").focus(function () {
+		var $this = this;
+		setTimeout(function () {
+			$this.select();
+		})
+	});
+
 	this.setCanvasSize = function (width, height) {
 		if (_previousWidth == 0) {
 			_previousWidth = _lastWidth = width;
@@ -354,10 +385,10 @@ function WebyToolbar() {
 		}
 	});
 
-	this.deactivateWidget = function(){
+	this.deactivateWidget = function () {
 		_widgetSettings.hide();
 		var aw = App.getActiveWidget();
-		if(aw != null){
+		if (aw != null) {
 			aw.deactivate();
 			App.setActiveWidget(null);
 		}
@@ -377,13 +408,13 @@ function WebyToolbar() {
 		_widgetSettings.hide();
 		_canvasSettings.hide();
 		_documentBackgroundSettings.hide();
-		if(_activeWidget != null && !App.isInputFocused(e) && !_activeWidget._isEditable){
+		if (_activeWidget != null && !App.isInputFocused(e) && !_activeWidget._isEditable) {
 			_activeWidget.showTools().html('.widget-disabled-overlay').show();
 		}
 	}
 
 	this.widgetActivated = function (widget) {
-		if(!widget._isContentLoaded){
+		if (!widget._isContentLoaded) {
 			return;
 		}
 		_activeWidget = widget;

@@ -5,6 +5,7 @@ function Weby() {
         return;
     }
 
+	var _saveInProgress = false;
     var _saveInterval = null;
     var _saveIntervalTime = 15000;
     var _FF = !(window.mozInnerScreenX == null);
@@ -83,7 +84,7 @@ function Weby() {
             _documentBackground.render();
 
             // Create periodic save action
-            //_saveInterval = setInterval(_save, _saveIntervalTime);
+           _saveInterval = setInterval(_save, _saveIntervalTime);
 
             // Catch window close event
             $(window).bind("beforeunload", function () {
@@ -218,9 +219,10 @@ function Weby() {
     };
 
     this.save = function (takeScreenshot, options) {
-        if (!_webyId) {
+        if (!_webyId || _saveInProgress) {
             return;
         }
+		_saveInProgress = true;
         clearTimeout(_labelTimeout);
         var settings = _background.save();
         settings['document'] = _documentBackground.save();
@@ -290,6 +292,7 @@ function Weby() {
 
                     App.fireEvent('weby.saved', data.data);
                 }
+				_saveInProgress = false;
             }
         };
         _webySave.setMessage('Saving...').show();

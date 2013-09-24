@@ -113,7 +113,7 @@
 
 .widget .widget-body {
 	height: 100%;
-	margin-bottom: -4px;
+	/*margin-bottom: -4px;*/
 	position: relative;
 	float: left;
 }

@@ -542,12 +542,12 @@ BaseWidget.prototype = {
 			if (e && e.target.nodeName.toLowerCase() != 'input' && e.target.nodeName.toLowerCase() != 'textarea' && !textEditable) {
 				this.html(':focus').blur();
 			}
-			return;
+			return this;
 		}
 
 
 		if (this._loadingContent) {
-			return;
+			return this;
 		}
 
 		this._isActive = true;
@@ -633,7 +633,7 @@ BaseWidget.prototype = {
 	contentLoaded: function () {
 
 		this._width = this.html('.widget-body')[0].scrollWidth;
-		this._height = this.html('.widget-body')[0].scrollHeight;
+		this._height = this.html('.widget-body')[0].scrollHeight - 3; // 3px hack
 
 		this.html().css({
 			width: this._width + 'px',
@@ -642,9 +642,7 @@ BaseWidget.prototype = {
 
 		this._isContentLoaded = true;
 
-		if(!this._isEditable){
-			this.addInteractionOverlay();
-		}
+		this.addInteractionOverlay();
 
 		if (this._isActive) {
 			this.showTools();
@@ -857,9 +855,13 @@ BaseWidget.prototype = {
 		return this._html.find('span.message');
 	},
 
-	controls: function () {
+	controls: function (selector) {
 		if (!this._jWidgetControls) {
 			this._jWidgetControls = this.html('span.control');
+		}
+
+		if(selector){
+			return this.html('span.control'+selector);
 		}
 		return this._jWidgetControls;
 	},
@@ -902,14 +904,41 @@ BaseWidget.prototype = {
 
 	setRadius: function (radius) {
 		this._radius = radius;
-		this.html().css({
+		var css = {
 			'-webkit-border-radius': radius + 'px',
 			'-moz-border-radius': radius + 'px',
 			'border-radius': radius + 'px'
+		};
+
+		this.html().css(css);
+		this.body('iframe, img, .widget-disabled-overlay').css(css);
+		this.html('.widget-disabled-overlay').css(css);
+
+		// Set controls radius
+		this.controls('.drag-handle').css({
+			'-webkit-border-radius': radius + 'px 0 0 0',
+			'-moz-border-radius': radius + 'px 0 0 0',
+			'border-radius': radius + 'px 0 0 0'
 		});
-		this.html('.widget-disabled-overlay').css({
-			'border-radius': this._radius + 'px'
+
+		this.controls('.remove-handle').css({
+			'-webkit-border-radius': '0 ' + radius + 'px 0 0',
+			'-moz-border-radius': '0 ' + radius + 'px 0 0',
+			'border-radius': '0 ' + radius + 'px 0 0'
 		});
+
+		this.controls('.resize-handle').css({
+			'-webkit-border-radius': '0 0 ' + radius + 'px 0',
+			'-moz-border-radius': '0 0 ' + radius + 'px 0',
+			'border-radius': '0 0 ' + radius + 'px 0'
+		});
+
+		this.controls('.rotate-handle').css({
+			'-webkit-border-radius': '0 0 0 ' + radius + 'px',
+			'-moz-border-radius': '0 0 0 ' + radius + 'px',
+			'border-radius': '0 0 0 ' + radius + 'px'
+		});
+
 		return this;
 	},
 
@@ -1152,7 +1181,7 @@ BaseWidget.prototype = {
 		return this;
 	},
 
-	getConstructorName: function(){
+	getConstructorName: function () {
 		return this.constructor.toString().match(/function ([A-Z]{1}[a-zA-Z]*)/)[1];
 	}
 };

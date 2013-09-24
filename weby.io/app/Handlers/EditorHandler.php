@@ -171,6 +171,7 @@ class EditorHandler extends AbstractHandler
         }
         $this->weby = $this->_weby;
 		$this->editor = true;
+		$this->disabledTools = json_encode($this->app()->getConfig()->get('disabled_tools', []));
         $validators = $this->app()->getConfig()->app->content_validators->toArray(true);
         $vIndex = rand(0, $validators->count() - 1);
         $this->contentValidator = $validators[$vIndex];

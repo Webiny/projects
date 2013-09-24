@@ -114,7 +114,7 @@ var AppClass = function () {
      * Application bootstrap
      */
     this.init = function () {
-        //_webyLogger = WebyLogger.init();
+        _webyLogger = WebyLogger.init();
 
         this.addEventListener(this);
         _appToolbar = new AppToolbar();

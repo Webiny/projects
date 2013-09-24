@@ -45,10 +45,10 @@ function TextWidget() {
 		this._createEditor();
 		App.deactivateTool();
 		this.html(".text-editable").width(this.html().width() - 2).height(this.html().height() - 2);
-		if (this._firstActivate) {
-			this.makeEditable().body('.widget-disabled-overlay').remove();
-		}
 		this.contentLoaded();
+		if (this._firstActivate) {
+			this.makeEditable();
+		}
 	}
 
 	this.setData = function (data) {
@@ -137,12 +137,13 @@ function TextWidget() {
 	 */
 	this.getSaveData = function () {
 		return {
-			content: this.body().find('.text-editable').html()
+			content: encodeURIComponent(this.body().find('.text-editable').html())
 		}
 	};
 
 	this.getEditHTML = function () {
 		this._firstActivate = false;
+        this._content = decodeURIComponent(this._content);
 		this._html = '<div style="width:' + (this._width - 2) + 'px; height:' + (this._height - 2) + 'px" id="text-editable-' + this._id + '" class="text-editable">' + this._content + '</div>';
 		return BaseWidget.prototype.getHTML.call(this);
 	};

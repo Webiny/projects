@@ -2,52 +2,54 @@
 
 WebyLogger =
 {
-    errorQueue: '',
-    errorCount: 0,
-    _logInterval: 1000,
-    _errorHandler: WEB+'tools/log',
-    _production: true,
+	errorQueue: '',
+	errorCount: 0,
+	_logInterval: 1000,
+	_errorHandler: WEB + 'tools/log',
+	_production: true,
 
-    init: function () {
-        this._initErrorObserver();
+	init: function () {
+		this._initErrorObserver();
 
-        if (this._production) {
-            setInterval(function () {
-                WebyLogger.logErrors();
-            }, this._logInterval);
-        }
-    },
+		if (this._production) {
+			setInterval(function () {
+				WebyLogger.logErrors();
+			}, this._logInterval);
+		}
+	},
 
-    logErrors: function () {
-        if (this.errorCount > 0) {
-            var errors = this.errorQueue;
-            var navigatorName = this._getBrowserName();
+	logErrors: function () {
+		if (this.errorCount > 0) {
+			var errors = this.errorQueue;
+			var navigatorName = this._getBrowserName();
 
-            $.ajax({
-                type: 'POST',
-                url: this._errorHandler,
-                data: {errors: errors, browser: navigatorName},
-                success: function (data) {
-                }
-            });
-            this.errorQueue = '';
-            this.errorCount = 0;
-        }
-    },
+			$.ajax({
+				type: 'POST',
+				url: this._errorHandler,
+				data: {errors: errors, browser: navigatorName},
+				success: function (data) {
+				}
+			});
+			this.errorQueue = '';
+			this.errorCount = 0;
+		}
+	},
 
-    _initErrorObserver: function () {
-        window.onerror = function (msg, url, line) {
-            //console.log(msg + ' ('+ url +')');
-            // save error to queue
-            var error = [];
-            error.push({'message': msg, 'url':url, 'line':line});
-            WebyLogger.errorQueue += JSON.stringify(error);
-            WebyLogger.errorCount++;
-            return true;
-        };
-    },
+	_initErrorObserver: function () {
+		window.onerror = function (msg, url, line) {
+			if (!this._production) {
+				console.log(msg + ': ' + line + ' (' + url + ')');
+			}
+			// save error to queue
+			var error = [];
+			error.push({'message': msg, 'url': url, 'line': line});
+			WebyLogger.errorQueue += JSON.stringify(error);
+			WebyLogger.errorCount++;
+			return true;
+		};
+	},
 
-    _getBrowserName: function () {
-        return navigator.userAgent;
-    }
+	_getBrowserName: function () {
+		return navigator.userAgent;
+	}
 }

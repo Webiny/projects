@@ -122,6 +122,11 @@ BaseWidget.prototype = {
 			'background-color': this._color,
 			'box-shadow': this._shadowX + 'px ' + this._shadowY + 'px ' + this._shadowSpread + 'px ' + this._shadowColor
 		});
+		_widget.find('iframe, img').css({
+			'-webkit-border-radius': this._radius + 'px',
+			'-moz-border-radius': this._radius + 'px',
+			'border-radius': this._radius + 'px'
+		});
 		return this._html = _widget;
 	},
 

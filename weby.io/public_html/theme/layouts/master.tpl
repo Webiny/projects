@@ -72,15 +72,16 @@
         <li>
             <a href="">Terms of Service</a>
         </li>
-        <li>
-            <a href="">Keyboard Shortcuts</a>
+        <li >
+            <a class="footer-keyboard-shortcuts" href="">Keyboard Shortcuts</a>
         </li>
         <li>
-            <a href="javascript:void(0);" data-role="feedback-open">Feedback</a>
+            <a class="footer-feedback" href="javascript:void(0);" data-role="feedback-open">Feedback</a>
         </li>
     </ul>
     <span><a href="http://www.webiny.com" target="_blank"></a></span>
     {include file="templates/common/feedback.tpl"}
 </div>
+{include file="templates/common/ga.tpl"}
 </body>
 </html>

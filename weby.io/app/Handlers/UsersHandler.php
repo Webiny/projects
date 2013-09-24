@@ -97,7 +97,7 @@ class UsersHandler extends AbstractHandler
 
 
     /**
-     * Toggle given Weby (loaded by passed id) from user's follow list
+     * Toggle given user (loaded by passed id) from logged user's follow list
      */
     public function ajaxToggleFollowing($id)
     {
@@ -105,16 +105,9 @@ class UsersHandler extends AbstractHandler
         if (!$user->load($id)) {
             $this->ajaxResponse(true, 'Could not find user!');
         }
+        $this->user()->toggleFollowing($user);
 
-        // If we got a valid user, that means we are deleting it
-        if ($this->user()->isFollowing($user)) {
-            $this->user()->unfollow($user);
-            $this->ajaxResponse(false);
-        }
-
-        // In other case, we are creating a new favorite
-        $this->user()->follow($user);
-        $this->ajaxResponse(false, '', ['followersCount' => View::formattedNumber($user->getFollowingUsersCount())]);
+        $this->ajaxResponse(false, '', ['followersCount' => View::formattedNumber($user->getUsersFollowingCount())]);
     }
 
     /**

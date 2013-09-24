@@ -44,11 +44,12 @@ function FacebookWidget() {
         var parser = new FacebookParser();
 		this._facebookUrl = parser.parse(inputValue);
 		this._facebookType = parser.getFacebookType();
+		this._facebookId = parser.getFacebookId();
         if(this._facebookUrl){
 			if(this._facebookType == 'post'){
 				return 'https://www.facebook.com/'+this._facebookUrl;
 			}
-            return 'http://graph.facebook.com/?id=' + this._facebookUrl + '&t=' + new Date().getTime();
+            return 'http://graph.facebook.com/?id=' + this._facebookId + '&t=' + new Date().getTime();
         }
         return false;
 
@@ -61,17 +62,20 @@ function FacebookWidget() {
 			width: width+'px',
 			height: height+'px'
 		});
+		this._loadingContent = false;
 		this.contentLoaded();
 	}
 
 	this.getSaveData = function(){
 		return {
-			facebookUrl: this._facebookUrl,
-			facebookType: this._facebookType
+			facebookUrl: encodeURIComponent(this._facebookUrl),
+			facebookType: this._facebookType,
+			facebookId: this._facebookId
 		}
 	}
 
 	this.getEditHTML = function () {
+		this._facebookUrl = decodeURIComponent(this._facebookUrl);
 		this._html = $(this.getIframe()).show();
 		return BaseWidget.prototype.getHTML.call(this);
 	};

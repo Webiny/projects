@@ -6,13 +6,15 @@ function WebyDetails() {
     var _flipDetailsButton = $('[data-role="flip-weby-details"]');
     var _favoritedBy = $('.favorited-by');
 
+    var _processingFavorites = false;
+    var _processingFollowing = false;
 
     var _addToFavoritesButton = $('[data-role="add-to-favorites"]');
-    var _favoritesAddMsg = '<div style="padding: 5px">Add to favorites</div>';
-    var _favoritesRemoveMsg = '<div style="padding: 5px">Remove to favorites</div>';
+    var _favoritesAddMsg = 'Add to favorites';
+    var _favoritesRemoveMsg = 'Remove from favorites';
 
-    var _tooltips = _webyDetails.kendoTooltip({
-        filter: ".has-tooltip",
+    var _bottomTooltips = _webyDetails.kendoTooltip({
+        filter: ".has-tooltip-bottom",
         position: 'bottom',
         content: function (e) {
             var target = e.target; // the element for which the tooltip is shown
@@ -26,7 +28,26 @@ function WebyDetails() {
         }
     }).data("kendoTooltip");
 
+    var _topTooltips = _webyDetails.kendoTooltip({
+        filter: ".has-tooltip-top",
+        position: 'top',
+        content: function (e) {
+            var target = e.target; // the element for which the tooltip is shown
+            return target.attr('data-tooltip'); // set the element text as content of the tooltip
+        },
+        animation: {
+            open: {
+                effects: "fade:in",
+                duration: 100
+            }
+        }
+    }).data("kendoTooltip");
+
     _followButton.on('click', function () {
+        if (_processingFollowing) {
+            return false;
+        }
+        _processingFollowing = true;
         $.ajax({
             url: WEB + 'tools/follow/' + _followButton.attr('data-id'),
             beforeSend: function () {
@@ -42,6 +63,7 @@ function WebyDetails() {
                 var followersCount = typeof r.data.followersCount == 'undefined' ? 0 : r.data.followersCount;
                 _webyDetails.find('.followers-count').text(followersCount);
                 _webyDetails.find('.loading-following').hide();
+                _processingFollowing = false;
             }
         })
     });
@@ -57,6 +79,10 @@ function WebyDetails() {
     });
 
     _addToFavoritesButton.click(function () {
+        if (_processingFavorites) {
+            return false;
+        }
+        _processingFavorites = true;
         $.ajax({
             url: WEB + 'tools/favorite/' + App.getWeby().getId(),
             beforeSend: function () {
@@ -72,7 +98,7 @@ function WebyDetails() {
                 var tooltipMsg = _addToFavoritesButton.attr('data-tooltip') == _favoritesAddMsg ? _favoritesRemoveMsg : _favoritesAddMsg;
                 _addToFavoritesButton.attr('data-tooltip', tooltipMsg);
 
-                _tooltips.refresh();
+                _bottomTooltips.refresh();
 
                 // Update count of favorites
                 var favoritesCount = typeof r.data.favoritesCount == 'undefined' ? 0 : r.data.favoritesCount;
@@ -90,8 +116,8 @@ function WebyDetails() {
                         _favoritedBy.find('ul').append(tpl);
                     }
                     _favoritedBy.show();
-
                 }
+                _processingFavorites = false;
 
             }
         })

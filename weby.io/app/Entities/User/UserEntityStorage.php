@@ -118,36 +118,35 @@ abstract class UserEntityStorage extends EntityAbstract
     /**
      * Gets all users that this user is following
      * @internal param $webyId
+     * @param $limit
      * @return bool|ArrayObject
      */
-    protected function _sqlGetFollowingUsers() {
-        $query = "SELECT followed_user FROM {$this->_getDb()->w_follow} WHERE \"user\"=?";
+    protected function _sqlGetFollowingUsers($limit) {
+        $query = "SELECT followed_user, count(*) OVER() total_count FROM {$this->_getDb()->w_follow} WHERE \"user\"=? LIMIT {$limit} ";
         $bind = array($this->_id);
-        return $this->_getDb()->execute($query, $bind)->fetchColumn();
+        return $this->_getDb()->execute($query, $bind)->fetchAll();
     }
 
     /**
-     * Gets all users that this user is following
+     * Gets all users that are following this user
      * @internal param $webyId
-     * @param $userId
+     * @param $limit
      * @return bool|ArrayObject
      */
-    protected function _sqlFollowUser($userId) {
-        $query = "INSERT INTO {$this->_getDb()->w_follow} (\"user\", followed_user, created_on) VALUES (?,?, NOW())";
-        $bind = array($this->_id, $userId);
-        return $this->_getDb()->execute($query, $bind);
+    protected function _sqlGetUsersFollowing($limit) {
+        $query = "SELECT \"user\", count(*) OVER() total_count FROM {$this->_getDb()->w_follow} WHERE followed_user=? LIMIT {$limit}";
+        $bind = array($this->_id);
+        return $this->_getDb()->execute($query, $bind)->fetchAll();
     }
 
     /**
-     * Gets all users that this user is following
-     * @internal param $webyId
-     * @param $userId
-     * @return bool|ArrayObject
+     * Toggles given user from this logged user's follow list
+     * @param $id
      */
-    protected function _sqlUnfollowUser($userId) {
-        $query = "DELETE FROM {$this->_getDb()->w_follow} WHERE \"user\"=? AND followed_user=?";
-        $bind = array($this->_id, $userId);
-        return $this->_getDb()->execute($query, $bind);
+    protected function _sqlToggleFollowing($id) {
+        $query = "SELECT TOGGLE_FOLLOWING(?,?)";
+        $bind = array($this->_id, $id);
+        $this->_getDb()->execute($query, $bind);
     }
 
     /**
@@ -160,4 +159,9 @@ abstract class UserEntityStorage extends EntityAbstract
         return self::_getDb()->execute($query, $bind);
     }
 
+    protected function _sqlCheckIfFollowing($id) {
+        $query = "SELECT * FROM {$this->_getDb()->w_follow} WHERE \"user\"=? AND followed_user=? LIMIT 1";
+        $bind = array($this->_id, $id);
+        return $this->_getDb()->execute($query, $bind)->fetchArray();
+    }
 }

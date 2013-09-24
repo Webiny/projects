@@ -2,6 +2,7 @@
 
 namespace App\Handlers;
 
+use App\AppTrait;
 use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
 use App\Lib\AbstractHandler;
@@ -20,7 +21,7 @@ use App\Lib\Logger as WebyLogger;
 
 class ToolsHandler extends AbstractHandler
 {
-    use HttpTrait, LoggerTrait, UserTrait, StorageTrait, StdLibTrait, ImageTrait;
+    use HttpTrait, LoggerTrait, UserTrait, StorageTrait, StdLibTrait, ImageTrait, AppTrait;
 
     /**
      * Log JS exception
@@ -146,6 +147,30 @@ class ToolsHandler extends AbstractHandler
             'count' => WebyEntity::getTotalRows()
         ];
         die($this->request()->query("\$callback") . '(' . json_encode($data) . ')');
+    }
+
+
+    /**
+     * Used to update number of hits of a given Weby
+     */
+    public function ajaxEmbeddedHit($id)
+    {
+        // Firstly, check if we got valid referer
+        $referer = $this->request()->server()->httpReferer();
+        $referer = $referer ? $this->str($referer) : false;
+        if (!$referer || !$referer->startsWith($this->app()->getConfig()->app->web_path)) {
+            die();
+        }
+
+        // If everything went okay, then check if we got valid Weby
+        $weby = new WebyEntity();
+        if (!$weby->load($id)) {
+            $this->ajaxResponse(true, 'Could not find Weby!');
+        }
+
+        // Finally, update hit stats
+        Stats\Stats::getInstance()->updateWebyEmbeddedHits($weby);
+        die();
     }
 
     /**

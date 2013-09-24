@@ -1,20 +1,40 @@
 <div class="dialog" id="introduction-dialog" style="display: none">
-    <p>Welcome to <b>Weby.io!</b></p>
+    <!-- confirmation message -->
+    <div class="overlay" style="display: none"></div>
+    <div class="confirmation-message" style="position: absolute; top: 150px; left: 92px; z-index: 10100; display: none">
+        Are you really sure you want to skip the introduction?
+        <p style="text-align: center">
+            <span class="button main" data-role="skip-confirm-no">No</span>
+            <span data-role="skip-confirm-yes" class="button">Yes</span>
+        </p>
+    </div>
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque, mi tristique placerat
-        laoreet, arcu turpis porttitor arcu, eget lobortis tellus tellus sit amet sapien.
-        Duis ut rhoncus quam. Nunc dictum mauris sit amet metus sollicitudin dignissim.
-        Mauris convallis blandit diam, at eleifend felis sollicitudin vel. Aenean pretium nibh
-        accumsan, pharetra libero in, dapibus eros. Aenean elementum, quam sit amet ullamcorper elementum,
-        nulla tellus mollis augue, at porttitor neque urna et libero. In tristique, turpis sed
-        scelerisque ultrices, magna enim tincidunt odio, a fringilla diam ante id elit. Maecenas
-        ullamcorper enim a odio feugiat rhoncus. Vivamus ipsum libero, vehicula nec nisl a, congue
-        mollis elit. Donec tempor lectus ac nunc malesuada congue. Fusce volutpat magna mauris, quis
-        placerat tortor placerat quis.
+    <!-- main dialog -->
+    <h1>Welcome to Weby.io</h1>
+
+    <h2>Best place to create and share your content</h2>
+
+    <p>
+        Experience the new way of creating something beautiful - from content collections, family albums,
+        birthday party
+        invitations, to band and celebrity fan pages - Weby.io is a fun and exciting new ways to mash and share
+        what is important to you.
     </p>
 
-    <p class="buttons">
+    <p>
+        With Weby.io fun never stops - you decide what you want to create and share with your friends and the
+        rest of
+        the world.
+    </p>
+
+    <p>
+        Go through our short 5-step intro or immediately create your first Weby!
+    </p>
+
+    <p class="buttons" style="text-align: center">
         <span data-role="start-introduction" class="button main">Start introduction</span>
-        <span class="button" data-role="close-introduction">Skip</span>
+        <span data-role="start-introduction" class="button">What can you do with Weby</span>
+        <span class="button" data-role="skip-introduction">Skip</span>
     </p>
+
 </div>

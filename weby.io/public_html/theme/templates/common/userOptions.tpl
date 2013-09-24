@@ -1,8 +1,6 @@
 <li class="dropdown">
-    <span class="user-photo">
-            <a href="{$viewObject.webPath}">
-                <img src="{$viewObject.user.avatarUrl}" id="user-avatar">
-            </a>
+    <span class="user-photo" {if $viewObject.user.avatarUrl != ''}
+          style="background: url({$viewObject.user.avatarUrl}) top left; background-size: cover{/if}">
         </span>
     <span class="username">{$viewObject.user.firstName} {$viewObject.user.lastName}</span>
     <span class="dropdown-arrow"></span>

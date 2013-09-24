@@ -13,9 +13,24 @@ abstract class UserEntityProperties extends UserEntityStorage
     protected $_favoriteWebies = null;
 
     /**
-     * Favorite Webies of an user (array of WebyEntity objects)
+     * All users that this user is following
      */
     protected $_followingUsers = null;
+
+    /**
+     * All users that are following this user
+     */
+    protected $_usersFollowing = null;
+
+    /**
+     * Count of all users that are following this user
+     */
+    protected $_usersFollowingCount = null;
+
+    /**
+     * Count of all users that this user is following
+     */
+    protected $_followingUsersCount = null;
 
     /**
      * @return mixed
@@ -81,5 +96,4 @@ abstract class UserEntityProperties extends UserEntityStorage
     {
         return $this->_onboarding;
     }
-
 }

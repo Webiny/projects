@@ -48,13 +48,15 @@ class PagesHandler extends AbstractHandler
 
         if ($this->request()->query('embed', false, true)) {
             $this->setTemplate('embed');
-            // Update Weby's hits stats
-            Stats::getInstance()->updateWebyEmbeddedHits($weby);
             return;
         }
 
 		$this->setTemplate('weby');
         Stats::getInstance()->updateWebyHits($weby);
+    }
+
+    public function searchByTag() {
+        die('bmjhgjh');
     }
 
     public function page404()

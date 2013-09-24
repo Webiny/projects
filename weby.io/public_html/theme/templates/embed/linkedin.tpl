@@ -1,7 +1,7 @@
 {extends file="layouts/empty.tpl"}
 {block name="content"}
     <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-    <script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/{$name}" data-format="inline"
+    <script type="IN/MemberProfile" data-id="{$url}" data-format="inline"
             data-related="false"></script>
     <script type="text/javascript" id="process">
 

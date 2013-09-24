@@ -50,6 +50,10 @@
     box-shadow: 0 2px 15px rgba(0, 0, 0, .4);
 }
 
+.introjs-helperLayer.highlighted.more-transparent {
+    background-color: rgba(255, 255, 255, .3);
+}
+
 .introjs-helperNumberLayer {
     display: none;
     position: absolute;
@@ -135,6 +139,8 @@
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    text-align: justify;
 }
 
 .introjs-tooltipbuttons {
@@ -196,13 +202,20 @@
 .introjs-nextbutton {
 }
 
+.introjs-tooltiptext h1{
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
 .introjs-disabled, .introjs-disabled:hover, .introjs-disabled:focus {
     color: white;
     border-color: #dc420e;
     cursor: default;
     background-color: #dc420e;
     background-image: none;
-    text-decoration: none
+    text-decoration: none;
+    display: none;
 }
 
 .noborder {

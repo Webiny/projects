@@ -111,7 +111,7 @@ class UserEntity extends UserEntityCrud
                 /**@var $weby \App\Entities\Weby\WebyEntity */
                 $tmp[] = [
                     'id' => $weby->getId(),
-                    'thumbnail' => 'http://graph.facebook.com/1594713365/picture?type=large',
+                    'thumbnail' => $weby->getImage('dashboard')->getUrl(),
                     'title' => $weby->getTitle(),
                     'slug' => $weby->getSlug(),
                     'public_url' => $weby->getPublicUrl(),
@@ -139,6 +139,7 @@ class UserEntity extends UserEntityCrud
 
     /**
      * Delete given Weby from user's favorites list
+     * @param \App\Entities\Weby\WebyEntity $weby
      * @param WebyEntity $weby
      */
     public function deleteFromFavorites(WebyEntity $weby)
@@ -159,48 +160,31 @@ class UserEntity extends UserEntityCrud
     }
 
     /**
-     * Checks if user is following given user
+     * Toggle following of other users
+     * @param UserEntity $user
      */
-    public function isFollowing(UserEntity $user)
-    {
-        $this->getFollowingUsers();
-        return $this->arr($this->_followingUsers)->inArray($user->getId()) ? true : false;
+    public function toggleFollowing(UserEntity $user) {
+        $this->_sqlToggleFollowing($user->getId());
     }
 
     /**
-     * Follow user
+     * Gets all users that are following this user
      */
-    public function follow(UserEntity $user)
+    public function getUsersFollowing($limit = 5)
     {
-        $this->_sqlFollowUser($user->getId());
-    }
-
-    /**
-     * Unfollow user
-     */
-    public function unfollow(UserEntity $user)
-    {
-        $this->_sqlUnfollowUser($user->getId());
-    }
-
-    /**
-     * Gets all users that this user is following
-     */
-    public function getFollowingUsers($objects = false)
-    {
-        if (is_null($this->_followingUsers)) {
-            $this->_followingUsers = $this->_sqlGetFollowingUsers();
-        }
-
-        if ($objects) {
-            if ($this->_followingUsers->count()) {
-                $user = new UserEntity();
+        if (is_null($this->_usersFollowing)) {
+            $data = $this->_sqlGetUsersFollowing($limit);
+            $this->_usersFollowing = [];
+            $this->_usersFollowingCount = 0;
+            if ($data->count()) {
+                $this->_usersFollowingCount = $data[0]['total_count'];
                 $tmp = [];
-                foreach ($this->_followingUsers as $id) {
-                    $user->load($id);
-                    $tmp[] = clone $user;
+                $user = new UserEntity();
+                foreach ($data as $u) {
+                    $user->load($u['user']);
+                    $tmp[$u['user']] = clone $user;
                 }
-                $this->_followingUsers = $tmp;
+                $this->_usersFollowing = $tmp;
             }
         }
 
@@ -208,10 +192,52 @@ class UserEntity extends UserEntityCrud
     }
 
     /**
-     * Gets count of users that are following this user
-     * @return int
+     * Gets total count of users that are following this user
      */
-    public function getFollowingUsersCount() {
-        return $this->arr($this->getFollowingUsers())->count();
+    public function getUsersFollowingCount($limit = 5)
+    {
+        $this->getUsersFollowing($limit);
+        return $this->_usersFollowingCount;
     }
+
+    /**
+     * Gets all users that this user is following
+     */
+    public function getFollowingUsers($limit = 5)
+    {
+        if (is_null($this->_usersFollowing)) {
+            $data = $this->_sqlGetFollowingUsers($limit);
+            $this->_followingUsers = [];
+            $this->_followingUsersCount = 0;
+            if ($data->count()) {
+                $this->_usersFollowingCount = $data[0]['total_count'];
+                $tmp = [];
+                $user = new UserEntity();
+                foreach ($data as $u) {
+                    $this->load($u['followed_user']);
+                    $tmp[$u['followed_user']] = clone $user;
+                }
+                $this->_usersFollowing = $tmp;
+            }
+        }
+
+        return $this->_followingUsers;
+    }
+
+    /**
+     * Gets total count of users that this user is following
+     */
+    public function getFollowingUsersCount($limit = 5)
+    {
+        $this->getUsersFollowing($limit);
+        return $this->_usersFollowingCount;
+    }
+
+    /**
+     * Check if this user is following given user
+     */
+    public function isFollowing(UserEntity $user) {
+        return (bool) $this->_sqlCheckIfFollowing($user->_id);
+    }
+
 }

@@ -21,6 +21,7 @@
 
 {block name="content"}
     <div class="bootstrap" data-role="weby">{$weby->toJson()}</div>
+    <div class="bootstrap" data-role="disabled-tools">{$disabledTools}</div>
     <div class="bootstrap" data-role="content-validator">{$contentValidator}</div>
     <div class="bootstrap" data-role="user-onboarding">{$viewObject.user->completedOnboarding()}</div>
     <div id="toolbar">
@@ -29,7 +30,6 @@
     <div id="drag-helper" style="position: absolute; width:0; height: 0;"></div>
     {include file="templates/editor/includes/loading.tpl"}
     {include file="templates/common/webyContent.tpl"}
-    {include file="templates/common/linkWidgetTemplates.tpl"}
     {include file="templates/editor/includes/webyToolbar.tpl"}
     {include file="templates/common/dashboard.tpl"}
     <div id="outer-widgets" class="dialog" style="display:none">
@@ -43,5 +43,6 @@
     {if !$viewObject.user->completedOnboarding()}
         {include file="templates/editor/includes/introDialog.tpl"}
     {/if}
+    {include file="templates/common/linkWidgetTemplates.tpl"}
 {/block}
 

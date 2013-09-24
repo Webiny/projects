@@ -68,5 +68,6 @@
     </div>
 </div>
 {block name="content"}{/block}
+{include file="templates/common/ga.tpl"}
 </body>
 </html>

@@ -55,7 +55,9 @@
                     <span class="tag-info">${favorites} favorites</span></p>
 
                 <p class="buttons">
+                    #if(typeof currentWeby != 'undefined'){#
                     <a href="javascript: void(0);"><span class="button delete">Delete</span></a>
+                    #}#
                     <a href="${editor_url}"><span class="button edit">Edit</span></a>
                     <a href="${public_url}"><span class="button main view">View</span></a>
                 </p>

@@ -30,7 +30,7 @@
     padding: 0 10px;
     border-top: 3px solid #4e4e4e;
     border-bottom: 3px solid #2d2d2d;
-    z-index: 1000010;
+    z-index: 999999;
 }
 
 .weby-details .favorites-icon {
@@ -69,13 +69,13 @@
 .weby-details .details-arrow a {
     width: 16px;
     height: 15px;
-    background: #303030 url("../images/sprite2.png") no-repeat 50% -1692px;
+    background: url("../images/sprite2.png") no-repeat -166px -1722px;
     display: block;
     float: right;
 }
 
 .weby-details .details-arrow a.shown {
-    background: url("../images/sprite2.png") no-repeat -166px -1722px;
+    background: #303030 url("../images/sprite2.png") no-repeat 50% -1692px;
 }
 
 .weby-details .details-arrow a:hover {
@@ -102,7 +102,6 @@
     top: 28px;
     left: 17px;
 }
-
 
 .weby-details .loading-following {
     background-image: url(../images/load.gif);
@@ -151,9 +150,9 @@
 .weby-details .user-info span.user-photo {
     width: 34px;
     height: 34px;
-    /* background-image: url("../images/sprite2.png");
-     background-repeat: no-repeat;
-     background-position: 50% -430px;*/
+    background-image: url("../images/sprite2.png");
+    background-repeat: no-repeat;
+    background-position: 50% -430px;
     display: inline-block;
     float: left;
 }
@@ -240,11 +239,12 @@
 }
 
 .weby-details .favorited-by ul li a.photo img {
-    width: 16px;
-    height: 16px;
+    width: 26px;
+    height: 26px;
     display: inline-block;
     background-color: #555;
     float: left;
+    margin: 0 1px 0 2px;
 }
 
 .weby-details a.view-all {

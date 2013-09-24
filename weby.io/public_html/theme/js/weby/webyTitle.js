@@ -112,9 +112,14 @@ function WebyTitle() {
             'data-width="400" data-height="400"></div><script async src="' + WEB + 'embed.js" charset="utf-8"></script>');
     }
 
+	this.viewportResize();
+
     this.webyLoaded = function() {
+		this.viewportResize();
         this.setEmbedCode();
     }
 
-	this.viewportResize();
+	this.webyBackgroundResized = function(){
+		this.viewportResize();
+	}
 }

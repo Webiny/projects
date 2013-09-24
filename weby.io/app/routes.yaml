@@ -13,6 +13,7 @@ routes:
     # TOOLS
     - ['tools/webies', \App\Handlers\ToolsHandler, ajaxGetWebies]
     - ['tools/webies/tags', \App\Handlers\ToolsHandler, ajaxGetWebiesByTags] # Gets Webies by tags (used also by WP widget)
+    - ['/^tools\/embedded-hit\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, ajaxEmbeddedHit]
     - ['tools/favorites', \App\Handlers\ToolsHandler, ajaxGetFavorites]
     - ['tools/tags', \App\Handlers\ToolsHandler, ajaxSearchTags]
     - ['tools/feedback', \App\Handlers\ToolsHandler, ajaxSendFeedback]

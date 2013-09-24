@@ -25,6 +25,15 @@
     top: 20px;
 }
 
+.dialog .overlay {
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    position: absolute;
+    background-color: #f25b2b;
+    opacity: 0.95;
+}
+
 .load-icon {
     background-image: url(../../images/load.gif);
     width: 16px;

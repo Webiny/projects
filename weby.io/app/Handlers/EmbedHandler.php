@@ -10,8 +10,8 @@ class EmbedHandler extends AbstractHandler
 	use HttpTrait;
 
 	public function linkedIn() {
+		$this->url = urldecode($this->request()->query('url'));
 		$this->id = $this->request()->query('id');
-		$this->name = $this->request()->query('name');
 		$this->setTemplate('linkedin');
 	}
 

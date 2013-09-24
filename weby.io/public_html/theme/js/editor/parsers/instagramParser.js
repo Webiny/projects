@@ -6,7 +6,7 @@ var InstagramParser = function () {
 
 		if (data.indexOf('iframe') >= 0) {
 			var regex = /src="(.*?)"/;
-			data = data.match(regex) ? RegExp.$1 : false;
+			data = data.match(regex) ? RegExp.$1 : data;
 		}
 
 		// Validate data

@@ -4,6 +4,11 @@ var VideoParser = function () {
 	this._type;
 
 	this._parse = function (data) {
+		if (data.indexOf('iframe') >= 0) {
+			var regex = /src="(.*?)"/;
+			data = data.match(regex) ? RegExp.$1 : data;
+		}
+
 		if (this._parseYoutubeLink(data)) {
 			this._type = 'youtube';
 			return this._id;
@@ -32,8 +37,15 @@ var VideoParser = function () {
 			var tmp = link.split('#');
 			link = tmp[0];
 		}
+
 		var p = /https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/;
-		return this._id = (link.match(p)) ? RegExp.$3 : false;
+		this._id = (link.match(p)) ? RegExp.$3 : false;
+		if(!this._id){
+			// Try another regex
+			p = /vimeo\.com\/(?:video\/)?(\d+)/;
+			this._id = link.match(p) ? RegExp.$1 : false;
+		}
+		return this._id;
 	}
 }
 

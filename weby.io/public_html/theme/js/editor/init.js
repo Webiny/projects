@@ -3,6 +3,7 @@
 var weby = null;
 var contentValidator = null;
 var onboardingComplete = null;
+var disabledTools = null;
 
 function instantiateGooglePicker(){
 	google.load('picker', '1');
@@ -13,6 +14,7 @@ $(function () {
 	contentValidator = $('[data-role="content-validator"]').text();
 	onboardingComplete = $('[data-role="onboarding-complete"]').text();
 	weby = JSON.parse($('[data-role="weby"]').html());
+	disabledTools = JSON.parse($('[data-role="disabled-tools"]').html());
 	$('.bootstrap').remove();
 
 	// Initialize app

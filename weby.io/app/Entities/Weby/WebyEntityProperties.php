@@ -159,7 +159,7 @@ abstract class WebyEntityProperties extends WebyEntityStorage
      * @param int $limit
      * @return array|null
      */
-    public function getUsersFavorited($raw = false, $limit = 5)
+    public function getUsersFavorited($raw = false, $limit = 8)
     {
         if (is_null($this->_usersFavorited)) {
             $this->_usersFavorited = [];

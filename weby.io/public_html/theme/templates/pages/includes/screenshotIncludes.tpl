@@ -6,12 +6,13 @@
     widgets/textWidget.css,
     widgets/mapWidget.css,
     widgets/twitterWidget.css,
+    widgets/flickerWidget.css,
     widgets/videoWidget.css,
     widgets/linkWidget.css,
     loading.css
 {/minify}
 
-{minify type="js"}
+{minify type="js" obfuscate="true"}
     mouseEvent.js,
     frontend/weby.js,
     weby/webyDrag.js,

@@ -11,6 +11,7 @@
     widgets/twitterWidget.css,
     widgets/videoWidget.css,
     widgets/linkWidget.css,
+    widgets/flickerWidget.css,
     jquery.fancybox.css,
     introjs.min.css
 {/minify}

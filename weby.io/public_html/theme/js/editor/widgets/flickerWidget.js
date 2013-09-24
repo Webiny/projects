@@ -62,7 +62,7 @@ function FlickerWidget() {
 
 	this._getEmbedCode = function () {
 		var code = $(this._flickerCode);
-		code.find('img').prop("id", "flickr-image-"+this._id);
+		code.attr('target', '_blank').find('img').prop("id", "flickr-image-"+this._id);
 		return code;
 	}
 

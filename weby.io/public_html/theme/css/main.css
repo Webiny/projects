@@ -19,6 +19,15 @@ body {
 	overflow: hidden;
 }
 
+.widget p {
+    margin: 0;
+    padding: 0;
+}
+
+#workspace {
+    color: windowtext;
+}
+
 body.unselectable * {
 	-moz-user-select: -moz-none !important;
 	-khtml-user-select: none !important;
@@ -70,7 +79,7 @@ body.unselectable * {
 	float: left;
 	text-align: left;
 	padding-right: 20px;
-
+	border-right: 1px solid #e5e5e5;
 }
 
 .header textarea.embed-code {
@@ -142,6 +151,8 @@ body.unselectable * {
 	background: url("../images/sprite2.png") no-repeat 50% -430px;
 	display: inline-block;
 	float: left;
+    height: 40px;
+    width: 40px;
 }
 
 .header-right li.dropdown span.user-photo img {
@@ -307,4 +318,8 @@ body.unselectable * {
 
 .bootstrap{
 	display:none;
+}
+
+.pointer-cursor {
+    cursor: pointer;
 }
