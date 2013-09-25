@@ -42,7 +42,6 @@ function Weby() {
 
         _background = new WebyBackground(weby.settings);
         _documentBackground = new WebyDocumentBackground(weby.settings.document);
-
         _progress.startLoading();
         if (_background.getImageBackground().getImage() != null) {
             items++;

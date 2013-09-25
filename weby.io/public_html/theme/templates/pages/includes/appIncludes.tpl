@@ -10,8 +10,7 @@
     widgets/videoWidget.css,
     widgets/linkWidget.css,
     widgets/flickerWidget.css,
-    jquery.fancybox.css,
-    loading.css
+    jquery.fancybox.css
 {/minify}
 
 {minify type="js" obfuscate="true"}

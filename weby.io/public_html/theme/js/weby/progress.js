@@ -13,7 +13,7 @@ function WebyProgress() {
 	_el.find('.progressbar').show();
 
 	this.startLoading = function () {
-
+		_el.find('.loading-title').show();
 	}
 
 	this.setMessage = function (message) {
@@ -42,7 +42,7 @@ function WebyProgress() {
 		var viewportWidth = $(window).width();
 		var viewportHeight = $(window).height();
 		$('.loading-overlay').css({
-			height: viewportHeight - 125,
+			height: viewportHeight - App.getTopOffset() - App.getBottomOffset(),
 			width: viewportWidth
 		});
 		$('.loading-title').css({

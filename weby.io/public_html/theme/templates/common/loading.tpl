@@ -1,4 +1,4 @@
-<div class="loading-overlay">
+<div class="loading-overlay" style="width:100%; height:100%">
     <div class="loading-title">
         <p>weby.io presents<span>{$weby.title|truncate:35:'...'}</span></p>
         <p class="click-to-see">
