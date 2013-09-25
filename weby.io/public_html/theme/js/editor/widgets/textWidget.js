@@ -11,7 +11,7 @@ function TextWidget() {
 	};
 
 	this.getHTML = function () {
-		this._html = '<div id="text-editable-' + this._id + '" class="text-editable"></div>';
+		this._html = '<div id="text-editable-' + this._id + '" class="text-editable"><p></p></div>';
 		return BaseWidget.prototype.getHTML.call(this);
 	};
 
