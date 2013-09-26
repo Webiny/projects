@@ -61,8 +61,8 @@ abstract class WebyEntityCrud extends WebyEntityProperties
 			foreach($data['content'] as $i => $widget){
 				if($widget['common']['type'] == 'text'){
 					$content = urldecode($widget['specific']['content']);
-					$allowedTags = '<span><a><p><ul><li><ol><img><blockquote><h1><h2><h3><h4><h5><h6><br><b><strong><i><u><font>';
-					$data['content'][$i]['specific']['content'] = htmlentities($this->str($content)->stripTags($allowedTags)->val());
+					$allowedTags = '<div><span><a><p><ul><li><ol><img><blockquote><h1><h2><h3><h4><h5><h6><br><b><strong><i><u><font>';
+					$data['content'][$i]['specific']['content'] = $this->str($content)->stripTags($allowedTags)->val();
 				}
 			}
 		}

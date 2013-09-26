@@ -184,6 +184,7 @@ function VideoWidget() {
 
 		// Append LOADING screen (move to BaseWidget)
 		this.showLoading(this._loadingMessage, '', true);
+		this.body('img').remove();
 		this.body().find('#video-preview-' + $this._id + ', .play-overlay').remove();
 		var jIframe = $('#' + $(iframe).attr('id'));
 
@@ -192,6 +193,7 @@ function VideoWidget() {
 			jIframe.attr("height", iframeHeight);
 			jIframe.attr("width", iframeWidth);
 			$this.html().resizable("option", "aspectRatio", iframeWidth / iframeHeight);
+			$this._heightOffset = 3;
 			$this.contentLoaded();
 		});
 

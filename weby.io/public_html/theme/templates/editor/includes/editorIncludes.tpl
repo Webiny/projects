@@ -17,6 +17,7 @@
 {/minify}
 
 {minify type="js" obfuscate="true"}
+    jquery-simulate.js,
     editor/init.js,
     mouseEvent.js,
     weby/weby.js,

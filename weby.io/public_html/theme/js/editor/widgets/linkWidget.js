@@ -260,7 +260,6 @@ function LinkWidget() {
 
 	/** This will render web link template */
 	this.generateLinkEmbed = function () {
-		console.log(this._linkUrl)
 		this._verifyUrl();
 		var tpl = $('script#link-widget-link-tpl').html();
 		tpl = tpl.replace(/{url}/g, this._linkUrl);

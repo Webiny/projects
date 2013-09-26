@@ -156,6 +156,9 @@ function Weby() {
 
     this.duplicateWidget = function (widget) {
         var data = widget.save();
+		if(data.common.type == 'text'){
+			data.specific["content"] = decodeURIComponent(data.specific["content"]);
+		}
         var newWidget = new window[data.common["class"]]();
         widget.deactivate();
         data.common.top = parseInt(data.common.top) + 25;

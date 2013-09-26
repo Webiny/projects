@@ -64,6 +64,7 @@ function MapWidget() {
 			map.width(this.body().outerWidth())
 			map.height(this.body().outerHeight())
 			this.input().remove();
+			this.message().remove();
 			_centerMarker();
 		}
 	}
@@ -207,7 +208,8 @@ function MapWidget() {
 	}
 
 	var _codeAddress = function (addr) {
-		$this._html.find('.message').hide();
+		$this.body('.message').hide();
+		$this.body('.map').height(272);
 		$this._geocoder.geocode({ 'address': addr}, function (results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				$this._map.setCenter(results[0].geometry.location);
@@ -223,7 +225,7 @@ function MapWidget() {
 						$this.showResizeHandle();
 					}
 				}
-				$this._html.find('.map').height(mapHeight - 28);
+				$this.body('.map').css({height: mapHeight - 28 + 'px', marginTop: 0});
 				_centerMarker();
 				$this.contentLoaded();
 				if (!$this._isActive) {
@@ -232,8 +234,11 @@ function MapWidget() {
 					$this.makeEditable();
 				}
 			} else {
-				$this._html.find('.message').html("We couldn't locate your address! Please try a different one!").show();
-				delete $this._map;
+				$this.body('.message').html("We couldn't locate your address! Please try a different one!").show();
+				if ($this.body('.map').length > 0) {
+					$this.body('.map').css({height: $this.body('.map').height() - 23 + 'px', marginTop: '3px'});
+				}
+				//delete $this._map;
 			}
 			$this._loadingContent = false;
 		});

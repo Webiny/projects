@@ -69,7 +69,7 @@ function WebyToolbar() {
 	_webyColorPicker = $("#color-picker").kendoFlatColorPicker({
 		preview: true,
 		opacity: true,
-		value: currentColor == null ? '#ffffff' : currentColor,
+		value: currentColor == null ? 'rgba(255, 255, 255, 0.50)' : currentColor,
 		change: function (e) {
 			App.getWeby().getBackground().getColorBackground().setColor(e.value).render();
 		}
@@ -280,6 +280,14 @@ function WebyToolbar() {
 	var _lastHeight = 0;
 
 	var _canvasSizeChange = function () {
+		if(isNaN(_canvasWidth.value())){
+			_canvasWidth.value(_lastWidth);
+		}
+
+		if(isNaN(_canvasHeight.value())){
+			_canvasHeight.value(_lastHeight);
+		}
+
 		if (_canvasWidth.value() == _lastWidth && _canvasHeight.value() == _lastHeight) {
 			return;
 		}
@@ -357,7 +365,7 @@ function WebyToolbar() {
 	_documentColorPicker = $("#doc-color-picker").kendoFlatColorPicker({
 		preview: true,
 		opacity: true,
-		value: currentColor == null ? '#ffffff' : currentColor,
+		value: currentColor == null ? 'rgba(255, 255, 255, 0.50)' : currentColor,
 		change: function (e) {
 			App.getWeby().getDocumentBackground().setColor(e.value).render();
 		}

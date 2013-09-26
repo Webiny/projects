@@ -28,8 +28,8 @@ var AppToolbar = function () {
 		_mainTools = ['text', 'link', 'map', 'instagram', 'pinterest', 'facebook', 'twitter', 'linkedin', 'googleplus'];
 		_otherTools = ['video', 'slideshare', 'googledrive', 'skydrive', 'soundcloud', 'vine', 'flicker', 'weby'];
 
-		for(var i in _tools){
-			if($.inArray(i, disabledTools) > -1){
+		for (var i in _tools) {
+			if ($.inArray(i, disabledTools) > -1) {
 				delete _tools[i];
 			}
 		}
@@ -38,10 +38,10 @@ var AppToolbar = function () {
 		/**
 		 * Build main toolbar
 		 */
-		
-		for(var key in _mainTools) {
+
+		for (var key in _mainTools) {
 			var object = _tools[_mainTools[key]];
-			if(object){
+			if (object) {
 				object.init();
 				_toolBar.find('ul').append(object.getToolbarIcon());
 			}
@@ -53,8 +53,8 @@ var AppToolbar = function () {
 		/**
 		 * Build secondary toolbar
 		 */
-		for(var key in _otherTools) {
-			if($.inArray(_otherTools[key], disabledTools) > -1){
+		for (var key in _otherTools) {
+			if ($.inArray(_otherTools[key], disabledTools) > -1) {
 				continue;
 			}
 			object = _tools[_otherTools[key]];
@@ -170,7 +170,7 @@ var AppToolbar = function () {
 				if (!validX || !validY) {
 					return;
 				}
-				
+
 				var x = event.clientX - box.left + App.getContent()[0].scrollLeft;
 				var y = event.clientY - box.top + App.getContent()[0].scrollTop;
 				activeTool.createWidgetAt(x, y);

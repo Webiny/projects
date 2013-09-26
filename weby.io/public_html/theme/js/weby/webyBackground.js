@@ -27,11 +27,11 @@ function WebyBackground(settings) {
 		}
 
 		// Make sure positive values get stored
-		if(_canvasHeight < 600) {
+		if(_canvasHeight < 600 || isNaN(_canvasHeight)) {
 			_canvasHeight = App.getContent()[0].scrollHeight;
 		}
 
-		if(_canvasWidth < 600) {
+		if(_canvasWidth < 600 || isNaN(_canvasWidth)) {
 			_canvasWidth = App.getContent()[0].scrollWidth;
 		}
 

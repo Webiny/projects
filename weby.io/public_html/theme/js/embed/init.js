@@ -7,7 +7,8 @@ $(window).resize(function () {
 	});
 	$('.loading-title').css({
 		top: ($('.loading-overlay').height() / 2 - $('.loading-title').outerHeight(true) / 2) - 10 + 'px',
-		left: ($('.loading-overlay').width() / 2 - $('.loading-title').outerWidth(true) / 2) + 'px'
+		left: ($('.loading-overlay').width() / 2 - $('.loading-title').outerWidth(true) / 2) + 'px',
+		display: 'block'
 	});
 });
 
