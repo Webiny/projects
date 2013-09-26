@@ -170,7 +170,7 @@ var AppClass = function (topOffset) {
 	 * @returns {number}
 	 */
 	this.getLeftOffset = function () {
-		return parseInt(_workspace.css("margin-left"));
+		return parseInt(_content.css("margin-left"));
 	}
 
 	/**
@@ -185,13 +185,6 @@ var AppClass = function (topOffset) {
 	 */
 	this.getWorkspace = function () {
 		return _workspace;
-	}
-
-	/**
-	 * Get header jQuery object
-	 */
-	this.getHeader = function () {
-		return _header;
 	}
 
 	/**

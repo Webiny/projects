@@ -4,7 +4,7 @@ function TextWidget() {
 	this._widgetClass = 'text-widget';
 
 	this.getHTML = function () {
-		this._html = decodeURIComponent(this._content);
+		this._html = $('<div/>').html(this._content).text();
 		return BaseWidget.prototype.getHTML.call(this);
 	};
 

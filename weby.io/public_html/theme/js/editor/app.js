@@ -1,6 +1,6 @@
 var AppClass = function () {
     var _content = $('#content');
-    var _contentWrapper = $('#wrapper');
+    var _workspace = $('#workspace');
     var _header = $('#header');
     var _appToolbar;
     var _dashboard = null;
@@ -226,8 +226,8 @@ var AppClass = function () {
         // Setup initial content sizes
         _viewportWidth = $(window).width();
         _viewportHeight = $(window).height();
-        _contentWrapper.width(_viewportWidth);
-        _contentWrapper.height(_viewportHeight - _topOffset - _bottomOffset);
+        _workspace.width(_viewportWidth);
+        _workspace.height(_viewportHeight - _topOffset - _bottomOffset);
 
         // Setup dragging and Weby
         _webyDrag = new WebyDrag(_content);
@@ -314,7 +314,7 @@ var AppClass = function () {
      * @returns {number}
      */
     this.getLeftOffset = function () {
-        return parseInt(_contentWrapper.css("margin-left"));
+        return parseInt(_content.css("margin-left"));
     }
 
 
@@ -339,19 +339,12 @@ var AppClass = function () {
         return _content;
     }
 
-    /**
-     * Get jQuery content wrapper element
-     */
-    this.getContentWrapper = function () {
-        return _contentWrapper;
-    }
-
-    /**
-     * Get header jQuery object
-     */
-    this.getHeader = function () {
-        return _header;
-    }
+	/**
+	 * Get jQuery content wrapper element
+	 */
+	this.getWorkspace = function () {
+		return _workspace;
+	}
 
     /**
      * Main APP event manager
