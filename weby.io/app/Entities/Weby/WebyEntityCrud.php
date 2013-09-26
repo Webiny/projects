@@ -53,11 +53,19 @@ abstract class WebyEntityCrud extends WebyEntityProperties
         $this->_slug = $this->_toSlug($this->_title);
     }
 
-    protected function _onBeforePopulate($data)
+    protected function _onBeforePopulate(&$data)
     {
         if (!$this->arr($data)->keyExists('content')) {
             $this->_content = [];
-        }
+        } else {
+			foreach($data['content'] as $i => $widget){
+				if($widget['common']['type'] == 'text'){
+					$content = urldecode($widget['specific']['content']);
+					$allowedTags = '<a><p><ul><li><ol><img><blockquote><h1><h2><h3><h4><h5><h6><br><b><strong><i><u><font>';
+					$data['content'][$i]['specific']['content'] = urlencode($this->str($content)->stripTags($allowedTags)->val());
+				}
+			}
+		}
 
         if (!$this->arr($data)->keyExists('tags')) {
             $this->_tags = [];

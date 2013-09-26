@@ -105,7 +105,7 @@ abstract class EntityAbstract implements \ArrayAccess
 
 	// Events
 
-	protected function _onBeforePopulate($data) {
+	protected function _onBeforePopulate(&$data) {
 		return false;
 	}
 

@@ -118,8 +118,8 @@ function WebyImageBackground(el) {
 			backgroundSize: 'cover',
 			backgroundAttachment: 'initial',
 			backgroundPosition: "left top",
-			width: App.getContent().width() + 'px',
-			height: App.getContent().height() + 'px',
+			width: _getVisibleWidth() + 'px',
+			height: _getVisibleHeight() + 'px',
 			top: wp.top + 'px',
 			left: wp.left + 'px',
 			position: 'fixed'
@@ -169,5 +169,21 @@ function WebyImageBackground(el) {
 			};
 			_el.css(css).find('img').css(css);
 		}
+	}
+
+	var _getVisibleWidth = function(){
+		var width = App.getViewportWidth();
+		if(App.getContent().width() < width){
+			width = App.getContent().width();
+		}
+		return width;
+	}
+
+	var _getVisibleHeight = function(){
+		var height = App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset();
+		if(App.getContent().height() < height){
+			height = App.getContent().height();
+		}
+		return height;
 	}
 }

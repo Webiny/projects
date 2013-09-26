@@ -1,7 +1,7 @@
 var AppClass = function (topOffset) {
 
 	var _content = $('#content');
-	var _contentWrapper = $('#wrapper');
+	var _workspace = $('#workspace');
 	var _header = $('#header');
 	var _dashboard = null;
 	var _favorites = null;
@@ -87,8 +87,8 @@ var AppClass = function (topOffset) {
 		// Setup initial content sizes
 		_viewportWidth = $(window).width();
 		_viewportHeight = $(window).height();
-		_contentWrapper.width(_viewportWidth);
-		_contentWrapper.height(_viewportHeight - _topOffset);
+		_workspace.width(_viewportWidth);
+		_workspace.height(_viewportHeight - _topOffset);
 
 		// Setup dragging and Weby
 		_webyDrag = new WebyDrag(_content);
@@ -170,7 +170,7 @@ var AppClass = function (topOffset) {
 	 * @returns {number}
 	 */
 	this.getLeftOffset = function () {
-		return parseInt(_contentWrapper.css("margin-left"));
+		return parseInt(_workspace.css("margin-left"));
 	}
 
 	/**
@@ -183,8 +183,8 @@ var AppClass = function (topOffset) {
 	/**
 	 * Get jQuery content wrapper element
 	 */
-	this.getContentWrapper = function () {
-		return _contentWrapper;
+	this.getWorkspace = function () {
+		return _workspace;
 	}
 
 	/**
