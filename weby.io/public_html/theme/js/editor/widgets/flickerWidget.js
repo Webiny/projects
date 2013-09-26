@@ -5,6 +5,7 @@ function FlickerWidget() {
 	this._parseErrorMessage = 'We couldn\'t insert your Flickr photo. Please try a different one.';
 	this._loadingMessage = 'Loading your Flickr photo...';
 	this._inputElement = 'textarea';
+	this._heightOffset = 0;
 
 	this._resizableOptions = {
 		minWidth:300,

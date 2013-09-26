@@ -99,7 +99,7 @@ function LinkWidget() {
 			// If requested file is a html page
 			if ($this._contentType == 'text/html') {
 				$this._linkType = 'web';
-				
+
 				$this.showLoading();
 				$.get(WEB + 'tools/parse-link/?url=' + encodeURIComponent(url), function (data) {
 					if (!data.error) {
@@ -166,7 +166,9 @@ function LinkWidget() {
 		}
 	}
 
-// This binds Google Drive Chooser app initialization on click of its button
+	/**
+	 * This binds Google Drive Chooser app initialization on click of its button
+	 */
 	this._bindGoogleDriveChooser = function () {
 		var $this = this;
 		$this.body().on('click', 'span.gdrive-button', function () {
@@ -197,7 +199,10 @@ function LinkWidget() {
 		});
 	};
 
-// This binds dropBox Chooser app initialization on click of its button
+	/**
+	 * This binds dropBox Chooser app initialization on click of its button
+	 */
+
 	this._bindDropBoxChooser = function () {
 		var $this = this;
 		$this.body().on('click', 'span.dropbox-button', function () {
@@ -224,7 +229,9 @@ function LinkWidget() {
 
 	};
 
-// Generates basic input field for links which users will paste
+	/**
+	 * Generates basic input field for links which users will paste
+	 */
 	this.generateInputField = function (value) {
 		var tpl = $('script#link-widget-field-tpl').html();
 		tpl = tpl.replace('{id}', this._id);
@@ -232,10 +239,14 @@ function LinkWidget() {
 		return tpl;
 	};
 
-// Methods for generating content for various link types (eg. jpg, gif, ppt, xls ...)
-// For every filetype, you can specify it's template (in LinkTool.ALLOWED_TYPES object)
+	/**
+	 * Methods for generating content for various link types (eg. jpg, gif, ppt, xls ...)
+	 * For every filetype, you can specify it's template (in LinkTool.ALLOWED_TYPES object)
+	 */
 
-// Renders standard file information box
+	/**
+	 * Renders standard file information box
+	 */
 	this.generateFileInfo = function () {
 		var tpl = $('script#link-widget-file-tpl').html();
 		tpl = tpl.replace('{url}', this._linkUrl);
@@ -247,22 +258,22 @@ function LinkWidget() {
 		return $(tpl);
 	};
 
-// This will render web link template
+	/** This will render web link template */
 	this.generateLinkEmbed = function () {
+		console.log(this._linkUrl)
 		this._verifyUrl();
 		var tpl = $('script#link-widget-link-tpl').html();
 		tpl = tpl.replace(/{url}/g, this._linkUrl);
 		tpl = tpl.replace('{id}', this._id);
 		tpl = tpl.replace('{title}', this.truncate(this._title, 35, '...'));
 		tpl = tpl.replace('{description}', this.truncate(this._description, 140, '...'));
-		tpl = $(tpl.replace('{imageUrl}', this._imageUrl));
-		if (!this._imageUrl) {
-			tpl.find('img').remove();
-		}
+		tpl = $(tpl.replace('{imageUrl}', this._imageUrl == "false" || this._imageUrl == false ? THEME + 'images/link-icon.png' : this._imageUrl));
 		return tpl;
 	};
 
-// Renders image
+	/**
+	 * Renders image
+	 */
 	this.generateImage = function () {
 		this._isInteractive = false;
 		var tpl = $('script#link-widget-image-tpl').html();

@@ -74,7 +74,8 @@
 
 #toolbar ul li.tools-drop-arrow ul {
 	position: absolute;
-	top: -179px;
+	/*top: -179px;*/
+	bottom:-1px;
 	left: 40px;
 	padding: 10px 10px 0 0px;
 	background-color: #fff;

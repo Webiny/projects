@@ -9,12 +9,10 @@
         <li>
             <a href="#cnv-image">Image</a>
         </li>
-        <li data-tab="video">
-            <a href="#cnv-video">Youtube</a>
-        </li>
         <li>
             <a href="#cnv-size">Size</a>
         </li>
+        <li class="dummy"></li>
     </ul>
     <div id="cnv-color" class="tab">
         <div id="color-picker" style="width: 264px; border: none;"></div>
@@ -85,18 +83,6 @@
                 </li>
             </ul>
         </div>
-    </div>
-    <div id="cnv-video" class="tab">
-        <span class="error-message"></span>
-        <input type="text" data-role="input-youtube" class="settings-input"
-               value="" placeholder="Paste a Youtube video URL" />
-        <div class="volume-control" data-role="video-volume-control">
-            <span class="title">Volume:</span>
-            <input data-role="k-slider-video-volume"/>
-        </div>
-        <a data-role="btn-youtube-remove" href="javascript:void(0)" class="green-button icon delete">Remove video</a>
-        <a data-role="btn-youtube-apply" href="javascript:void(0)" class="green-button">Load video</a>
-        <span class="info-message top-margin"></span>
     </div>
     <div id="cnv-size" class="tab">
         <label>Width:<input type="text" id="canvas-width" placeholder="Width" value="800"/></label>

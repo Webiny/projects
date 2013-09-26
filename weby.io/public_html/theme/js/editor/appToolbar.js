@@ -28,13 +28,24 @@ var AppToolbar = function () {
 		_mainTools = ['text', 'link', 'map', 'instagram', 'pinterest', 'facebook', 'twitter', 'linkedin', 'googleplus'];
 		_otherTools = ['video', 'slideshare', 'googledrive', 'skydrive', 'soundcloud', 'vine', 'flicker', 'weby'];
 
+		for(var i in _tools){
+			if($.inArray(i, disabledTools) > -1){
+				delete _tools[i];
+			}
+		}
+
+
 		/**
 		 * Build main toolbar
 		 */
+		
 		for(var key in _mainTools) {
 			var object = _tools[_mainTools[key]];
-			object.init();
-			_toolBar.find('ul').append(object.getToolbarIcon());
+			if(object){
+				object.init();
+				_toolBar.find('ul').append(object.getToolbarIcon());
+			}
+
 		}
 
 		_toolBar.find('ul').append('<li class="tools-drop-arrow"><a data-tool="tools-drop" class="tools-drop ui-draggable" title="Other">OtherTools</a><ul></ul></li>');
@@ -43,6 +54,9 @@ var AppToolbar = function () {
 		 * Build secondary toolbar
 		 */
 		for(var key in _otherTools) {
+			if($.inArray(_otherTools[key], disabledTools) > -1){
+				continue;
+			}
 			object = _tools[_otherTools[key]];
 			object.init();
 			_toolBar.find('ul li ul').append(object.getToolbarIcon());
@@ -148,7 +162,7 @@ var AppToolbar = function () {
 				}
 				var activeTool = _tools[tool];
 
-				var box = App.getContentWrapper()[0].getBoundingClientRect();
+				var box = App.getContent()[0].getBoundingClientRect();
 				var validX = event.clientX > box.left && event.clientX < box.right;
 				var validY = event.clientY > box.top && event.clientY < box.bottom;
 
@@ -157,8 +171,8 @@ var AppToolbar = function () {
 					return;
 				}
 				
-				var x = event.clientX - box.left + App.getContentWrapper()[0].scrollLeft;
-				var y = event.clientY - box.top + App.getContentWrapper()[0].scrollTop;
+				var x = event.clientX - box.left + App.getContent()[0].scrollLeft;
+				var y = event.clientY - box.top + App.getContent()[0].scrollTop;
 				activeTool.createWidgetAt(x, y);
 			}
 		});

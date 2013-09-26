@@ -8,23 +8,23 @@ function WebyVideoBackground(el) {
 	var _videoInput = $('[data-role="input-youtube"]');
 	var _applyBtn = $('[data-role="btn-youtube-apply"]');
 	var _removeBtn = $('[data-role="btn-youtube-remove"]');
-	var _errorMessage = $('#cnv-video .error-message');
-	var _infoMessage = $('#cnv-video .info-message');
+	var _errorMessage = $('#doc-video .error-message');
+	var _infoMessage = $('#doc-video .info-message');
 	var _volumeControl = $('[data-role="video-volume-control"]');
 	var _volumeSlider = $('[data-role="k-slider-video-volume"]');
 
 	this.setVideo = function (video) {
 		_video = video;
 		return this;
-	}
+	};
 
 	this.getPlayer = function () {
 		return _player;
-	}
+	};
 
-	this.hideErrorMessage = function(){
+	this.hideErrorMessage = function () {
 		_errorMessage.hide();
-	}
+	};
 
 	this.render = function () {
 		if (_video == null) {
@@ -38,17 +38,17 @@ function WebyVideoBackground(el) {
 			_applyBtn.hide();
 			_removeBtn.show();
 			_volumeControl.show();
-			if(_kVolumeSlider){
+			if (_kVolumeSlider) {
 				_kVolumeSlider.value(_volume);
 			}
-			if(App.getWeby().getBackground().getPatternBackground().getPattern() != null){
+			if (App.getWeby().getBackground().getPatternBackground().getPattern() != null) {
 				_infoMessage.show().html("If you don't see the video, check your color, pattern and image settings, they may be covering your video.");
 			} else {
 				_infoMessage.hide();
 			}
 		}
 		_loadYoutubeBackground();
-	}
+	};
 
 	this.populate = function (data) {
 		if (!data) {
@@ -56,7 +56,7 @@ function WebyVideoBackground(el) {
 		}
 		_video = data.video == "" ? null : data.video;
 		_volume = data.volume == "" ? 0 : data.volume;
-	}
+	};
 
 	this.save = function () {
 		return {
@@ -67,22 +67,19 @@ function WebyVideoBackground(el) {
 
 	this.webyBackgroundBeforeResize = function () {
 		_el.hide();
-	}
+	};
 
 	this.webyBackgroundResized = function () {
-		_el.show();
-		var wp = App.getContentWrapper().offset();
 		var css = {
-			width: (App.getContentWrapper().width() - App.getWeby().getScrollBarOffset()) + 'px',
-			height: (App.getContentWrapper().height() - App.getWeby().getScrollBarOffset()) + 'px',
-			top: wp.top + 'px',
-			left: wp.left + 'px'
+			width: _getWidth() + 'px',
+			height: _getHeight() + 'px'
 		};
 		_el.css(css);
 		if (_player) {
 			$('#player').css(css);
 		}
-	}
+		_el.show();
+	};
 
 	_videoInput.keydown(function (e) {
 		if (e.keyCode == 13) {
@@ -133,12 +130,12 @@ function WebyVideoBackground(el) {
 			_videoInput.val('').focus();
 			_errorMessage.show().html('Please enter a valid Youtube link!');
 		}
-	}
+	};
 
 	var _loadYoutubeBackground = function () {
 		_player = new YT.Player('player', {
-			width: App.getContentWrapper().width() - App.getWeby().getScrollBarOffset(),
-			height: App.getContentWrapper().height() - App.getWeby().getScrollBarOffset(),
+			width: _getWidth(),
+			height: _getHeight(),
 			videoId: _video,
 			playerVars: {
 				playlist: _video,
@@ -150,15 +147,25 @@ function WebyVideoBackground(el) {
 			},
 			events: {
 				onReady: function (e) {
+					e.target.playVideo();
 					e.target.setVolume(_volume);
 					e.target.setLoop(true);
-					e.target.playVideo();
 					App.fireEvent("video.background.ready");
 				},
-				onError: function(){
+				onError: function () {
 					// Do nothing
 				}
 			}
 		});
+	};
+
+	var _getWidth = function () {
+		var width = App.getViewportWidth();
+		return width;
+	};
+
+	var _getHeight = function () {
+		var height = App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset();
+		return height;
 	};
 }

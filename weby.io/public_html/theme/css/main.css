@@ -24,10 +24,6 @@ body {
     padding: 0;
 }
 
-#workspace {
-    color: windowtext;
-}
-
 body.unselectable * {
 	-moz-user-select: -moz-none !important;
 	-khtml-user-select: none !important;

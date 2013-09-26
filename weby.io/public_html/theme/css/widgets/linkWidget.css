@@ -41,6 +41,7 @@
 	/* Position fix */
 	padding-left: 4px;
 	margin-top: -2px;
+	height: 75px;
 }
 
 
@@ -73,6 +74,11 @@
 	display: block;
 	float: left;
 	line-height: 0;
+	width: 70px;
+	height: 70px;
+	margin-top: 2px;
+	background-size: cover;
+	background-position: center;
 }
 
 .link-widget .link .website{
@@ -172,6 +178,10 @@
 	margin-bottom: 10px;
 	display: block;
 	font-weight: 600;
+}
+
+.link-widget .website a.title{
+	width: 260px;
 }
 
 .link-widget .website span.description{

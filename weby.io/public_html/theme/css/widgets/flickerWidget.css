@@ -1,4 +1,8 @@
-.link-widget.widget-body a{
+.flicker-widget.widget-body a{
 	float:left;
 	line-height:0;
+}
+
+.flicker-widget.widget-body a img{
+	position:absolute;
 }

@@ -136,11 +136,18 @@
 	border-bottom: none !important;
 }
 
-#weby-toolbar-wrapper div.menu li.dummy {
+#canvas-settings li.dummy {
 	border-bottom: 1px solid #c5c5c5;
 	display: inline-block;
 	height: 19px;
-	width: 155px;
+	width: 51px;
+}
+
+#document-settings li.dummy {
+	border-bottom: 1px solid #c5c5c5;
+	display: inline-block;
+	height: 19px;
+	width: 84px;
 }
 
 #weby-toolbar-wrapper div.menu li.ui-state-default {
@@ -259,6 +266,10 @@
 }
 
 #canvas-settings #cnv-color {
+	text-align: center;
+}
+
+#document-settings #doc-color {
 	text-align: center;
 }
 
@@ -414,6 +425,10 @@
 .k-state-active, .k-state-active:hover, .k-active-filter, .k-tabstrip .k-state-active {
 	background: none !important;
 	border: none !important;
+}
+
+.editor .k-widget.k-tooltip.k-slider-tooltip{
+	display:none;
 }
 
 #widget-settings span.k-widget {

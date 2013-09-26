@@ -83,9 +83,6 @@ function Weby() {
             _progress.setSteps(items);
             _documentBackground.render();
 
-            // Create periodic save action
-           _saveInterval = setInterval(_save, _saveIntervalTime);
-
             // Catch window close event
             $(window).bind("beforeunload", function () {
                 App.getWeby().save(true);
@@ -328,7 +325,13 @@ function Weby() {
         for (var i in widgets) {
             var widgetData = widgets[i];
             var widget = new window[widgetData.common["class"]]();
-            var html = widget.setId(++BaseTool.WIDGET_COUNT).createFromData(widgetData).html();
+            widget.setId(++BaseTool.WIDGET_COUNT).createFromData(widgetData);
+			if($.inArray(widgetData.common["type"], disabledTools) > -1){
+				// Show unavailable overlay
+				widget.showUnavailable();
+			}
+
+			var html = widget.html();
             _widgets[widget.getId()] = widget;
 
             // Bind load events
@@ -353,6 +356,8 @@ function Weby() {
     };
 
 	this.webyLoaded = function(){
+		// Create periodic save action
+		_saveInterval = setInterval(_save, _saveIntervalTime);
 		_progress.hideProgress();
 		weby = undefined;
 	}

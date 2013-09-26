@@ -179,6 +179,8 @@ var BaseWidget = function () {
 
 	this._parseError = false;
 
+	this._heightOffset = 3;
+
 	/**
 	 * NOTE!!!!
 	 * In UI components events are fired to enforce the use of App event manager and not direct object modification
@@ -275,7 +277,8 @@ var BaseWidget = function () {
 			App.fireEvent("widget.resize.start", {element: $(this), event: event, ui: ui});
 		},
 		stop: function (event, ui) {
-			App.fireEvent("widget.resize.stop", {element: $(this), event: event, ui: ui});
+			var $this = $(this).data('widget');
+			App.fireEvent("widget.resize.stop", {element: $(this), event: event, ui: ui, id: $this._id});
 		}
 
 	};
@@ -633,7 +636,11 @@ BaseWidget.prototype = {
 	contentLoaded: function () {
 
 		this._width = this.html('.widget-body')[0].scrollWidth;
-		this._height = this.html('.widget-body')[0].scrollHeight - 3; // 3px hack
+		this._height = this.html('.widget-body')[0].scrollHeight; // 3px hack
+
+		if(this._heightOffset){
+			this._height -= this._heightOffset;
+		}
 
 		this.html().css({
 			width: this._width + 'px',
@@ -785,6 +792,12 @@ BaseWidget.prototype = {
 			this.body().prepend(loading);
 		}
 		return this;
+	},
+
+	showUnavailable: function(){
+		this.html().append('<div class="widget-unavailable-overlay"></div>');
+		this.body('*:not(".widget-unavailable-overlay")').remove();
+		this._resize();
 	},
 
 	showTools: function () {
@@ -984,6 +997,9 @@ BaseWidget.prototype = {
 	 * @param data
 	 */
 	widgetResizeStop: function (data) {
+		if(data.element.data('widget').getId() != this._id){
+			return;
+		}
 		this._width = parseInt(data.element.width());
 		this._height = parseInt(data.element.height());
 		this._html.css("height", this._height + 'px');
@@ -1019,6 +1035,12 @@ BaseWidget.prototype = {
 			marginLeft: margin,
 			marginRight: margin,
 			marginTop: (this._html.outerHeight() / 2 - 20) + 'px'
+		});
+
+		// Resize unavailable overlay
+		this.html('.widget-unavailable-overlay').css({
+			width: this.body()[0].scrollWidth + 'px',
+			height: this.body()[0].scrollHeight + 'px'
 		});
 	},
 

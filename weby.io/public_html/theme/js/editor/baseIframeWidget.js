@@ -24,9 +24,8 @@ var BaseIframeWidget = function () {
 		},
 		stop: function (event, ui) {
 			var $this = $(this).data('widget');
-			App.fireEvent("widget.resize.stop", {element: $(this), event: event, ui: ui});
+			App.fireEvent("widget.resize.stop", {element: $(this), event: event, ui: ui, id: $this._id});
 			$this.body('.overlay').remove();
-			//$this.html().css('height', 'auto');
 		},
 		resize: function (event, ui) {
 			var $this = $(this).data('widget');

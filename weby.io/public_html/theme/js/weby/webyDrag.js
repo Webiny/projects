@@ -1,5 +1,5 @@
 var WebyDrag = function (el) {
-	el = el.parent();
+	el = $('#workspace');
 	var FF = !(window.mozInnerScreenX == null);
 	// Used to fine tune dragging speed
 	var deltaFactor = 1;

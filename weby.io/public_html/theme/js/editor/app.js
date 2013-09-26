@@ -281,7 +281,7 @@ var AppClass = function () {
      * @returns {number}
      */
     this.getAvailableContentWidth = function () {
-        return _viewportWidth - _weby.getScrollBarOffset();
+        return _viewportWidth;
     }
 
     /**
@@ -290,7 +290,7 @@ var AppClass = function () {
      * @returns {number}
      */
     this.getAvailableContentHeight = function () {
-        return _viewportHeight - _topOffset - _bottomOffset - _weby.getScrollBarOffset();
+        return _viewportHeight - _topOffset - _bottomOffset;
     }
 
     /**

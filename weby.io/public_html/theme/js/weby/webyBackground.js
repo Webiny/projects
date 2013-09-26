@@ -81,7 +81,7 @@ function WebyBackground(settings) {
 	var _getWidgetsBeyondCanvas = function (width, height) {
 		var widgets = App.getWeby().getWidgets();
 		var outerWidgets = [];
-		var el = App.getContentWrapper()[0];
+		var el = App.getContent()[0];
 		for (var i in widgets) {
 			var widget = widgets[i];
 			var rect = widget.html()[0].getBoundingClientRect();
@@ -91,7 +91,7 @@ function WebyBackground(settings) {
 			var marginLeft = parseInt(widget.html().css('margin-left'));
 			var marginTop = parseInt(widget.html().css('margin-top'));
 
-			var wrapperMarginLeft = parseInt(App.getContentWrapper().css('margin-left'));
+			var wrapperMarginLeft = parseInt(App.getContent().css('margin-left'));
 
 			if (isNaN(marginTop)) {
 				marginTop = 0;
@@ -173,33 +173,16 @@ function WebyBackground(settings) {
 		function _resize(el, dimension, size) {
 			var data = {};
 			data[dimension] = size;
-			if (el == App.getContentWrapper()) {
-				App.fireEvent("weby.background.before.resize");
-				el.css(data);
-				App.getWeby().getBackground().setContainment(width, height);
-				App.fireEvent("weby.background.resized");
-			} else {
-				el.css(data);
-			}
+			App.fireEvent("weby.background.before.resize");
+			el.css(data);
+			App.getWeby().getBackground().setContainment(width, height);
+			App.fireEvent("weby.background.resized");
 		}
 
 		App.getWeby().getToolbar().setCanvasSize(width, height);
-		if (width <= App.getViewportWidth() - App.getWeby().getScrollBarOffset()) {
-			_resize(App.getContent(), "width", width + 'px');
-			_resize(App.getContentWrapper(), "width", width + App.getWeby().getScrollBarOffset() + 'px');
-		} else {
-			_resize(App.getContent(), "width", width + 'px');
-			_resize(App.getContentWrapper(), "width", App.getViewportWidth() + 'px');
-		}
-
-		if (height <= App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset() - App.getWeby().getScrollBarOffset()) {
-			_resize(App.getContent(), "height", height + 'px');
-			_resize(App.getContentWrapper(), "height", height + App.getWeby().getScrollBarOffset() + 'px');
-		} else {
-			_resize(App.getContent(), "height", height + 'px');
-			_resize(App.getContentWrapper(), "height",App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset() + 'px');
-		}
-
+		App.getContent().css({width: 0, height: 0});
+		_resize(App.getContent(), "width", width + 'px');
+		_resize(App.getContent(), "height", height + 'px');
 		return this;
 	}
 
@@ -242,10 +225,12 @@ function WebyBackground(settings) {
 	};
 
 	this.webyBackgroundResized = function () {
+		$('#workspace').height(App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset());
+		$('#workspace').width(App.getViewportWidth());
 		if(App.getViewportWidth() < 1200){
-			App.getContentWrapper().css("margin", "0");
+			App.getContent().css("margin", "0");
 		} else {
-			App.getContentWrapper().css("margin", "0 auto");
+			App.getContent().css("margin", "0 auto");
 		}
 		for (var i in _backgrounds) {
 			if("webyBackgroundResized" in _backgrounds[i]){

@@ -17,6 +17,7 @@ use Webiny\Component\Logger\LoggerTrait;
 use Webiny\Component\Security\Authentication\Providers\Http\Http;
 use Webiny\Component\Security\SecurityTrait;
 use Webiny\Component\StdLib\StdLibTrait;
+use Webiny\Component\StdLib\StdObject\StdObjectWrapper;
 use Webiny\Component\Storage\Directory\LocalDirectory;
 use Webiny\Component\Storage\File\LocalFile;
 use Webiny\Component\Storage\StorageTrait;
@@ -171,7 +172,13 @@ class EditorHandler extends AbstractHandler
         }
         $this->weby = $this->_weby;
 		$this->editor = true;
-		$this->disabledTools = json_encode($this->app()->getConfig()->get('disabled_tools', []));
+
+		$tmp = $this->app()->getConfig()->get('disabled_tools', []);
+		if(!$this->isArray($tmp)){
+			$tmp = $tmp->toArray();
+		}
+
+		$this->disabledTools = json_encode($tmp);
         $validators = $this->app()->getConfig()->app->content_validators->toArray(true);
         $vIndex = rand(0, $validators->count() - 1);
         $this->contentValidator = $validators[$vIndex];

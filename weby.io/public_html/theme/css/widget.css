@@ -155,9 +155,17 @@
 	margin-top: 2px;
 }
 
+.widget-unavailable-overlay{
+	float: left;
+	position: absolute;
+	z-index: 7999;
+	width: 100%;
+	height: 100%;
+	background-color: #f25b2b;
+}
+
 .widget-disabled-overlay {
 	float: left;
-	margin-left: 30px;
 	position: absolute;
 	z-index: 8000;
 	width: 100%;
@@ -226,8 +234,8 @@
 	display: block;
 	position: absolute;
 	z-index: 8000;
-	background-image: url("../images/sprite-controls.png");
-	background-repeat: no-repeat;
+	background: url("../images/sprite-controls.png") no-repeat;
+	cursor: pointer;
 }
 
 .widget span.drag-handle {

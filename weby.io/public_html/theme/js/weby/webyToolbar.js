@@ -120,6 +120,9 @@ function WebyToolbar() {
 		opacity: true,
 		preview: true,
 		buttons: false,
+		change: function (e) {
+			_activeWidget.setColor(e.value);
+		},
 		select: function (e) {
 			_activeWidget.setColor(e.value);
 		}
@@ -209,6 +212,9 @@ function WebyToolbar() {
 		opacity: true,
 		preview: true,
 		buttons: false,
+		change: function (e) {
+			_activeWidget.setShadowColor(e.value);
+		},
 		select: function (e) {
 			_activeWidget.setShadowColor(e.value);
 		}
@@ -273,17 +279,17 @@ function WebyToolbar() {
 	var _lastWidth = 0;
 	var _lastHeight = 0;
 
-	var _canvasSizeChange = function (type) {
+	var _canvasSizeChange = function () {
 		if (_canvasWidth.value() == _lastWidth && _canvasHeight.value() == _lastHeight) {
 			return;
 		}
 		if (_canvasWidth.value() == null) {
-			_canvasWidth.value(App.getViewportWidth() - App.getWeby().getScrollBarOffset());
+			_canvasWidth.value(App.getViewportWidth());
 		}
 		if (_canvasHeight.value() == null) {
-			_canvasHeight.value(App.getViewportHeight() - App.getTopOffset() - App.getWeby().getScrollBarOffset() - App.getBottomOffset());
+			_canvasHeight.value(App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset());
 		}
-		App.getWeby().getBackground().applyCanvasSize(_canvasWidth.value(), _canvasHeight.value(), type);
+		App.getWeby().getBackground().applyCanvasSize(_canvasWidth.value(), _canvasHeight.value());
 
 		_previousWidth = _lastWidth;
 		_lastWidth = _canvasWidth.value();
@@ -296,12 +302,8 @@ function WebyToolbar() {
 		step: 1,
 		decimals: 0,
 		format: "n0",
-		change: function (e) {
-			_canvasSizeChange('change');
-		},
-		spin: function (e) {
-			_canvasSizeChange('spin');
-		}
+		change:_canvasSizeChange,
+		spin: _canvasSizeChange
 	}).data("kendoNumericTextBox");
 
 	_canvasHeight = $("#canvas-height").kendoNumericTextBox({
@@ -309,12 +311,8 @@ function WebyToolbar() {
 		step: 1,
 		decimals: 0,
 		format: "n0",
-		change: function (e) {
-			_canvasSizeChange('change');
-		},
-		spin: function (e) {
-			_canvasSizeChange('spin');
-		}
+		change: _canvasSizeChange,
+		spin: _canvasSizeChange
 	}).data("kendoNumericTextBox");
 
 	// Select input value on focus
@@ -358,6 +356,7 @@ function WebyToolbar() {
 
 	_documentColorPicker = $("#doc-color-picker").kendoFlatColorPicker({
 		preview: true,
+		opacity: true,
 		value: currentColor == null ? '#ffffff' : currentColor,
 		change: function (e) {
 			App.getWeby().getDocumentBackground().setColor(e.value).render();
@@ -399,12 +398,16 @@ function WebyToolbar() {
 	 */
 
 	this.contentClick = function (e) {
+		_colorPicker.close();
+		_shadowColorPicker.close();
 		_widgetSettings.hide();
 		_canvasSettings.hide();
 		_documentBackgroundSettings.hide();
 	};
 
 	this.widgetClick = function (e) {
+		_colorPicker.close();
+		_shadowColorPicker.close();
 		_widgetSettings.hide();
 		_canvasSettings.hide();
 		_documentBackgroundSettings.hide();
@@ -432,6 +435,8 @@ function WebyToolbar() {
 
 	this.widgetDeactivated = function () {
 		_activeWidget = null;
+		_colorPicker.close();
+		_shadowColorPicker.close();
 		_widgetSettings.hide();
 		$('#weby-toolbar-wrapper a.tool-icon:not(".background, .document")').addClass('disabled');
 	}

@@ -7,6 +7,7 @@ function TwitterWidget() {
 	this._parseErrorMessage = "Looks like this Tweet doesn't exist! Try a different one.";
 	this._loadingMessage = "Loading your Tweet...";
 	this._parser = null;
+	this._heightOffset = 0;
 
 	this.getHTML = function () {
 		this._html = '<textarea class="tweet-embed" placeholder="Paste your Tweet embed code here">https://twitter.com/Fascinatingpics/status/286206794005610496</textarea>' +

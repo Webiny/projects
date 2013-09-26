@@ -72,35 +72,17 @@ function WebyBackground(settings) {
 	 * @param type change|spin
 	 */
 	this.setContentSize = function (width, height) {
-		function _resize(el, dimension, size) {
-			var data = {};
-			data[dimension] = size;
-			el.css(data);
-			App.fireEvent("weby.background.resized");
+		App.getContent().css({
+			width: width + 'px',
+			height: height + 'px'
+		});
 
-		}
-
-		if (width <= App.getViewportWidth() - App.getWeby().getScrollBarOffset()) {
-			_resize(App.getContent(), "width", width + 'px');
-			_resize(App.getContentWrapper(), "width", width + App.getWeby().getScrollBarOffset() + 'px');
-		} else {
-			_resize(App.getContent(), "width", width + 'px');
-			_resize(App.getContentWrapper(), "width", App.getViewportWidth() + 'px');
-		}
-
-		if (height <= App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset() - App.getWeby().getScrollBarOffset()) {
-			_resize(App.getContent(), "height", height + 'px');
-			_resize(App.getContentWrapper(), "height", height + App.getWeby().getScrollBarOffset() + 'px');
-		} else {
-			_resize(App.getContent(), "height", height + 'px');
-			_resize(App.getContentWrapper(), "height",App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset() + 'px');
-		}
-
+		App.fireEvent("weby.background.resized");
 		return this;
 	}
 
 	this.recalculateContentSize = function () {
-		this.setContentSize(_canvasWidth, _canvasHeight, 'change');
+		this.setContentSize(_canvasWidth, _canvasHeight);
 	}
 
 	this.webyLoaded = function () {
@@ -109,10 +91,11 @@ function WebyBackground(settings) {
 	}
 
 	this.webyBackgroundResized = function () {
+		$('#workspace').height(App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset()).width(App.getViewportWidth());
 		if(App.getViewportWidth() < 1200){
-			App.getContentWrapper().css("margin", "0");
+			App.getContent().css("margin", "0");
 		} else {
-			App.getContentWrapper().css("margin", "0 auto");
+			App.getContent().css("margin", "0 auto");
 		}
 		for (var i in _backgrounds) {
 			if ("webyBackgroundResized" in _backgrounds[i]) {

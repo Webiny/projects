@@ -24,17 +24,7 @@
 {/block}
 {block name="content"}
     {include file="templates/pages/includes/webyDetails.tpl"}
-    <div id="workspace">
-        <div id="weby-background-video">
-            <div id="player"></div>
-        </div>
-        <div id="wrapper">
-            <div id="content">
-                <div id="weby-background-image"></div>
-                <div id="weby-background-color"></div>
-            </div>
-        </div>
-    </div>
+    {include file="templates/common/webyContent.tpl"}
     {include file="templates/common/loading.tpl"}
     {include file="templates/common/dashboard.tpl"}
     {include file="templates/common/favorites.tpl"}
