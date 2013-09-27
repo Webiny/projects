@@ -75,6 +75,8 @@ class EditorHandler extends AbstractHandler
         $weby->populate($requestData);
         $weby->setUser($this->user())->save();
 
+		system('varnishadm -T 127.0.0.1:6082 -S /etc/varnish/secret ban req.url == "'.$weby->getPublicUrl(true).'"');
+
         // Add to screenshot queue if requested
         if ($this->request()->post('takeScreenshot', false)) {
             $queue = new ScreenshotQueue();

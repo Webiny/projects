@@ -96,6 +96,10 @@ var AppClass = function (topOffset) {
 		_weby.init();
 	}
 
+    this.isEditor = function() {
+        return false;
+    }
+
 	this.addEventListener = function (obj) {
 		_eventListeners.push(obj);
 		return this;

@@ -38,7 +38,7 @@
 	padding-left: 70px;
 	background: url("../images/sprite2.png") no-repeat -140px -600px;
 	min-width: 210px;
-
+    min-height: 70px;
 }
 
 .editor .header .header-middle .edit-title {

@@ -1,24 +1,16 @@
-{* Description: Weby.io Master Layout
-
- Available blocks:
-    - title
-    - head
-    - content
-    - headerRightTools
-*}
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>{block name="title"}{/block} | Weby.io</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta charset="utf-8">
+    <title>{block name="title"}{/block}</title>
+    <script type="text/javascript">
+        var THEME = '{$viewObject.themeWebPath}';
+        var WEB = '{$viewObject.webPath}';
+    </script>
     {minify type="css"}
         font.css,
         main.css,
-        socialShare.css,
         headerMiddle.css,
-        weby.css,
+        staticPage.css,
         jquery.fancybox.css,
         dialog/dialog.css,
         dialog/dashboardDialog.css,
@@ -26,7 +18,6 @@
         dialog/feedbackDialog.css,
         dialog/keyboardShortcutsDialog.css
     {/minify}
-
     {minify type="js"}
         jquery-2.0.3.min.js,
         jquery-ui-1.9.2.webyio.js,
@@ -37,34 +28,41 @@
         weby/feedback.js,
         weby/webyDashboard.js,
         weby/webyFavorites.js,
+        frontend/staticPage.js
     {/minify}
     <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        var THEME = '{$viewObject.themeWebPath}';
-        var WEB = '{$viewObject.webPath}';
-    </script>
-    {block name="head"}{/block}
 
+    {block name="head"}{/block}
 </head>
-<body class="{block name="body-class"}{/block}">
+<body>
 <div id="fb-root"></div>
 <div id="sharePost"></div>
 
 <div class="header">
-    <div data-role="weby-save" class="saving">
-        <p>Saving...</p>
-    </div>
     <div class="logo">
         <a href="/"><img src="{$viewObject.themeWebPath}images/weby-logo.png"></a>
     </div>
-    {block name="headerMiddle"}{/block}
+    {block name="headerMiddle"}
+    {/block}
     <div class="header-right">
         <ul>
-            {block name="headerRightTools"}{/block}
+                {if $viewObject.user}
+                    <li class="my-webies">
+                        <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
+                    </li>
+                {/if}
+
+                {if $viewObject.user}
+                    {include file="templates/common/userOptions.tpl"}
+                {else}
+                    {include file="templates/pages/includes/authorization.tpl"}
+                {/if}
         </ul>
     </div>
 </div>
-{block name="content"}{/block}
+<div id="page-content">
+    {block name="content"}{/block}
+</div>
 <div class="footer">
     <ul>
         <li>
@@ -86,7 +84,14 @@
     <span><a href="http://www.webiny.com" target="_blank"></a></span>
     {include file="templates/common/feedback.tpl"}
     {include file="templates/common/keyboardShortcuts.tpl"}
+    {include file="templates/common/dashboard.tpl"}
+    {include file="templates/common/favorites.tpl"}
+    {block name="outerTemplates"}{/block}
 </div>
 {include file="templates/common/ga.tpl"}
+</body>
+</html>
+
+
 </body>
 </html>

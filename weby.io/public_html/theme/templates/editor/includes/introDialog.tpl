@@ -1,10 +1,10 @@
 <div class="dialog" id="introduction-dialog" style="display: none">
     <!-- confirmation message -->
     <div class="overlay" style="display: none"></div>
-    <div class="confirmation-message" style="position: absolute; top: 150px; left: 92px; z-index: 10100; display: none">
-        Are you really sure you want to skip the introduction?
+    <div class="confirmation-message" style="position: absolute; top: 84px; left: 70px; z-index: 10100; display: none">
+        <span class="skip-confirmation"></span>
         <p style="text-align: center">
-            <span class="button main" data-role="skip-confirm-no">No</span>
+            <span class="button main" data-role="skip-confirm-no">No, return to the introduction!</span>
             <span data-role="skip-confirm-yes" class="button">Yes</span>
         </p>
     </div>

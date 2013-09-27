@@ -53,11 +53,14 @@ function WebyDashboard() {
                 id: "id"
             }),
             data: function (response) {
-                if (typeof App != 'undefined') {
                     for (var i in response.webies) {
-                        response.webies[i].currentWeby = App.getWeby().getId();
+                        if (typeof App == 'undefined') {
+                            response.webies[i].isEditor = false
+                        } else {
+                            response.webies[i].isEditor = App.isEditor();
+                            response.webies[i].currentWeby = App.getWeby().getId();
+                        }
                     }
-                }
                 return response.webies;
             },
             total: function (response) {

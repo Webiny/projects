@@ -115,7 +115,7 @@ abstract class WebyEntityProperties extends WebyEntityStorage
         if ($rawArray) {
             $tmp = [];
             foreach ($this->_tags as $tag) {
-                $tmp[] = ['id' => $tag['id'], 'tag' => $tag['tag']];
+                $tmp[] = ['id' => $tag['id'], 'tag' => $tag['tag'], 'slug' => $tag['slug']];
             }
             return $tmp;
         }

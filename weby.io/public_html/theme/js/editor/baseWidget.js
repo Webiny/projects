@@ -1062,6 +1062,10 @@ BaseWidget.prototype = {
 		if(widgetBox.right > contentBox.right){
 			this.setPosition(contentBox.right - widgetBox.width - contentBox.left, this._top);
 		}
+
+		if(widgetBox.bottom > contentBox.bottom){
+			this.setPosition(this._left, contentBox.bottom - widgetBox.height - contentBox.top);
+		}
 	},
 
 	/**

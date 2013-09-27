@@ -4,6 +4,8 @@ function FeedbackClass() {
     var _feedbackOpener = $('[data-role="feedback-open"]');
     var _feedbackSender = $('[data-role="feedback-send"]');
 
+    var _keyboardShortcutsOpener = $('[data-role="keyboard-shortcuts-open"]');
+
     var _feedbackMessage = _feedbackDialog.find('textarea');
     var _name = _feedbackDialog.find('input.name');
     var _email = _feedbackDialog.find('input.email');
@@ -120,6 +122,12 @@ function FeedbackClass() {
         if (_formValid()) {
             _sendmail();
         }
+    });
+
+    _keyboardShortcutsOpener.click(function() {
+        $.fancybox($('#keyboard-shortcuts-dialog'), {
+            type: 'inline',
+        });
     });
 
 }

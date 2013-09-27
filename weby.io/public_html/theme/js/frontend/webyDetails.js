@@ -5,7 +5,7 @@ function WebyDetails() {
     var _followButton = $('[data-role="follow-user"]');
     var _flipDetailsButton = $('[data-role="flip-weby-details"]');
     var _favoritedBy = $('.favorited-by');
-
+    var _webyUser = $('[data-role="weby-user"]');
     var _processingFavorites = false;
     var _processingFollowing = false;
 
@@ -123,6 +123,13 @@ function WebyDetails() {
         })
     });
 
+    _webyUser.hover(function () {
+        _topTooltips.show(_webyUser);
+    });
+    _webyUser.mouseout(function () {
+        _topTooltips.hide(_webyUser);
+    });
+
     _showFullDetails.click(function () {
         if (_showFullDetails.hasClass('shown')) {
             $('.full-weby-data').slideUp(300);
@@ -131,6 +138,11 @@ function WebyDetails() {
             $('.full-weby-data').slideDown(300);
             _showFullDetails.addClass('shown')
         }
+    });
+
+    _webyDetails.draggable({
+        containment: [0, 98],
+        handle: $('#weby-details .details-arrow')
     });
 
 }

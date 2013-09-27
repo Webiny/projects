@@ -20,8 +20,15 @@ class UserEntity extends UserEntityCrud
      */
     public static function generateUsername($email)
     {
-        $parts = self::str($email)->explode('@');
-        return $parts->first()->replace('.', '')->val();
+        $username = self::str($email)->explode('@');
+        $username = $username->first()->replace('.', '')->val();
+        $count = 1;
+        $finalUsername = $username;
+        while (self::_sqlCheckUsernameExists($finalUsername)) {
+            $count++;
+            $finalUsername = $username . '.' . $count;
+        }
+        return $finalUsername;
     }
 
     /**
@@ -37,6 +44,22 @@ class UserEntity extends UserEntityCrud
             return false;
         }
         return $user->populate($data);
+    }
+
+    /**
+     * Searches user by username and returns an UserEntity object
+     * @param $username
+     * @return UserEntity|bool
+     */
+    public static function getByUsername($username) {
+        $userId = self::_sqlLoadByUsername($username);
+        if ($userId) {
+            $user = new UserEntity();
+            $user->load($userId);
+            return $user;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -163,7 +186,8 @@ class UserEntity extends UserEntityCrud
      * Toggle following of other users
      * @param UserEntity $user
      */
-    public function toggleFollowing(UserEntity $user) {
+    public function toggleFollowing(UserEntity $user)
+    {
         $this->_sqlToggleFollowing($user->getId());
     }
 
@@ -236,8 +260,9 @@ class UserEntity extends UserEntityCrud
     /**
      * Check if this user is following given user
      */
-    public function isFollowing(UserEntity $user) {
-        return (bool) $this->_sqlCheckIfFollowing($user->_id);
+    public function isFollowing(UserEntity $user)
+    {
+        return (bool)$this->_sqlCheckIfFollowing($user->_id);
     }
 
 }

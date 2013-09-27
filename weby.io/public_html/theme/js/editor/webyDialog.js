@@ -22,11 +22,17 @@ function WebyTitleDialog(parent) {
     var _editing = false;
     var _timer = false;
 
+    var _btnSave = $('[data-role="weby-dialog-save"]');
+
     // Tooltips
     var _tooltips = _webyDialog.kendoTooltip({
         showOn: false,
         position: "top",
         filter: ".has-tooltip",
+        content: function (e) {
+            var target = e.target; // the element for which the tooltip is shown
+            return target.attr('data-tooltip'); // set the element text as content of the tooltip
+        },
         animation: {
             open: {
                 effects: "fade:in",
@@ -76,7 +82,7 @@ function WebyTitleDialog(parent) {
         });
 
         // Save button
-        $('[data-role="weby-dialog-save"]').click(function () {
+        _btnSave.click(function () {
             if (_titleInput.val() != '') {
                 _editing = false;
                 App.getWeby().setTitle(_titleInput.val());
@@ -286,7 +292,6 @@ function WebyTitleDialog(parent) {
                 $('.tags-placeholder').show();
             }
 
-            console.log(_tagsLog);
         })
 
         _tagsData.on('click', '.weby-tag', function () {
@@ -296,7 +301,6 @@ function WebyTitleDialog(parent) {
             if (_tagsData.find('span.weby-tag').length == 0) {
                 $('.tags-placeholder').show();
             }
-            console.log(_tagsLog);
 
         })
     }
@@ -355,7 +359,16 @@ function WebyTitleDialog(parent) {
 
     _titleInput.on('input', function () {
         if (_titleInput.val().length == 50) {
+            _titleInput.attr('data-tooltip', 'Maximum 50 characters allowed.');
+            _tooltips.refresh();
             _tooltips.show(_titleInput);
+        }
+        if (_titleInput.val().length < 50) {
+            _tooltips.hide(_titleInput);
+            _titleInput.attr('data-tooltip', 'Please enter your title.');
+            setTimeout(function() {
+                _tooltips.refresh();
+            }, 200);
         }
     });
 
@@ -419,8 +432,6 @@ function WebyTitleDialog(parent) {
                     if (_tagsData.find('span.weby-tag').length == 0) {
                         _tagsWrapper.find('.tags-placeholder').show();
                     }
-                    console.log(_tagsLog);
-
                 }
                 break;
             case 27: // Esc key
@@ -435,6 +446,16 @@ function WebyTitleDialog(parent) {
         switch (charCode) {
             case 27: // Esc key
                 $.fancybox.close();
+                break;
+        }
+    });
+
+    _webyDialog.find('input').keydown(function (e) {
+        var event = e || window.event;
+        var charCode = event.which || event.keyCode;
+        switch (charCode) {
+            case 13: // Enter key
+                _btnSave.click();
                 break;
         }
     });

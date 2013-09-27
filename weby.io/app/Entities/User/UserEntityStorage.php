@@ -102,11 +102,21 @@ abstract class UserEntityStorage extends EntityAbstract
         return $this->_getDb()->execute($query, $bind);
     }
 
+    /**
+     * Queries the database for user based on his service type (fb, g+ etc.) and service registered email
+     * @param $username
+     * @internal param $email
+     * @return \ArrayObject|bool
+     */
+    protected static function _sqlLoadByUsername($username) {
+        $query = "SELECT id FROM ".self::_getDb()->w_user." WHERE username=? LIMIT 1";
+        $bind = array($username);
+        return self::_getDb()->execute($query, $bind)->fetchValue();
+    }
+
 	/**
 	 * Queries the database for user based on his service type (fb, g+ etc.) and service registered email
-	 *
 	 * @param $email
-	 *
 	 * @return \ArrayObject|bool
 	 */
 	protected static function _sqlLoadByEmail($email) {
@@ -114,6 +124,12 @@ abstract class UserEntityStorage extends EntityAbstract
 		$bind = array($email);
 		return self::_getDb()->execute($query, $bind)->fetchArray();
 	}
+
+    protected static function _sqlCheckUsernameExists($username) {
+        $query = "SELECT id FROM ".self::_getDb()->w_user." WHERE username=? LIMIT 1";
+        $bind = array($username);
+        return self::_getDb()->execute($query, $bind)->fetchValue();
+    }
 
     /**
      * Gets all users that this user is following

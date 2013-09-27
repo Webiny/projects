@@ -34,6 +34,15 @@
     opacity: 0.95;
 }
 
+.dialog .disabling-overlay {
+    z-index: 2000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+}
+
 .load-icon {
     background-image: url(../../images/load.gif);
     width: 16px;
@@ -75,7 +84,7 @@
 .dialog .button {
     color: #fff;
     padding: 7px 11px 10px 11px;
-    margin: 0 0 0 4px;
+    margin: 0 2px 0 2px;
     font-size: 18px;
     border: none;
     font-weight: 400;
@@ -171,3 +180,12 @@
 }
 
 /* ----------------------------- End of dialog CSS ----------------------------- */
+
+/* intro styles (only few were needed so they are here */
+
+.skip-confirmation {
+    display: inline-block;
+    height: 100px;
+    width: 350px;
+    background-image: url(../../images/msg-introduction-skip.png);
+}

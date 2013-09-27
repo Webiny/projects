@@ -110,6 +110,11 @@ var AppClass = function () {
         }
         return true;
     }
+
+    this.isEditor = function() {
+        return true;
+    }
+
     /**
      * Application bootstrap
      */

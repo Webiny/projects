@@ -2,7 +2,7 @@
     <a href="" class="close-dialog"></a>
 
     <h1>My Weby</h1>
-        <input maxlength="50" type="text" id="weby-title-field" class="has-tooltip" title="Please enter your title."
+        <input maxlength="50" type="text" id="weby-title-field" class="has-tooltip" data-tooltip="Please enter your title."
                placeholder="Weby title" value="{if $weby.metaFollow}{$weby.title}{/if}">
     {*
         When Weby is created, by default, meta_follow is false. Also, by default every Weby has
@@ -11,14 +11,14 @@
         (title, tags and description), and then we set the title to empty string, so we force user to write his title.
     *}
 
-        <span id="weby-tags-wrapper" class="has-tooltip" title="Maximum 10 tags allowed.">
+        <span id="weby-tags-wrapper" class="has-tooltip" data-tooltip="Maximum 10 tags allowed.">
             <span class="weby-tags">
                 {foreach from=$weby.tags item=tag}
                     <span data-tag="{$tag.tag}" data-id="{$tag.id}" class="weby-tag">{$tag.tag}<span class="remove-tag"></span></span>
                 {/foreach}
             </span>
             <span style="display: none;" class="load-icon tags-loading"></span>
-            <div id="weby-tag-input" class="tags-editable has-tooltip" title="Your tag is too long (maximum 25 characters)" contenteditable="true"></div>
+            <div id="weby-tag-input" class="tags-editable has-tooltip" data-tooltip="Your tag is too long (maximum 25 characters)" contenteditable="true"></div>
             <span class="tags-placeholder">Enter tags</span>
             <input type="hidden" id="tag-search-value">
             <div id="weby-tags-dropdown">

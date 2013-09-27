@@ -6,6 +6,13 @@ routes:
     - ['', \App\Handlers\PagesHandler, index]
     - ['about', \App\Handlers\PagesHandler, about]
 
+    # WEBIES LISTING
+    - ['/^following\/?(\d+)?$/', \App\Handlers\PagesHandler, listFollowingWebies] #search recently created Webies
+    - ['/^recent\/?(\d+)?$/', \App\Handlers\PagesHandler, listRecentWebies] #search recently created Webies
+    - ['/^tag\/(\S+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByTag] #search Webies by tag
+    - ['user/intro-done', \App\Handlers\UsersHandler, markOnboardingDone]
+    - ['/^user\/([.a-z0-9_-]*)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByUser] #search Webies by user
+
     # USER
     - ['/^tools\/follow\/([0-9]*)$/', \App\Handlers\UsersHandler, ajaxToggleFollowing]
     - ['/^tools\/favorite\/([a-z0-9]*)$/', \App\Handlers\UsersHandler, ajaxToggleFavorite]
@@ -13,15 +20,17 @@ routes:
     # TOOLS
     - ['tools/webies', \App\Handlers\ToolsHandler, ajaxGetWebies]
     - ['tools/webies/tags', \App\Handlers\ToolsHandler, ajaxGetWebiesByTags] # Gets Webies by tags (used also by WP widget)
+
     - ['/^tools\/embedded-hit\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, ajaxEmbeddedHit]
     - ['tools/favorites', \App\Handlers\ToolsHandler, ajaxGetFavorites]
-    - ['tools/tags', \App\Handlers\ToolsHandler, ajaxSearchTags]
+    - ['tools/tags', \App\Handlers\ToolsHandler, ajaxSearchTags] #searches tags when typing them into textbox
     - ['tools/feedback', \App\Handlers\ToolsHandler, ajaxSendFeedback]
     - ['tools/log', \App\Handlers\ToolsHandler, log]
     - ['tools/parse-link', \App\Handlers\LinksHandler, parse]
-    - ['/^tools\/delete-weby\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, deleteWeby]
-    - ['/^tools\/take-screenshot\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, takeScreenshot]
-    - ['/^tools\/screenshot\/([a-z0-9]*)$/', \App\Handlers\ToolsHandler, viewWeby] # render Weby for screenshot
+    - ['/^tools\/delete-weby\/([a-z0-9]{13})$/', \App\Handlers\ToolsHandler, deleteWeby]
+    - ['/^tools\/take-screenshot\/([a-z0-9]{13})$/', \App\Handlers\ToolsHandler, takeScreenshot]
+    - ['/^tools\/screenshot\/([a-z0-9]{13})$/', \App\Handlers\ToolsHandler, viewWeby] # render Weby for screenshot
+    - ['/^tools\/mustache\/weby\/([a-z0-9]{13})$/', \App\Handlers\ToolsHandler, mustacheWeby] # render Weby for screenshot
 
     # EDITOR
     - ['editor/save', \App\Handlers\EditorHandler, save]
@@ -29,7 +38,6 @@ routes:
     - ['editor/dashboard', \App\Handlers\EditorHandler, dashboard]
     - ['editor/upload-image', \App\Handlers\EditorHandler, uploadImage]
     - ['editor/remove-image', \App\Handlers\EditorHandler, removeImage]
-    - ['user/intro-done', \App\Handlers\UsersHandler, markOnboardingDone]
 
     # EMBED
     - ['embed/linkedin', \App\Handlers\EmbedHandler, linkedIn]
@@ -54,6 +62,7 @@ routes:
     - ['backend/stats/ajax-get-active-users-stats', \App\Handlers\StatsHandler, ajaxGetActiveUsersStats]
 
     # GLOBAL ROUTES
-    - ['/^([a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]*)$/', \App\Handlers\PagesHandler, viewWeby] #frontend Weby
-    - ['/^([a-z0-9_-]*)\/([a-z0-9]*)$/', \App\Handlers\EditorHandler, route] #backend editor router
-    - ['/^([a-z0-9_-]*)$/', \App\Handlers\EditorHandler, route] #backend editor router
+    - ['/^([\.a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]{13})\/embed$/', \App\Handlers\PagesHandler, viewWebyEmbed] #embed Weby
+    - ['/^([\.a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]{13})$/', \App\Handlers\PagesHandler, viewWeby] #frontend Weby
+    - ['/^([\.a-z0-9_-]*)\/([a-z0-9]{13})$/', \App\Handlers\EditorHandler, route] #backend editor router
+    - ['/^([\.a-z0-9_-]*)$/', \App\Handlers\EditorHandler, route] #backend editor router

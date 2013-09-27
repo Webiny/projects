@@ -1,22 +1,4 @@
 /** Frontend styles**/
-
-.header-right ul li.register-btn {
-    padding-left: 30px;
-}
-
-.header-right ul li.register-btn a {
-    width: 182px;
-    height: 47px;
-    background-image: url("../images/sprite2.png");
-    background-repeat: no-repeat;
-    background-position: 50% -1455px;
-    display: block;
-}
-
-.header-right ul li.register-btn a:hover {
-    opacity: 0.85;
-}
-
 .weby-details {
     width: 118px;
     position: fixed;
@@ -48,9 +30,9 @@
 }
 
 .weby-details .favorites-icon.added {
-    background-image: url("../images/sprite3.png");
+    background-image: url("../images/sprite2.png");
     background-repeat: no-repeat;
-    background-position: -10px -53px;
+    background-position: -159px -2860px;
 }
 
 .weby-details .weby-stats {
@@ -66,12 +48,25 @@
     min-height: 10px
 }
 
+.weby-details .details-arrow span.handler {
+    height: 5px;
+    width: 120px;
+    margin-bottom: 2px;
+    background-image: url("../images/handler.png");
+    background-repeat: repeat;
+    display: block;
+    float: left;
+    cursor: pointer;
+}
+
 .weby-details .details-arrow a {
     width: 16px;
     height: 15px;
     background: url("../images/sprite2.png") no-repeat -166px -1722px;
     display: block;
-    float: right;
+    position: absolute;
+    left: 112px;
+    top: 15px;
 }
 
 .weby-details .details-arrow a.shown {
@@ -115,6 +110,7 @@
 .weby-details .favorites {
     border-bottom: 1px solid #323232;
     padding-bottom: 10px;
+    margin-top: 3px;
 }
 
 .weby-details .favorites p {

@@ -1,8 +1,9 @@
 <div class="dialog webies-dialog" id="dashboard-dialog" style="display: none">
 
     <div class="dialog-loading">
-        <div class="overlay"></div>
+        <div class="disabling-overlay"></div>
         <span class="load-icon"></span>
+
         <div class="text">
             Loading...
         </div>
@@ -10,7 +11,7 @@
     <div class="delete-confirmation" style="display:none">
         <div class="overlay"></div>
         <div class="message">
-            <img src="{$viewObject.themeWebPath}images/remove-weby.png" />
+            <img src="{$viewObject.themeWebPath}images/remove-weby.png"/>
         </div>
         <div class="actions">
             <a href="javascript:void(0)" data-role="btn-cancel"><span class="button">No, keep it!</span></a>
@@ -38,26 +39,33 @@
             <div class="weby-data left">
                 <h2>${title}</h2>
                 #if(tags.length == 0){#
-                    <p>No tags</p>
+                <p>No tags</p>
                 #}else{#
-                    <h3>Tags</h3>
-                    <ul class="tags-list">
-                        #for(var x=0; x < tags.length; x++){#
-                        <li class="weby-tag white">#= tags[x].tag #</li>
-                        #}#
-                    </ul>
+                <h3>Tags</h3>
+                <ul class="tags-list">
+                    #for(var x=0; x < tags.length; x++){#
+                    <li class="weby-tag white">#= tags[x].tag #</li>
+                    #}#
+                </ul>
                 #}#
             </div>
             <div class="weby-actions right">
-                <p>Edited <time class="passed" datetime="${modified_on}">${modified_on}</time></p>
+                <p>Edited
+                    <time class="passed" datetime="${modified_on}">${modified_on}</time>
+                </p>
                 <p>
                     <span class="tag-info">${hits} hits</span>
                     <span class="tag-info">${favorites} favorites</span></p>
 
                 <p class="buttons">
-                    #if(typeof currentWeby != 'undefined'){#
-                    <a href="javascript: void(0);"><span class="button delete">Delete</span></a>
+                    #if (isEditor){#
+                        #if (currentWeby != id){#
+                        <a href="javascript: void(0);"><span class="button delete">Delete</span></a>
+                        #}#
+                    #} else {#
+                        <a href="javascript: void(0);"><span class="button delete">Delete</span></a>
                     #}#
+
                     <a href="${editor_url}"><span class="button edit">Edit</span></a>
                     <a href="${public_url}"><span class="button main view">View</span></a>
                 </p>

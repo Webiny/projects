@@ -1,6 +1,6 @@
 .weby-tag {
-    background: #27b6ac url("../../images/sprite3.png") no-repeat -20px -11px;
-    border: none;
+    background: #27b6ac url("../../images/sprite2.png") no-repeat -169px -2678px;
+    border : none;
     color: white;
     height: 18px;
     font-style: normal;
@@ -30,9 +30,7 @@
     display: inline-block;
     height: 9px;
     width: 9px;
-    background: url('../../images/sprite3.png');
-    background-repeat: none;
-    background-position: 29px 64px;
+    background: #27b6ac url("../../images/sprite2.png") no-repeat -170px -2779px;
     margin: 2px 0 0 3px;
 }
 
@@ -113,7 +111,7 @@
 
 #tags-list li {
     color: black;
-	padding: 5px;
+    padding: 5px;
 }
 
 #tags-list li:hover {
