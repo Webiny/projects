@@ -50,7 +50,7 @@ function Weby() {
             img.load(function () {
                 $(this).remove();
                 _progress.next();
-                _background.render();ww
+                _background.render();
                 _load(weby.content);
             });
             $('body').append(img);
