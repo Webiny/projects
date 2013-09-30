@@ -122,27 +122,6 @@ function checkBrowser(cookieKey, onClose) {
 		return true;
 	}
 
-
-	$.fancybox($('#unsupported-browser-dialog'), {
-		beforeClose: function(){
-			var date = new Date();
-			date.setDate(date.getDate() + 7);
-			// Save to cookie
-			$.cookies.set(cookieKey, true, {
-				path: '/',
-				expiresAt: date
-			});
-		},
-		afterClose: function () {
-			setTimeout(onClose);
-		},
-		width: '500px',
-		height: '320px',
-		autoSize: false,
-		modal: true
-	});
-	return false;
-
 	var browser = BrowserDetect.browser;
 	var version = BrowserDetect.version;
 
@@ -159,11 +138,12 @@ function checkBrowser(cookieKey, onClose) {
 		} else {
 			$.fancybox($('#unsupported-browser-dialog'), {
 				beforeClose: function(){
-					var today = new Date();
+					var date = new Date();
+					date.setDate(date.getDate() + 7);
 					// Save to cookie
 					$.cookies.set(cookieKey, true, {
 						path: '/',
-						expiresAt: today.setDate(today.getDate() + 7)
+						expiresAt: date
 					});
 				},
 				afterClose: function () {
