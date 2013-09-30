@@ -45,9 +45,17 @@ class ToolsHandler extends AbstractHandler
 
     public function takeScreenshot($webyId)
     {
-        if ($this->request()->getClientIp() != $this->app()->getConfig()->screenshots->ip || !$this->app()->getConfig()->screenshots->enabled) {
+
+		if(!$this->app()->getConfig()->screenshots->enabled){
+			$this->request()->redirect($this->app()->getConfig()->app->web_path);
+		}
+
+		$ips = $this->app()->getConfig()->screenshots->ip->toArray(true);
+
+        if (!$ips->inArray($this->request()->getClientIp())) {
             $this->request()->redirect($this->app()->getConfig()->app->web_path);
         }
+
         $weby = new WebyEntity();
         $weby->load($webyId);
 

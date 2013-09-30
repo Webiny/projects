@@ -3,7 +3,6 @@
     kendo.default.min.css,
     widget.css,
     loading.css,
-    webyDetails.css,
     widgets/textWidget.css,
     widgets/mapWidget.css,
     widgets/twitterWidget.css,
@@ -16,7 +15,6 @@
 {minify type="js" obfuscate="true"}
     mouseEvent.js,
     frontend/weby.js,
-    frontend/webyDetails.js,
     weby/webyLogger.js,
     weby/webyDrag.js,
     embed/webySocialShare.js,

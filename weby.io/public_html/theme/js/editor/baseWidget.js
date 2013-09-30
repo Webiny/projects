@@ -805,8 +805,15 @@ BaseWidget.prototype = {
 	},
 
 	showFailedToLoad: function () {
+		if(this.html('.widget-unavailable-overlay').length > 0){
+			return;
+		}
+
 		this.html().append('<div class="widget-unavailable-overlay"><p><span class="smiley-face"></span>We couldn\'t load this content!<br/>Try reloading the page.</p></div>');
 		this.body('*:not(".widget-unavailable-overlay")').remove();
+		if(this._height < 90){
+			this.html('.widget-unavailable-overlay').html('<p><span class="smiley-face"></span>We couldn\'t load this content!</p></div>');
+		}
 		this._resize();
 	},
 
@@ -1062,9 +1069,12 @@ BaseWidget.prototype = {
 			margin: -this._padding + 'px 0 0 -' + this._padding + 'px'
 		});
 
-		this.html('.widget-unavailable-overlay p').css({
-			marginTop: ((this._html.outerHeight() / 2) - 70) + 'px'
-		});
+		if(this._height > 90){
+			this.html('.widget-unavailable-overlay p').css({
+				marginTop: ((this._html.outerHeight() / 2) - 70) + 'px'
+			});
+		}
+
 	},
 
 	_checkPosition: function () {

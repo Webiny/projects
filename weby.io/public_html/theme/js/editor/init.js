@@ -31,7 +31,7 @@ $(function () {
 		App.init();
 	}
 
-	if(checkBrowser("browser.editor", function(){
+	if(checkBrowser("weby_browser_editor", function(){
 		_loadApp();
 	})){
 		_loadApp();

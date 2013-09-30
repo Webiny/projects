@@ -100,6 +100,10 @@ function WebyVideoBackground(el) {
 		tooltip: {
 			enabled: false
 		},
+		change: function (e) {
+			_volume = e.value;
+			_player.setVolume(_volume);
+		},
 		slide: function (e) {
 			_volume = e.value;
 			_player.setVolume(_volume);

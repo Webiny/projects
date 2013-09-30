@@ -43,6 +43,9 @@
 	background: #f25b2b url(../images/sprite2.png) 0 0 no-repeat;
 	text-decoration: none;
 	text-indent: -9999px;
+	border-left: 1px solid #f26a3f;
+	border-right: 1px solid #dc5327;
+	border-top: 3px solid #f26f45;
 }
 
 #weby-toolbar-wrapper .tool-icon:hover {
@@ -73,6 +76,9 @@
 #weby-toolbar-wrapper .background {
 	background-color: #27b6ac;
 	background-position: -106px -94px;
+	border-left: 1px solid #2bc6ba;
+	border-right: 1px solid #229d94;
+	border-top: 3px solid #2bc6ba;
 }
 
 #weby-toolbar-wrapper .background:hover{
@@ -80,6 +86,9 @@
 }
 
 #weby-toolbar-wrapper .document {
+	border-left: 1px solid #2bc6ba;
+	border-right: 1px solid #229d94;
+	border-top: 3px solid #2bc6ba;
 	background-color: #27b6ac;
 	background-position: -174px -94px;
 }
