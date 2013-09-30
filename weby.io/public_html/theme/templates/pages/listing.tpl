@@ -13,7 +13,7 @@
 
 {block name="headerMiddle"}
     <div class="header-middle header-middle-wrap">
-        <h2>{block name="headTitle"}{/block}</h2>
+        {block name="headTitle"}{/block}
     </div>
 {/block}
 

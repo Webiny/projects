@@ -41,6 +41,7 @@ class ViewContainer implements \ArrayAccess
         $this->themeWebPath = $appCfg->theme_web_path;
         $this->storageAbsPath = $appCfg->storage_abs_path;
         $this->storageWebPath = $appCfg->storage_web_path;
+        $this->mode = $appCfg->mode;
 
         // Get current user
         $this->_getUserData();

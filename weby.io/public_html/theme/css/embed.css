@@ -151,3 +151,7 @@ body {
 .embed .loading-overlay{
 	top: 98px;
 }
+
+.bootstrap {
+	display: none;
+}

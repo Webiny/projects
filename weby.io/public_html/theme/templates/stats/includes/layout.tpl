@@ -31,7 +31,7 @@
         jquery.fancybox.pack.js,
         time.js,
         timePassed.js,
-        weby/feedback.js
+        weby/footer.js
     {/minify}
 
     <script type="text/javascript">

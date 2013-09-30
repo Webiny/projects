@@ -175,9 +175,7 @@ function WebyTitleDialog(parent) {
                 var duplicateTag, maxTags = 5, totalTags = 0;
                 _tagsWrapper.find('.load-icon').show();
                 $.ajax({
-                    url: WEB + 'tools/tags/?search=',
-                    method: 'post',
-                    data: {search: $.trim(search)},
+                    url: WebyTitleDialog.TAG_FINDER + '?tag='+$.trim(search)+'&t='+  new Date().getTime(),
                     success: function (response) {
                         _tagsWrapper.find('.load-icon').hide();
                         if (response) {
@@ -358,12 +356,12 @@ function WebyTitleDialog(parent) {
     }
 
     _titleInput.on('input', function () {
-        if (_titleInput.val().length == 50) {
+        if (_titleInput.val().length == 150) {
             _titleInput.attr('data-tooltip', 'Maximum 50 characters allowed.');
             _tooltips.refresh();
             _tooltips.show(_titleInput);
         }
-        if (_titleInput.val().length < 50) {
+        if (_titleInput.val().length < 150) {
             _tooltips.hide(_titleInput);
             _titleInput.attr('data-tooltip', 'Please enter your title.');
             setTimeout(function() {

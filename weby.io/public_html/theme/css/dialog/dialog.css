@@ -70,6 +70,10 @@
     padding: 0;
 }
 
+.dialog h2 a {
+    color: #fff;
+    text-decoration: none;
+}
 .dialog input, .dialog textarea {
     width: 450px;
     padding: 10px 10px 10px 10px;
@@ -187,5 +191,5 @@
     display: inline-block;
     height: 100px;
     width: 350px;
-    background-image: url(../../images/msg-introduction-skip.png);
+    background-image: url(../../images/msg/msg-introduction-skip.png);
 }

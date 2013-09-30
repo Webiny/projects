@@ -20,10 +20,37 @@
     position: relative;
 }
 
-.header-icon.default-user-avatar {
-
+.header-middle.header-middle-wrap .header-icon {
+    position: absolute;
+    height: 36px;
+    width: 36px;
+    display: block;
+    top: 20px;
+    left: 14px;
 }
 
+.header-middle.header-middle-wrap .header-icon.tag {
+    background: url(../images/sprite2.png) no-repeat -154px -2466px;
+}
+
+.header-middle.header-middle-wrap .header-icon.userAvatar {
+    background-image: url(../images/sprite2.png);
+    background-position: -152px -3294px;
+}
+
+.header-middle.header-middle-wrap .header-icon.following-users-webies {
+    background-image: url(../images/sprite2.png);
+    background-position: -154px -3294px;
+}
+
+.header-middle.header-middle-wrap .header-icon.recent-webies {
+    background-image: url("../images/sprite2.png");
+    background-repeat: no-repeat;
+    background-position: -153px -3490px;
+}
+
+
+/* --- Tpls and boxes for listing --- */
 .box .content .image-weby-link {
     position: absolute;
     width: 100%;
@@ -45,14 +72,13 @@
 }
 
 .tpl-holder {
-    margin: 30px;
+    margin: 30px 30px 0 30px;
 }
 
 .tpl1, .tpl2, .tpl3, .tpl4, .tpl5 {
     margin: 0 auto;
     width: 1165px;
     position: relative;
-    height: 980px
 }
 
 .box {
@@ -202,12 +228,17 @@
 }
 
 .pagination {
+    line-height: 17px;
     position: relative;
     text-align: center;
     width: 1168px;
     background-image: url(../images/404-white-transparent-bg.png);
     padding: 10px;
     margin: 0 auto 0 auto;
+}
+
+.pagination .load-icon {
+    margin-right: 3px;
 }
 
 .pagination ul {
@@ -266,6 +297,10 @@
     margin-top: 10px;
     display: inline-block;
     float: left;
+    width: 161px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .box .weby-info h2 {
@@ -313,4 +348,15 @@
 
 .box .weby-info ul li.date span {
     float: left;
+}
+
+/* error message */
+
+.error-text {
+   margin-top: 100px;
+}
+
+
+.error-text p.message{
+    text-align: center;
 }

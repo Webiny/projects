@@ -5,16 +5,18 @@ namespace App\Handlers;
 use App\AppTrait;
 use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
+use App\HelperTrait;
 use App\Lib\AbstractHandler;
 use App\Lib\Stats\Stats;
 use App\Lib\UserTrait;
+use App\Lib\View;
 use Webiny\Component\Http\HttpTrait;
 use Webiny\Component\Security\Authentication\Providers\Http\Http;
 use Webiny\Component\Security\SecurityTrait;
 
 class PagesHandler extends AbstractHandler
 {
-    use SecurityTrait, HttpTrait, AppTrait, UserTrait;
+    use SecurityTrait, HttpTrait, AppTrait, UserTrait, HelperTrait;
 
     /**
      * Limit when showing lists pages (depends on used layout)
@@ -62,264 +64,115 @@ class PagesHandler extends AbstractHandler
     }
 
     /**
-     * Shows 404 page
-     */
-    public function page404()
-    {
-    }
-
-    /**
-     * Shows about page
-     */
-    public function about()
-    {
-    }
-
-    /**
-     * Gets recent Webies
-     * @param int $page         Number of page
-     * @internal param \App\Handlers\ID $user of tag
-     * @internal param $json
+     * Lists Webies from certain user
+     * @param int $page
      */
     public function listRecentWebies($page = 1)
     {
-        $json = $this->request()->post('json');
-        $this->page = $page;
-        if ($json) {
-            $result = WebyEntity::listRecentWebies($page, $this->_listLimit);
-            if ($result->count()) {
-                $totalWebiesCount = $result[0]['total_count'];
-                $pagination = $this->_getNavigation($totalWebiesCount, $page, $this->_listLimit);
+        $data = WebyEntity::listRecentWebies($page, $this->_listLimit);
+        $this->_listWebies($data, $page);
+    }
 
-                $webiesArr = [];
-                $weby = new WebyEntity();
-                foreach ($result as $w) {
-                    $weby->load($w['id']);
-                    $webiesArr[] = $weby->toListArray();
-                }
+    /**
+     * Lists Webies from users that this user is following
+     * @param int $page
+     */
+    public function listFollowingWebies($page = 1)
+    {
+        if (!$this->user()) {
+            $cfg = $this->app()->getConfig()->app;
+            $this->request()->redirect($cfg->web_path, 404);
+        }
+        $data = WebyEntity::listFollowingWebies($this->user(), $page, $this->_listLimit);
+        $this->_listWebies($data, $page);
+    }
 
-                $this->ajaxResponse(false, '', ['webies' => $webiesArr, 'pagination' => $pagination]);
-            }
-            $this->ajaxResponse(false, '', []);
+    /**
+     * Lists Webies by username
+     * @param $username
+     * @param int $page
+     * @internal param $userId
+     */
+    public function listWebiesByUser($username, $page = 1)
+    {
+        $this->username = $username;
+
+        $webyUser = UserEntity::getByUsername($username);
+        $this->webyUser = $webyUser;
+        if (!$webyUser) {
+            $this->html = View::getInstance()->fetch('templates/pages/includes/smartyListEmpty.tpl');
+        } else {
+            $data = WebyEntity::listWebiesByUser($username, $page, $this->_listLimit);
+            $this->_listWebies($data, $page);
         }
     }
 
     /**
-     * Gets Webies by user that current user is following
+     * Lists Webies by tag
+     * @param $slug             All searches are made not by tag directly, it's done by slug
+     * @param int $page
+     * @internal param $userId
+     */
+    public function listWebiesByTag($slug, $page = 1)
+    {
+        $data = WebyEntity::listWebiesByTag($slug, $page, $this->_listLimit);
+        $this->_listWebies($data, $page);
+        $this->searchValue = $slug;
+    }
+
+    public function page404()
+    {
+        $this->recentTags = WebyEntity::getRecentTags(10);
+        header("HTTP/1.0 404 Not Found");
+    }
+
+    /**
+     * Gets Webies for listing
+     * @param $result
      * @param int $page         Number of page
      * @internal param \App\Handlers\ID $user of tag
      * @internal param $json
      */
-    public function listFollowingWebies($page = 1)
+    private function _listWebies($result, $page = 1)
     {
         $json = $this->request()->post('json');
-        $this->page = $page;
-        if (!$this->user()) {
-            $this->request()->redirect($this->app()->getConfig()->app->web_path);
-        }
-        if ($json) {
-            $result = WebyEntity::listFollowingWebies($this->user()->getId(), $page, $this->_listLimit);
-            if ($result->count()) {
-                $totalWebiesCount = $result[0]['total_count'];
-                $pagination = $this->_getNavigation($totalWebiesCount, $page, $this->_listLimit);
+        $data['webies'] = [];
+        $data['count'] = 0;
+        $data['pagination'] = '';
+        $data['page'] = $this->page = $page;
 
-                $webiesArr = [];
+        if ($result->count()) {
+            $data['count'] = $result->count();
+
+            $data['count'] = $result[0]['total_count'];
+            $data['pagination'] = $this->_getNavigation($data['count'], $page, $this->_listLimit);
+
+            foreach ($result as $w) {
                 $weby = new WebyEntity();
-                foreach ($result as $w) {
-                    $weby->load($w['id']);
-                    $webiesArr[] = $weby->toListArray();
-                }
-
-                $this->ajaxResponse(false, '', ['webies' => $webiesArr, 'pagination' => $pagination]);
+                $weby->load($w['id']);
+                $data['webies'][] = $weby->toListArray();
             }
-            $this->ajaxResponse(false, '', []);
-        }
-    }
 
-    /**
-     * Searching Webies by a single user (eg. when clicking on a tag that directly leads to this action)
-     * @param $username              ID of tag
-     * @param int $page         Number of page
-     * @internal param $json
-     */
-    public function listWebiesByUser($username, $page = 1)
-    {
-        $json = $this->request()->post('json');
-        $this->page = $page;
-        if ($json) {
-            $result = WebyEntity::listWebiesByUser($username, $page, $this->_listLimit);
-            if ($result->count()) {
-                $totalWebiesCount = $result[0]['total_count'];
-                $pagination = $this->_getNavigation($totalWebiesCount, $page, $this->_listLimit);
-
-                $webiesArr = [];
-                $weby = new WebyEntity();
-                foreach ($result as $w) {
-                    $weby->load($w['id']);
-                    $webiesArr[] = $weby->toListArray();
-                }
-
-                $this->ajaxResponse(false, '', ['webies' => $webiesArr, 'pagination' => $pagination]);
-            }
-            $this->ajaxResponse(false, 'End of results', []);
-        } else {
-            $this->searchingUser = UserEntity::getByUsername($username);
-        }
-    }
-
-    /**
-     * Searching Webies by a single tag (eg. when clicking on a tag that directly leads to this action)
-     * @param $tag              ID of tag
-     * @param int $page         Number of page
-     * @internal param $json
-     */
-    public function listWebiesByTag($tag, $page = 1)
-    {
-        $this->tag = $tag;
-        $this->page = $page;
-        $json = $this->request()->post('json');
-        if ($json) {
-            $result = WebyEntity::listWebiesByTag($tag, $page, $this->_listLimit);
-            if ($result->count()) {
-                $totalWebiesCount = $result[0]['total_count'];
-                $pagination = $this->_getNavigation($totalWebiesCount, $page, $this->_listLimit);
-
-                $webiesArr = [];
-                $weby = new WebyEntity();
-                foreach ($result as $w) {
-                    $weby->load($w['id']);
-                    $webiesArr[] = $weby->toListArray();
-                }
-
-                $this->ajaxResponse(false, '', ['webies' => $webiesArr, 'pagination' => $pagination]);
-            }
-            $this->ajaxResponse(false, '', []);
-        }
-    }
-
-    /**
-     * Generates pagination
-     * @param $count
-     * @param $page
-     * @param $diplaynum
-     * @param bool $hasP1
-     * @param bool $returnArray
-     * @return array|string
-     */
-    private function _getNavigation($count, $page, $diplaynum, $hasP1 = TRUE, $returnArray=false)
-    {
-        $links = array('prev'=>'','next'=>'','pages'=>array());
-        if ($count < $diplaynum || $diplaynum < 1)
-        {
-            if($returnArray)
-            {
-                return array('html'=>'', 'array'=>$links);
-            }
-            return;
-        }
-
-        $output = "";
-        $numOfPages = ceil($count / $diplaynum);
-        $totalOfPages = $numOfPages;
-
-        if (($page + 9) > $numOfPages) {
-            $numOfPages = $numOfPages;
-            $cur_page = $page - 5;
-            if ($cur_page <= 0) {
-                $cur_page = 1;
+            // If json is set to true, then just output json (for ajax requests)
+            if ($json) {
+                $this->ajaxResponse(false, '', $data);
+            } else {
+                $data['tplId'] = rand(1, 5);
+                $this->html = View::getInstance()->fetch('templates/pages/includes/smartyListBox.tpl', $data);
             }
         } else {
-            if (($page - 5) > 0) {
-                $numOfPages = $page + 5;
+            // If json is set to true, then just output json (for ajax requests)
+            if ($json) {
+                $this->ajaxResponse(false, '', $data);
             } else {
-                $numOfPages = 10;
+                $this->html = View::getInstance()->fetch('templates/pages/includes/smartyListEmpty.tpl');
             }
-            $cur_page = $page - 5;
-            if ($cur_page <= 0) {
-                $cur_page = 1;
-            }
-        }
-
-        if (preg_match('/([0-9]{1,9})$/', $_SERVER ['REQUEST_URI'])) {
-            $page_uri = preg_replace('/([0-9]{1,9})$/', '{page}', $_SERVER ['REQUEST_URI']);
-        } else {
-            $urlData = parse_url($_SERVER ['REQUEST_URI']);
-            if (isset($urlData['query']) && $urlData['query'] != "") {
-                $page_uri = $_SERVER ['REQUEST_URI'] . '&{page}';
-            } else {
-                $page_uri = $_SERVER ['REQUEST_URI'] . '?{page}';
-            }
-        }
-
-        if (!preg_match("/page={page}/", $page_uri)) {
-            $page_uri = $page_uri;
-        }
-
-        for ($i = $cur_page; $i <= $numOfPages; $i++) {
-            if (!$hasP1 && $i == 1) {
-                $tpage_uri = str_replace("?{page}", "", $page_uri);
-                $tpage_uri = str_replace("&{page}", "", $tpage_uri);
-                if ($i == $page) {
-                    $cpLink = "<a class=\"pagination-active\" href=\"" . $tpage_uri . "\">$i</a>";
-                    $output .= $cpLink."\n";
-                    $selected = true;
-                } else {
-                    $cpLink = "<a href=\"" . $tpage_uri . "\">$i</a>";
-                    $output .= $cpLink."\n";
-                    $selected = false;
-                }
-                $links['pages'][] = array('href'=>$tpage_uri,'page'=>$i,'selected'=>$selected);
-            } else {
-                if ($i == $page)
-                {
-                    $href = str_replace("{page}", $i, $page_uri);
-                    $output .= "<a class=\"pagination-active\" href=\"" . $href . "\">$i</a>\n";
-                    $selected = true;
-                } else
-                {
-                    $href = str_replace("{page}", $i, $page_uri);
-                    $output .= "<a href=\"" . $href . "\">$i</a>\n";
-                    $selected = false;
-                }
-                $links['pages'][] = array('href'=>$href,'page'=>$i,'selected'=>$selected);
-            }
-        }
-
-        $previous_link = "\n";
-        if(($page - 1) >= 1)
-        {
-            if(($page-1)==1 && !$hasP1)
-            {
-                $href = str_replace("?{page}", "", $page_uri);
-                $href = str_replace("&{page}", "", $href);
-            }else{
-                $href = str_replace("{page}", $page - 1, $page_uri);
-            }
-
-            $previous_link = "<a class=\"prev\" href=\"" . $href . "\">  &lt;&lt; </a>";
-            $links['prev'] = $href;
-        }
-
-        $next_link = "\n";
-        if(($page + 1) <= $numOfPages)
-        {
-            $href = str_replace("{page}", $page + 1, $page_uri);
-            $next_link = "<a class=\"next\" href=\"" . $href . "\">  &gt;&gt; </a>";
-            $links['next'] = $href;
-        }
-
-        $link = '<p class="paging">' . $previous_link . $output . $next_link . '</p>';
-
-        if($returnArray)
-        {
-            return array('html'=>$link, 'array'=>$links);
-        }else{
-            return $link;
         }
     }
 
     /**
-     * Used for checking request, if user has edited an URL, we will automatically redirect them to correct one
+     * Used for checking request, if user has edited a URL, we will automatically redirect them to correct one
+	 *
      * @param $weby WebyEntity
      * @param $user String
      * @param $slug String

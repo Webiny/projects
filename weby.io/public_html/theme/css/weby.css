@@ -1,7 +1,20 @@
 #workspace {
 	overflow:auto;
 	position:relative;
+	cursor: hand;
+	cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+}
 
+#workspace.grabbing, #workspace.grabbing .widget {
+	cursor: grabbing;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 #content {
@@ -11,10 +24,6 @@
 	overflow: hidden;
 	z-index: 0;
 	background-attachment: local;
-	cursor: hand;
-	cursor: grab;
-	cursor: -moz-grab;
-	cursor: -webkit-grab;
 }
 
 #weby-background-color{
@@ -28,6 +37,7 @@
 }
 
 #weby-background-image{
+	font-family: "FixFont";
 	z-index: 2;
 	pointer-events:none;
 }
@@ -35,20 +45,10 @@
 #weby-background-video{
 	position: absolute;
 	overflow: hidden;
-	top: 98px;
+	top: 0px;
 	left: 0;
 	z-index: 0;
 	pointer-events:none;
-}
-
-#content.grabbing, #content.grabbing .widget {
-	cursor: grabbing;
-	cursor: -moz-grabbing;
-	cursor: -webkit-grabbing;
-	-moz-user-select: -moz-none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
 }
 
 ::-webkit-scrollbar {
@@ -155,15 +155,15 @@ body.editor .k-widget.k-window.k-window-titleless{
 	width: 700px !important;
 }
 
-#content.hide-content {
+#workspace.hide-content {
 	cursor: hand;
 }
 
-.editor #content.hide-content .widget-body {
+.editor #workspace.hide-content .widget-body {
 	visibility: hidden;
 }
 
-.editor #content.hide-content .widget {
+.editor #workspace.hide-content .widget {
 	box-shadow: none !important;
 	background-color: #ffffff !important;
 	opacity: 1 !important;

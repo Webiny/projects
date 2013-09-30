@@ -5,12 +5,13 @@ namespace App\Entities\Weby;
 use App\AppTrait;
 use App\Entities\User\UserEntity;
 use App\Lib\UserTrait;
+use Webiny\Component\Cache\CacheTrait;
 use Webiny\Component\StdLib;
 
 class WebyEntity extends WebyEntityCrud
 {
 
-    use AppTrait, UserTrait;
+    use AppTrait, UserTrait, CacheTrait;
 
 
     /**
@@ -25,7 +26,7 @@ class WebyEntity extends WebyEntityCrud
             'favoritedCount' => $this->getFavoriteCount(),
             'hitsCount' => $this->getTotalHits(),
             'publicUrl' => $this->getPublicUrl(),
-            'createdOn' => $this->getCreatedOn(),
+            'createdOn' => date('Y-m-d H:i:s', strtotime($this->getCreatedOn())),
             'images' => [
                 'square' => $this->getImage('frontend-square')->getUrl(),
                 'vertical' => $this->getImage('frontend-vertical')->getUrl(),
@@ -34,24 +35,69 @@ class WebyEntity extends WebyEntityCrud
         ];
     }
 
-    /**
-     * Gets all Webies for given user
-     *
-     * @param UserEntity $user
-     *
-     * @return array
-     */
-    public static function getAllByUser(UserEntity $user)
+    public function getSummaryData()
     {
-        $webies = self::_sqlLoadByUser($user);
-        $tmp = [];
-        foreach ($webies as $wId) {
-            $weby = new WebyEntity();
-            $tmp[] = $weby->load($wId);
-        }
+        $data = $this->cache()->read('weby.json.' . $this->_id);
 
-        return $tmp;
+		if(!$data) {
+			$data = [
+				'otherFavoriteCount' => $this->getCountOfMoreUsers(),
+				'hits'               => $this->getTotalHits(),
+				'webyUser'           => [
+					'id'        => $this->getUser()->getId(),
+					'name'      => $this->getUser()->getUsername(),
+					'avatar'    => $this->getUser()->getAvatarUrl(),
+					'followers' => $this->getUser()->getFollowingUsersCount()
+				],
+				'tags'               => $this->getTags(true),
+				'shareCount'         => $this->getShareCount()
+			];
+
+			$this->cache()->save('weby.json.' . $this->_id, json_encode($data));
+		} else {
+			$data = json_decode($data, true);
+		}
+
+		if($this->user()) {
+			$data['currentUser'] = [
+				'id'          => $this->user()->getId(),
+				'name'        => $this->user()->getFirstName() . ' ' . $this->user()->getLastName()[0] . '.',
+				'avatar'      => $this->user()->getAvatarUrl(),
+				'isFollowing' => $this->user()->isFollowing($this->getUser())
+			];
+		} else {
+			$data['currentUser'] = false;
+		}
+
+		// This must not be cached
+		$data['favoritedBy'] = $this->getUsersFavorited(true);
+		$data['favoriteCount'] = $this->getFavoriteCount();
+		$data['isFavorited'] = $this->inUsersFavorites();
+
+
+		return json_encode($data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+	}
+
+    public static function getRecentTags($limit = 10) {
+        return self::_sqlGetRecentTags($limit);
     }
+	/**
+	 * Gets all Webies for given user
+	 *
+	 * @param UserEntity $user
+	 *
+	 * @return array
+	 */
+	public static function getAllByUser(UserEntity $user) {
+		$webies = self::_sqlLoadByUser($user);
+		$tmp = [];
+		foreach ($webies as $wId) {
+			$weby = new WebyEntity();
+			$tmp[] = $weby->load($wId);
+		}
+
+		return $tmp;
+	}
 
     /**
      * Searches database for Webies with given single tag attached
@@ -70,26 +116,28 @@ class WebyEntity extends WebyEntityCrud
     }
 
     /**
-     * Searches database for Webies from given user
+     * Searches database for recent Webies
      */
-    public static function listRecentWebies($userId, $page, $limit = 9)
+    public static function listRecentWebies($page, $limit = 9)
     {
-        return self::_sqlGetRecentWebies($userId, $page, $limit);
+        return self::_sqlGetRecentWebies($page, $limit);
     }
 
     /**
      * Searches database for Webies from given user
      */
-    public static function listFollowingWebies($page, $limit = 9)
+    public static function listFollowingWebies(UserEntity $user, $page, $limit = 9)
     {
-        return self::_sqlGetFollowingWebies($page, $limit);
+        return self::_sqlGetFollowingWebies($user->getId(), $page, $limit);
     }
 
     /**
      * Searches for tags (when entering new tag)
-     * @param $search
+     *
+     * @param      $search
      * @param bool $json
      * @param bool $addSearchingTag
+     *
      * @return bool|\Webiny\Component\StdLib\StdObject\ArrayObject\ArrayObject
      */
     public static function searchTags($search, $json = false, $addSearchingTag = false)
@@ -105,25 +153,36 @@ class WebyEntity extends WebyEntityCrud
         }
         if ($addSearchingTag && !$found) {
             if (!$data->inArray($search)) {
-                $data->append(self::arr(['id' => 0, 'tag' => $search]));
+                $data->append(self::arr([
+                    'id' => 0,
+                    'tag' => $search
+                ]));
             }
         }
         if ($data->count()) {
             if ($json) {
                 $tmp = [];
                 foreach ($data as $tag) {
-                    $tmp[] = ['id' => $tag['id'], 'tag' => $tag['tag']];
+                    $tmp[] = [
+                        'id' => $tag['id'],
+                        'tag' => $tag['tag']
+                    ];
                 }
+
                 return json_encode($tmp);
             }
+
             return $data;
         }
+
         return false;
     }
 
     /**
      * Inserts new tag into table, this DOES NOT bind given tag to Weby
+     *
      * @param $tag
+     *
      * @return bool|Mixed
      */
     public static function insertTag($tag)
@@ -140,6 +199,7 @@ class WebyEntity extends WebyEntityCrud
         if ($this->user()) {
             return $this->user()->inFavorites($this);
         }
+
         return false;
     }
 
@@ -169,7 +229,8 @@ class WebyEntity extends WebyEntityCrud
      */
     public function toJson()
     {
-        return json_encode($this->toArray(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+        return json_encode($this->toArray(),
+            JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
     }
 
@@ -200,6 +261,7 @@ class WebyEntity extends WebyEntityCrud
             return $this->_images->key($tag);
         }
         $this->_images[$tag] = new WebyImage($this->_id, $tag);
+
         return $this->_images[$tag];
     }
 

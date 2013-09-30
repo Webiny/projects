@@ -164,6 +164,21 @@
 	background-color: #f25b2b;
 }
 
+.widget-unavailable-overlay p {
+	display: block;
+	background-color: #f25b2b;
+	text-align: center;
+	font-size: 20px;
+	color: #fff;
+	padding: 20px;
+}
+
+.widget-unavailable-overlay span.smiley-face {
+	display: block;
+	height: 25px;
+	background: url("../images/sprite2.png") no-repeat 50% -2580px;
+}
+
 .widget-disabled-overlay {
 	float: left;
 	position: absolute;

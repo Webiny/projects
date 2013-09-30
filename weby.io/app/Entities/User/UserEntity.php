@@ -51,7 +51,8 @@ class UserEntity extends UserEntityCrud
      * @param $username
      * @return UserEntity|bool
      */
-    public static function getByUsername($username) {
+    public static function getByUsername($username)
+    {
         $userId = self::_sqlLoadByUsername($username);
         if ($userId) {
             $user = new UserEntity();
@@ -63,9 +64,91 @@ class UserEntity extends UserEntityCrud
     }
 
     /**
+     * @param bool $array
+     * @return array|string
+     */
+    public function getFollowers($array = false)
+    {
+        $followersData = $this->_sqlGetFullUsersFollowing();
+
+        $followers = [];
+        $this->_usersFollowingCount = 0;
+        if ($followersData->count()) {
+            $this->_usersFollowingCount = $followersData[0]['total_count'];
+            foreach ($followersData as $f) {
+                $user = new UserEntity();
+                if ($user->load($f['id'])) {
+                    $followers[] = $user;
+                }
+            }
+        }
+        // If JSON was true, then we have to convert all objects to JSON and return that
+        if ($array) {
+            $tmp = [];
+            foreach ($followers as $f) {
+                /**@var $f \App\Entities\User\UserEntity */
+                $tmp[] = ['id' => $f->getId(),
+                    'username' => $f->getUsername(),
+                    'avatarUrl' => $f->getAvatarUrl(),
+                    'usersFollowingCount' => $f->getUsersFollowingCount()
+                ];
+            }
+
+            return json_encode($tmp);
+        }
+
+        return $followers;
+    }
+
+    /**
+     * Returns favorite Webies, default is array of objects, but can be set to JSON via parameter(true)
+     * @param bool $json
+     * @return array|null|string
+     */
+    public
+    function getFullUsersFollowing($json = false)
+    {
+        // Check to see if we already have loaded all favorites
+        if (is_null($this->_followingWebies)) {
+            $this->_followingWebies = $this->arr();
+            $favorites = $this->_sqlGetFavoriteWebies();
+            $weby = new WebyEntity();
+            foreach ($favorites as $data) {
+                if ($weby->load($data['weby'])) {
+                    $weby->setAddedToFavoritesTime($data['created_on']);
+                    $this->_favoriteWebies[$data['weby']] = clone $weby;
+                }
+            }
+        }
+
+        // If JSON was true, then we have to convert all objects to JSON and return that
+        if ($json) {
+            $tmp = [];
+            foreach ($this->_favoriteWebies as $weby) {
+                /**@var $weby \App\Entities\Weby\WebyEntity */
+                $tmp[] = [
+                    'id' => $weby->getId(),
+                    'thumbnail' => $weby->getImage('dashboard')->getUrl(),
+                    'title' => $weby->getTitle(),
+                    'slug' => $weby->getSlug(),
+                    'public_url' => $weby->getPublicUrl(),
+                    'hits' => $weby->getTotalHits(),
+                    'favorites' => $weby->getFavoriteCount(),
+                    'addedToFavoritesTime' => $weby->getAddedToFavoritesTime(),
+                    'tags' => $weby->getTags(true),
+                ];
+            }
+            return json_encode($tmp);
+        }
+
+        return $this->_favoriteWebies;
+    }
+
+    /**
      * Marks user - completed onboarding
      */
-    public function markOnboardingDone()
+    public
+    function markOnboardingDone()
     {
         $this->_sqlMarkOnboardingDone();
     }
@@ -75,7 +158,8 @@ class UserEntity extends UserEntityCrud
      * @param bool $json
      * @return array|string
      */
-    public function getWebies($json = false)
+    public
+    function getWebies($json = false)
     {
         $webies = WebyEntity::getAllByUser($this);
 
@@ -102,7 +186,8 @@ class UserEntity extends UserEntityCrud
     }
 
 
-    public function getProfileUrl()
+    public
+    function getProfileUrl()
     {
         return $this->app()->getConfig()->app->web_path . $this->getUsername() . '/';
     }
@@ -112,7 +197,8 @@ class UserEntity extends UserEntityCrud
      * @param bool $json
      * @return array|null|string
      */
-    public function getFavoriteWebies($json = false)
+    public
+    function getFavoriteWebies($json = false)
     {
         // Check to see if we already have loaded all favorites
         if (is_null($this->_favoriteWebies)) {
@@ -155,7 +241,8 @@ class UserEntity extends UserEntityCrud
      * @param WebyEntity $weby
      * @return bool
      */
-    public function inFavorites(WebyEntity $weby)
+    public
+    function inFavorites(WebyEntity $weby)
     {
         return $this->getFavoriteWebies()->keyExists($weby->getId());
     }
@@ -165,7 +252,8 @@ class UserEntity extends UserEntityCrud
      * @param \App\Entities\Weby\WebyEntity $weby
      * @param WebyEntity $weby
      */
-    public function deleteFromFavorites(WebyEntity $weby)
+    public
+    function deleteFromFavorites(WebyEntity $weby)
     {
         if (isset($this->_favoriteWebies[$weby->getId()])) {
             $this->_sqlDeleteFromFavorites($weby->getId());
@@ -177,7 +265,8 @@ class UserEntity extends UserEntityCrud
      * Adds given Weby to user's favorites list
      * @param WebyEntity $weby
      */
-    public function addToFavorites(WebyEntity $weby)
+    public
+    function addToFavorites(WebyEntity $weby)
     {
         $this->_sqlAddToFavorites($weby->getId(), $weby->getUser()->getId());
     }
@@ -186,18 +275,21 @@ class UserEntity extends UserEntityCrud
      * Toggle following of other users
      * @param UserEntity $user
      */
-    public function toggleFollowing(UserEntity $user)
+    public
+    function toggleFollowing(UserEntity $user)
     {
         $this->_sqlToggleFollowing($user->getId());
     }
 
     /**
-     * Gets all users that are following this user
+     * Gets all users that are following this user - only for quick results and first n followers
      */
-    public function getUsersFollowing($limit = 5)
+    public
+    function getUsersFollowing($limit = 5)
     {
         if (is_null($this->_usersFollowing)) {
-            $data = $this->_sqlGetUsersFollowing($limit);
+            $page = 1;
+            $data = $this->_sqlGetUsersFollowing($limit, $page);
             $this->_usersFollowing = [];
             $this->_usersFollowingCount = 0;
             if ($data->count()) {
@@ -218,7 +310,8 @@ class UserEntity extends UserEntityCrud
     /**
      * Gets total count of users that are following this user
      */
-    public function getUsersFollowingCount($limit = 5)
+    public
+    function getUsersFollowingCount($limit = 5)
     {
         $this->getUsersFollowing($limit);
         return $this->_usersFollowingCount;
@@ -227,7 +320,8 @@ class UserEntity extends UserEntityCrud
     /**
      * Gets all users that this user is following
      */
-    public function getFollowingUsers($limit = 5)
+    public
+    function getFollowingUsers($limit = 5)
     {
         if (is_null($this->_usersFollowing)) {
             $data = $this->_sqlGetFollowingUsers($limit);
@@ -251,7 +345,8 @@ class UserEntity extends UserEntityCrud
     /**
      * Gets total count of users that this user is following
      */
-    public function getFollowingUsersCount($limit = 5)
+    public
+    function getFollowingUsersCount($limit = 5)
     {
         $this->getUsersFollowing($limit);
         return $this->_usersFollowingCount;
@@ -260,7 +355,8 @@ class UserEntity extends UserEntityCrud
     /**
      * Check if this user is following given user
      */
-    public function isFollowing(UserEntity $user)
+    public
+    function isFollowing(UserEntity $user)
     {
         return (bool)$this->_sqlCheckIfFollowing($user->_id);
     }

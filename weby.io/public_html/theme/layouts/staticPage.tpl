@@ -7,6 +7,8 @@
         var WEB = '{$viewObject.webPath}';
     </script>
     {minify type="css"}
+        kendo.common.min.css,
+        kendo.default.min.css,
         font.css,
         main.css,
         headerMiddle.css,
@@ -16,21 +18,27 @@
         dialog/dashboardDialog.css,
         dialog/favoritesDialog.css,
         dialog/feedbackDialog.css,
-        dialog/keyboardShortcutsDialog.css
+        dialog/followersDialog.css,
+        dialog/keyboardShortcutsDialog.css,
+        dialog/registerDialog.css
     {/minify}
     {minify type="js"}
         jquery-2.0.3.min.js,
         jquery-ui-1.9.2.webyio.js,
         jQueryFix.js,
-        jquery.fancybox.pack.js,
+        jquery.fancybox.pack.js
+        {/minify}
+    <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
+    {minify type="js"}
         time.js,
         timePassed.js,
-        weby/feedback.js,
+        weby/footer.js,
         weby/webyDashboard.js,
         weby/webyFavorites.js,
-        frontend/staticPage.js
+        weby/webyFollowers.js,
+        frontend/authorization.js,
+        frontend/staticPageInit.js,
     {/minify}
-    <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
 
     {block name="head"}{/block}
 </head>
@@ -63,35 +71,9 @@
 <div id="page-content">
     {block name="content"}{/block}
 </div>
-<div class="footer">
-    <ul>
-        <li>
-            <a href="#">Help</a>
-        </li>
-        <li>
-            <a href="#">About</a>
-        </li>
-        <li>
-            <a href="#">Terms of Service</a>
-        </li>
-        <li >
-            <a class="footer-keyboard-shortcuts" href="javascript:void(0);" data-role="keyboard-shortcuts-open">Keyboard Shortcuts</a>
-        </li>
-        <li class="feedback">
-            <a class="footer-feedback" href="javascript:void(0);" data-role="feedback-open">Feedback</a>
-        </li>
-    </ul>
-    <span><a href="http://www.webiny.com" target="_blank"></a></span>
-    {include file="templates/common/feedback.tpl"}
-    {include file="templates/common/keyboardShortcuts.tpl"}
-    {include file="templates/common/dashboard.tpl"}
-    {include file="templates/common/favorites.tpl"}
-    {block name="outerTemplates"}{/block}
-</div>
-{include file="templates/common/ga.tpl"}
-</body>
-</html>
-
+{block name="footer"}
+    {include file="layouts/includes/frontendFooter.tpl"}
+{/block}
 
 </body>
 </html>

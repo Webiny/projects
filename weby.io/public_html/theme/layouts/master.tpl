@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
     <title>{block name="title"}{/block} | Weby.io</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
@@ -23,6 +23,7 @@
         dialog/dialog.css,
         dialog/dashboardDialog.css,
         dialog/favoritesDialog.css,
+        dialog/followersDialog.css,
         dialog/feedbackDialog.css,
         dialog/keyboardShortcutsDialog.css
     {/minify}
@@ -32,11 +33,14 @@
         jquery-ui-1.9.2.webyio.js,
         jQueryFix.js,
         jquery.fancybox.pack.js,
+        browserDetect.js,
         time.js,
         timePassed.js,
-        weby/feedback.js,
+        weby/footer.js,
+        third_party/jquery.cookies.min.js,
         weby/webyDashboard.js,
         weby/webyFavorites.js,
+        weby/webyFollowers.js
     {/minify}
     <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
     <script type="text/javascript">
@@ -65,28 +69,8 @@
     </div>
 </div>
 {block name="content"}{/block}
-<div class="footer">
-    <ul>
-        <li>
-            <a href="#">Help</a>
-        </li>
-        <li>
-            <a href="#">About</a>
-        </li>
-        <li>
-            <a href="#">Terms of Service</a>
-        </li>
-        <li >
-            <a class="footer-keyboard-shortcuts" href="javascript:void(0);" data-role="keyboard-shortcuts-open">Keyboard Shortcuts</a>
-        </li>
-        <li class="feedback">
-            <a class="footer-feedback" href="javascript:void(0);" data-role="feedback-open">Feedback</a>
-        </li>
-    </ul>
-    <span><a href="http://www.webiny.com" target="_blank"></a></span>
-    {include file="templates/common/feedback.tpl"}
-    {include file="templates/common/keyboardShortcuts.tpl"}
-</div>
-{include file="templates/common/ga.tpl"}
+{block name="footer"}
+    {include file="layouts/includes/frontendFooter.tpl"}
+{/block}
 </body>
 </html>

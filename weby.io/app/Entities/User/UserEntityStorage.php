@@ -3,10 +3,13 @@ namespace App\Entities\User;
 
 use App\Entities\EntityAbstract;
 use App\Lib\DatabaseResult;
+use Webiny\Component\Http\HttpTrait;
+use Webiny\Component\StdLib\StdLibTrait;
 use Webiny\Component\StdLib\StdObject\ArrayObject\ArrayObject;
 
 abstract class UserEntityStorage extends EntityAbstract
 {
+    use StdLibTrait, HttpTrait;
     protected $_id = 0;
     protected $_serviceName = '';
     protected $_email = '';
@@ -152,6 +155,33 @@ abstract class UserEntityStorage extends EntityAbstract
     protected function _sqlGetUsersFollowing($limit) {
         $query = "SELECT \"user\", count(*) OVER() total_count FROM {$this->_getDb()->w_follow} WHERE followed_user=? LIMIT {$limit}";
         $bind = array($this->_id);
+        return $this->_getDb()->execute($query, $bind)->fetchAll();
+    }
+
+    /**
+     * Gets all users that are following this user
+     * @internal param $webyId
+     * @internal param $limit
+     * @internal param int $page
+     * @internal param $offset
+     * @return bool|ArrayObject
+     */
+    protected function _sqlGetFullUsersFollowing()
+    {
+        $query = "SELECT \"user\" id, count(*) OVER() total_count FROM {$this->_getDb()->w_follow}
+                        WHERE followed_user=?";
+        $bind = [$this->_id];
+
+        if ($this->request()->query('$top')) {
+            $query .= " LIMIT ?";
+            $bind[] = $this->request()->query('$top');
+        }
+
+        if ($this->request()->query('$skip')) {
+            $query .= " OFFSET ?";
+            $bind[] = $this->request()->query('$skip');
+        }
+
         return $this->_getDb()->execute($query, $bind)->fetchAll();
     }
 

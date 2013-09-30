@@ -7,7 +7,7 @@ use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
 use App\Lib\AbstractHandler;
 use App\Lib\Screenshot;
-use App\Lib\Stats;
+use App\Lib\Stats\Stats;
 use App\Lib\UserTrait;
 use App\Lib\View;
 use Webiny\Component\Cache\CacheTrait;
@@ -45,7 +45,7 @@ class ToolsHandler extends AbstractHandler
 
     public function takeScreenshot($webyId)
     {
-        if ($this->request()->getClientIp() != '127.0.0.1' && $this->request()->getClientIp() != '192.241.180.184') {
+        if ($this->request()->getClientIp() != $this->app()->getConfig()->screenshots->ip || !$this->app()->getConfig()->screenshots->enabled) {
             $this->request()->redirect($this->app()->getConfig()->app->web_path);
         }
         $weby = new WebyEntity();
@@ -75,15 +75,12 @@ class ToolsHandler extends AbstractHandler
         die();
     }
 
-    private function _createSize($weby, $storage, $width, $height, $tag)
-    {
-        $key = $weby->getStorageFolder() . '/' . $tag . '-' . time() . '.jpg';
-        $imageObj = $this->image($weby->getImage('original-screenshot')->getFile());
-        $thumbImage = new LocalFile($key, $storage);
-        if ($imageObj->thumbnail($width, $height, 'crop')->save($thumbImage)) {
-            $weby->getImage($tag)->setKey($key)->save();
-        }
-    }
+	public function webySummary($webyId) {
+		$weby = new WebyEntity();
+		$weby->load($webyId);
+		Stats::getInstance()->updateWebyHits($weby);
+		die(json_encode($weby->getSummaryData()));
+	}
 
     /**
      * Sends general feedback to email (addresses are in config.yaml)
@@ -149,6 +146,18 @@ class ToolsHandler extends AbstractHandler
         die($this->request()->query("\$callback") . '(' . json_encode($data) . ')');
     }
 
+    /**
+     * Get user's followers
+     */
+    public function ajaxGetFollowers()
+    {
+        $followers = $this->user()->getFollowers(true);
+        $data = [
+            'followers' => json_decode($followers, true),
+            'count' => $this->user()->getUsersFollowingCount()
+        ];
+        die($this->request()->query("\$callback") . '(' . json_encode($data) . ')');
+    }
 
     /**
      * Used to update number of hits of a given Weby
@@ -169,7 +178,7 @@ class ToolsHandler extends AbstractHandler
         }
 
         // Finally, update hit stats
-        Stats\Stats::getInstance()->updateWebyEmbeddedHits($weby);
+        Stats::getInstance()->updateWebyEmbeddedHits($weby);
         die();
     }
 
@@ -213,7 +222,7 @@ class ToolsHandler extends AbstractHandler
         die($result);
     }
 
-    // TODO: this isn't finished as some parts are still needed to complete this (image and tags)
+    // TODO: add TAGs to resultset
     /**
      * Gets Webies from given tags
      * Also used by Wordpress Webies widget
@@ -228,7 +237,7 @@ class ToolsHandler extends AbstractHandler
             $weby->load($id);
             $temp['id'] = $weby->getId();
             $temp['title'] = $weby->getTitle();
-            $temp['thumbnail'] = 'http://www.hdwallpaperstop.com/wp-content/uploads/2013/02/Cute-Puppy-Black-Eyes-Wallpaper.jpg';
+            $temp['thumbnail'] = $weby->getImage('dashboard')->getUrl();
             $temp['author'] = $weby->getUser()->getFirstName() . ' ' . $weby->getUser()->getLastName();
             $temp['hits'] = $weby->getTotalHits();
             $temp['favorites'] = $weby->getFavoriteCount();
@@ -251,5 +260,15 @@ class ToolsHandler extends AbstractHandler
 
         return $webies;
     }
+
+	private function _createSize($weby, $storage, $width, $height, $tag)
+	{
+		$key = $weby->getStorageFolder() . '/' . $tag . '-' . time() . '.jpg';
+		$imageObj = $this->image($weby->getImage('original-screenshot')->getFile());
+		$thumbImage = new LocalFile($key, $storage);
+		if ($imageObj->thumbnail($width, $height, 'crop')->save($thumbImage)) {
+			$weby->getImage($tag)->setKey($key)->save();
+		}
+	}
 
 }

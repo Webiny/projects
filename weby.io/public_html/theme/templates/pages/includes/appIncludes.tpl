@@ -21,6 +21,7 @@
     weby/webyTitle.js,
     weby/webyDashboard.js,
     weby/webyFavorites.js,
+    weby/webyFollowers.js,
     frontend/webySocialShare.js,
     frontend/webyBackground.js,
     weby/webyDocumentBackground.js,
@@ -31,7 +32,7 @@
     weby/progress.js,
     frontend/app.js,
     frontend/flip.js,
-    frontend/registration.js,
+    frontend/authorization.js,
     frontend/webyDetails.js,
     frontend/baseWidget.js,
     frontend/widgets/textWidget.js,
@@ -53,6 +54,7 @@
     frontend/widgets/googlePlusWidget.js,
     frontend/widgets/webyWidget.js,
     editor/baseTool.js,
-    editor/tools/linkTool.js
+    editor/tools/linkTool.js,
+    frontend/init.js
 {/minify}
 <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>

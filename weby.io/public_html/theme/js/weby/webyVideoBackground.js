@@ -72,7 +72,8 @@ function WebyVideoBackground(el) {
 	this.webyBackgroundResized = function () {
 		var css = {
 			width: _getWidth() + 'px',
-			height: _getHeight() + 'px'
+			height: _getHeight() + 'px',
+			top: App.getTopOffset()+'px'
 		};
 		_el.css(css);
 		if (_player) {

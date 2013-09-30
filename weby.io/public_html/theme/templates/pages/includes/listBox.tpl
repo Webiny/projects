@@ -1,6 +1,6 @@
 {literal}
     <script type="weby/tpl" id="listing-tpl">
-        <div id="page{pageNumber}" class="tpl{templateNumber}"></div>
+        <div id="page{pageNumber}" class="tpl{templateNumber} box-tpl"></div>
     </script>
     <script type="weby/tpl" id="listing-box-tpl">
         <div id="box-{pageNumber}-{boxNumber}" class="box{boxNumber} box">
@@ -13,7 +13,7 @@
             </div>
 
             <div class="weby-info">
-                <h2><a class="header-url" href="{publicUrl}">{webyTitle}</a></h2>
+                <h2><a class="header-url" href="{publicUrl}">{webyTitle}</h2>
                 <ul>
                     <li class="favs">
                              <span>

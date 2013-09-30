@@ -65,7 +65,7 @@ class View
 	 *
 	 * @return string
 	 */
-	public function fetch($template, $data) {
+	public function fetch($template, $data = null) {
 		return $this->_smarty->fetch($template, $data);
 	}
 

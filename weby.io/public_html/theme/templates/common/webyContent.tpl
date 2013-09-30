@@ -7,3 +7,5 @@
         <div id="weby-background-color"></div>
     </div>
 </div>
+
+{include file="templates/common/unsupportedBrowser.tpl"}

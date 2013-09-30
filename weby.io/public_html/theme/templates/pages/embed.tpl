@@ -8,7 +8,10 @@
     </script>
 {/block}
 {block name="content"}
+    {include file="templates/pages/includes/webyDetails.tpl"}
     {include file="templates/common/webyContent.tpl"}
+    <div class="bootstrap" data-role="weby">{$weby->toJson()}</div>
+    <div class="bootstrap" data-role="json-data">{$weby->getSummaryData()}</div>
     <div class="embed-background" style="background: url({$weby->getImage('original-screenshot')})"></div>
     <div class="loading-overlay">
         <div class="loading-title">

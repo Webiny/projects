@@ -14,7 +14,7 @@ class Router
 	use SingletonTrait, AppTrait, StdLibTrait, HttpTrait, LoggerTrait;
 
 	private $_routes = array();
-	private $_requestParams;
+	private $_requestParams = [];
 	private $_handlerClass;
 	private $_handlerMethod;
 
@@ -99,7 +99,7 @@ class Router
 				if(($fChar == '|' || $fChar== '/') && ($regex->subStringCount('|') >= 2 || $regex->subStringCount('/') >= 2)
 				) {
 					// preg_match request
-					preg_match($regex->val(), $request, $match);
+					@preg_match($regex->val(), $request, $match);
 				} else {
 					if($regex == $request) { // string match request
 						$match = [true];

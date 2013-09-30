@@ -45,7 +45,12 @@
     overflow: hidden;
     padding-top: 3px;
     margin-right: -7px;
-    min-height: 10px
+    min-height: 10px;
+    cursor: -webkit-grab;
+}
+
+.weby-details.ui-draggable-dragging *:hover {
+    cursor: -webkit-grabbing;
 }
 
 .weby-details .details-arrow span.handler {
@@ -56,7 +61,6 @@
     background-repeat: repeat;
     display: block;
     float: left;
-    cursor: pointer;
 }
 
 .weby-details .details-arrow a {
@@ -250,26 +254,6 @@
     color: #fff;
     font-size: 12px;
     margin-top: 5px;
-}
-
-.weby-details .tags span.weby-tag-blue {
-    background-image: url(../images/sprite2.png);
-    background-repeat: no-repeat;
-    color: #fff;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: capitalize;
-    margin: 1px 2px 0 0;
-    padding: 0 4px 0 2px;
-    display: inline-block;
-    height: 16px;
-    text-indent: 10px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    -moz-border-radius-topright: 2px;
-    -moz-border-radius-bottomright: 2px;
-    background-position: -97px -1950px;
-    text-transform: uppercase;
 }
 
 .weby-details .popular-related-btns {

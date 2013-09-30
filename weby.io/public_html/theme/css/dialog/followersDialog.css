@@ -1,0 +1,190 @@
+#followers-dialog .delete-confirmation{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	top: 0;
+	left: 0;
+}
+
+
+#followers-dialog .delete-confirmation .overlay{
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    position: absolute;
+    background-color: #f25b2b;
+    opacity: 0.95;
+}
+
+#followers-dialog .delete-confirmation .message{
+    text-align: center;
+    font-size: 24px;
+    margin-top: 130px;
+    z-index: 1001;
+    color: #fff;
+    position: relative;
+}
+
+#followers-dialog .delete-confirmation .actions{
+    text-align: center;
+    margin-top: 20px;
+    z-index: 1001;
+    position: relative;
+}
+
+/* ----------------- */
+
+#followers-dialog .user-avatar {
+    width: 48px;
+    height: 48px;
+	border: 2px solid #ffffff;
+	float: left;
+    margin-right: 7px;
+}
+
+#followers-dialog .followers-list {
+    background: none;
+    border: none;
+}
+
+#followers-dialog ul.followers-list {
+    list-style: none;
+    margin: 0 0;
+    padding: 0 0;
+    overflow: hidden;
+    background-color: #f25b2b;
+}
+
+#followers-dialog .followers-list-item {
+    border-bottom: 1px solid #dc420e;
+    overflow: hidden;
+    list-style: none;
+    padding-top: 13px;
+    padding-bottom: 9px;
+    background-color: #f25b2b;
+    width: 230px;
+    display: inline-block;
+    margin: 5px;
+}
+
+#followers-dialog p.user-info {
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#followers-dialog p.user-info a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#followers-dialog .weby-tag.white {
+    color: #f25b2b;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 1px 2px 0 2px;
+    padding: 0 4px 0 2px;
+    display: inline-block;
+    height: 16px;
+    text-indent: 10px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    -moz-border-radius-topright: 2px;
+    -moz-border-radius-bottomright: 2px;
+    background: white url(../../images/sprite2.png) no-repeat -170px -871px;
+    line-height: normal;
+}
+
+.dialog .tag-info {
+    color: #f25b2b;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 1px 2px 0 2px;
+    padding: 0 4px 0 2px;
+    display: inline-block;
+    height: 16px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: white;
+    line-height: normal;
+}
+
+#followers-dialog .weby-data.left {
+    float: left;
+    width: 375px;
+    padding: 5px 0 0 20px;
+}
+
+#followers-dialog .weby-actions.right {
+    float: right;
+}
+
+#followers-dialog .weby-actions.right p {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+#followers-dialog .weby-actions.right p.buttons {
+    margin-top: 17px;
+}
+
+#followers-dialog .button.delete {
+    background: #dc420e url(../../images/sprite2.png) no-repeat -156px -969px;
+    text-indent: 20px;
+}
+
+#followers-dialog .button.edit {
+    background: #dc420e url(../../images/sprite2.png) no-repeat -156px -1089px;
+    text-indent: 20px;
+}
+
+#followers-dialog ul {
+    list-style: none;
+}
+
+#followers-dialog ul.tags-list {
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+}
+
+#followers-dialog .followers-footer {
+    padding-top: 8px;
+    bottom: 0;
+    position: absolute;
+    width: 743px;
+}
+
+#followers-dialog .followers-pager {
+    width: 500px;
+    float: left;
+    background: #f25b2b none;
+    border: none;
+    margin-top: 5px;
+}
+
+#followers-dialog .followers-pager .k-pager-numbers .k-state-selected,
+#followers-dialog .followers-pager .k-pager-numbers .k-link {
+    color: #fff;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -o-border-radius: 0;
+}
+#followers-dialog .followers-pager.k-pager-wrap>.k-link {
+    border:none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -o-border-radius: 0;
+}
+
+#followers-dialog .k-loading-mask {
+    opacity: 0;
+    background: #f25b2b none;
+}

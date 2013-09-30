@@ -8,7 +8,7 @@
     weby/webyLogger.js,
     weby/webyDashboard.js,
     weby/webyFavorites.js,
-    weby/feedback.js,
+    weby/footer.js,
     editor/dashboardInit.js
 {/minify}
 <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>

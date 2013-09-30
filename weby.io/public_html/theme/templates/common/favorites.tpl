@@ -31,10 +31,10 @@
 {literal}
     <script type="weby/tpl" id="favorites-list-item-tpl">
         <li class="favorites-list-item" data-id="${id}">
-            <img class="weby-thumbnail" src="${thumbnail}"/>
+            <a href="${public_url}"><img class="weby-thumbnail" src="${thumbnail}"/></a>
 
             <div class="weby-data left">
-                <h2>${title}</h2>
+                <h2><a href="${public_url}">${title}</a></h2>
                 #if(tags.length == 0){#
                 <p>No tags</p>
                 #}else{#

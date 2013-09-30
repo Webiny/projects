@@ -49,16 +49,24 @@ class UsersHandler extends AbstractHandler
             Stats::getInstance()->updateWebiesStats($this->user());
 
             $this->request()->redirect($weby->getEditorUrl());
+
+            // Redirect to editor (if this is new user)
+            $this->request()->redirect($this->user()->getProfileUrl());
         } else {
 
             // If user exists, then update it's data in Weby database,
             // Saving, so we can sync the data with our database data
             $user->populate($serviceData)->save();
             Stats::getInstance()->updateUsersLoginCount($user);
+
+            // Redirect to last visited URL
+            if (isset($_COOKIE['weby_login_ref'])) {
+            $this->request()->redirect($_COOKIE['weby_login_ref']);
+            }
+            $this->request()->redirect($this->user()->getProfileUrl());
+
         }
 
-        // Redirect to editor
-        $this->request()->redirect($this->user()->getProfileUrl());
     }
 
     /**

@@ -97,6 +97,12 @@ function WebyBackground(settings) {
 		} else {
 			App.getContent().css("margin", "0 auto");
 		}
+
+		// Remove margin if no header is shown (means we're taking screenshot)
+		if(typeof screenshot != "undefined" && screenshot){
+			App.getContent().css("margin", "0");
+		}
+
 		for (var i in _backgrounds) {
 			if ("webyBackgroundResized" in _backgrounds[i]) {
 				_backgrounds[i].webyBackgroundResized();

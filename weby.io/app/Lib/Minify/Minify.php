@@ -519,6 +519,7 @@ class Minify
             return false;
         }
 
+		$encodeToIe6 = true;
         // no regex = faaast
         $version = (float)substr($ua, 30);
 

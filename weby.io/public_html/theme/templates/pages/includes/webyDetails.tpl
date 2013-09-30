@@ -1,105 +1,115 @@
-<div class="weby-details" id="weby-details">
-    <div class="details-arrow">
-        <span class="handler"></span>
-        {if $weby.tags->count()}<a class="shown" data-role="show-full-details" href="javascript:void(0);"></a>{/if}
-    </div>
+{literal}
+    <script type="weby/tpl" id="weby-details-tpl">
+        <div class="weby-details" id="weby-details">
+            <div class="details-arrow">
+                <span class="handler"></span>
+                #if (data.tags.length > 0) {#<a class="shown" data-role="show-full-details"
+                                                href="javascript:void(0);"></a>#}#
+            </div>
 
-    <div class="favorites">
-        <div class="loading-favorites" style="display: none"></div>
-        {if $viewObject.user}
-            {if $viewObject.user.id != $weby.user.id}
-                <span data-role="add-to-favorites"
-                      data-tooltip="{if !$weby->inUsersFavorites()}Add to favorites{else}Remove from favorites{/if} "
-                      class="favorites-icon has-tooltip-bottom {if $weby->inUsersFavorites()}added{/if} clickable"></span>
-            {else}
+            <div class="favorites">
+                <div class="loading-favorites" style="display: none"></div>
+                #if (data.currentUser) {#
+                #if (data.currentUser.id != data.webyUser.id) {#
+                    <span data-role="add-to-favorites"
+                          data-tooltip="#if (!data.isFavorited){#Add to favorites#}else{#Remove from favorites#}#"
+                          class="favorites-icon has-tooltip-bottom #if (isFavorited){#added#}# clickable"></span>
+                #}else{#
                 <span class="favorites-icon"></span>
-            {/if}
-        {else}
-            <span class="favorites-icon pointer-cursor" data-role="create-weby"></span>
-        {/if}
-        <div class="weby-stats">
-            <p>
-            <span class="favorites-count">
-                {$weby.favoriteCount|formattedNumber}
-            </span>
-                favorites
-            </p>
-            <span class="views">
-                {$weby.hits|formattedNumber} hits
-            </span>
-        </div>
-    </div>
-    <div class="full-weby-data">
-        <div class="flip-front">
-            <div class="user-info">
-                <div style="display: none" class="loading-following"></div>
-                <div>
-                    <a href="{$viewObject.webPath}user/{$weby.user.username}">
-                    <span class="user-photo" {if $weby.user.avatarUrl != ''}
-                          style="background: url({$weby.user.avatarUrl}) top left; background-size: cover{/if}">
-                    </span>
-                    </a>
-
-                    <p class="user-name" {if $weby.user.username|count_characters>=14}data-role="weby-user"
-                       data-tooltip="{$weby.user.username}"
-                       class="has-tootip-top"{/if}>{$weby.user.username|truncate:14:'...':true}</p>
-
-                    <p class="user-name"><b class="followers-count">{$weby.user.usersFollowingCount}</b>
-                        followers</p>
+                #}#
+                #}else{#
+                <span class="favorites-icon pointer-cursor" data-role="create-weby"></span>
+                #}#
+                <div class="weby-stats">
+                    <p>
+                <span class="favorites-count">
+                    #= data.favoriteCount #
+                </span>
+                        favorites
+                    </p>
+                <span class="views">
+                    #= data.hits # hits
+                </span>
                 </div>
-                {if $viewObject.user && $viewObject.user.id != $weby.user.id}
-                    {if $viewObject.user->isFollowing($weby.user)}
-                        <a data-role="follow-user" data-id="{$weby.user.id}" class="unfollow-btn"
+            </div>
+            <div class="full-weby-data">
+                <div class="flip-front">
+                    <div class="user-info">
+                        <div style="display: none" class="loading-following"></div>
+                        <div>
+                            <a href="#= WEB+'user/'+ data.webyUser.name #">
+                                <span class="user-photo" #if (data.webyUser.avatar != '') {# style="background: url(#=
+                                data.webyUser.avatar #) top left; background-size: cover" #}#></span>
+                            </a>
+
+                            <p class="user-name" #if (data.webyUser.name.length > 14) {# data-role="weby-user"
+                            data-tooltip="#= data.webyUser.name #" class="has-tooltip-top" #}#>
+                            #if (data.webyUser.name.length > 14) {# #= data.webyUser.name.substring(0, 14) #... #} else
+                            {# #= data.webyUser.name# #}#</p>
+                            <p class="user-name"><b class="followers-count">#= data.webyUser.followers #</b> followers
+                            </p>
+                        </div>
+                        # if (data.currentUser && data.currentUser.id != data.webyUser.id) {#
+                        #if (data.currentUser.isFollowing) {#
+                        <a data-role="follow-user" data-id="#= data.webyUser.id #" class="unfollow-btn"
                            href="javascript: void(0);">Unfollow</a>
-                    {else}
-                        <a data-role="follow-user" data-id="{$weby.user.id}" class="follow-btn"
+                        #}else{#
+                        <a data-role="follow-user" data-id="#= data.webyUser.id #" class="follow-btn"
                            href="javascript: void(0);">Follow</a>
-                    {/if}
-                {/if}
-            </div>
-            <div class="favorited-by" {if $weby.favoriteCount==0}style='display:none'{/if}>
-                <h2>Favorited by</h2>
-                <ul>
-                    {foreach from=$weby.usersFavorited item=user}
-                        <li class=" has-tooltip-top" data-tooltip="{$user.username}">
-                            <a class="photo" href="{$viewObject.webPath}user/{$user.id}"><img src="{$user.avatarUrl}"/></a>
+                        #}#
+                        #}#
+                    </div>
+                    <div class="favorited-by"
+                    #if (data.favoriteCount==0) {# style="display:none" #}#>
+                    <h2>Favorited by</h2>
+                    <ul>
+                        #for(var i in data.favoritedBy){#
+                        <li class="has-tooltip-top" data-tooltip="#= data.favoritedBy[i].username #">
+                            <a class="photo" href="#= WEB+'user/'+data.favoritedBy[i].username #"><img
+                                        src="#= data.favoritedBy[i].avatarUrl #"/></a>
                         </li>
-                    {/foreach}
-                </ul>
-                {if ({$weby.countOfMoreUsers} > 0)}
-                    <a class="view-all" href="javascript:void(0);">...and {$weby.countOfMoreUsers} more.</a>
-                {/if}
+                        #}#
+                    </ul>
+                    # if (data.otherFavoriteCount > 0){#
+                    <a class="view-all" href="javascript:void(0);">...and #= data.otherFavoriteCount # more.</a>
+                    #}#
+                </div>
+                <div class="tags flip-behind"
+                #if (data.tags.length == 0){# style="display: none" #}#>
+                <h2>
+                    Tags
+                </h2>
+                #for(var i in data.tags){#
+                <a href="#= WEB+'tag/'+data.tags[i].slug #">
+                    <span #if(data.tags[i].tag.length > 14){# data-tooltip="#= data.tags[i].tag #" #}#
+                    class="weby-tag-blue #if(data.tags[i].tag.length > 14){# has-tooltip-top#}#">
+                    #if(data.tags[i].tag.length > 14){# #= data.tags[i].tag.substring(0, 10) #... #}else{# #=
+                    data.tags[i].tag # #}#</span>
+                </a>
+                #if (i == 4 && data.tags.length > 5){#
+                <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">view all tags &raquo;</a>
+                # break; #
+                #}#
+                #}#
             </div>
-            <div class="tags flip-behind" {if $weby.numberOfTags == 0}style="display: none"{/if}">
+        </div>
+        <div class="tags flip-behind" style="display: none;">
             <h2>
                 Tags
             </h2>
-            {foreach from=$weby->getTags(true) item=tag name=tagsFront}
-                <a href="{$viewObject.webPath}tag/{$tag.slug}"><span class="weby-tag-blue">
-                    {$tag.tag|truncate:14:'...':true}
-                    </span></a>
-                {if $smarty.foreach.tagsFront.index == 4 && $weby.numberOfTags > 5}
-                    <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">view all
-                        tags &raquo;</a>
-                    {break}
-                {/if}
-            {/foreach}
+            #for(var i in data.tags){#
+            <a href="#= WEB+'tag/'+data.tags[i].slug #">
+                <span #if(data.tags[i].tag.length > 14){# data-tooltip="#= data.tags[i].tag #" #}# class="weby-tag-blue
+                #if(data.tags[i].tag.length > 14){# has-tooltip-top#}#">
+                #if(data.tags[i].tag.length > 14){# #= data.tags[i].tag.substring(0, 10) #... #}else{# #=
+                data.tags[i].tag # #}#</span>
+            </a>
+            #}#
+            <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">&laquo; view less tags</a>
         </div>
-    </div>
-    <div class="tags flip-behind" style="display: none;">
-        <h2>
-            Tags
-        </h2>
-        {foreach from=$weby->getTags(true) item=tag}
-            <a href="{$viewObject.webPath}tag/{$tag.slug}"><span class="weby-tag-blue">
-                {$tag.tag|truncate:14:'...':true}
-                </span></a>
-        {/foreach}
-        <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">&laquo; view less tags</a>
-    </div>
-</div>
-</div>
-{literal}
+        </div>
+        </div>
+    </script>
     <script type="weby/tpl" id="user-favorited">
         <li class="has-tooltip-top" data-tooltip="{username}">
             <a class="photo" href="javascript:void();"><img src="{avatarUrl}"></a>

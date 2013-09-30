@@ -5,7 +5,7 @@ function WebyTitle() {
 	/**
 	 * Title action button
 	 */
-	var _editTitle = $('[data-role="weby-title"]');
+	var _editTitle = $('.header-middle-wrap');
 
 	/**
 	 * Title h2
@@ -67,9 +67,6 @@ function WebyTitle() {
     });
 
 	this.viewportResize = function (data) {
-		_title.css('width', 0);
-		_url.css('width', 0);
-
 		var width = _headerRight.position().left - _titlePosition;
 		var titleWidth = _title[0].scrollWidth;
 		var urlWidth = _url[0].scrollWidth;
@@ -115,11 +112,12 @@ function WebyTitle() {
 	this.viewportResize();
 
     this.webyLoaded = function() {
-		this.viewportResize();
         this.setEmbedCode();
     }
 
 	this.webyBackgroundResized = function(){
 		this.viewportResize();
 	}
+
+	this.viewportResize();
 }

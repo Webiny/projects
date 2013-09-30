@@ -248,6 +248,13 @@
 	border-radius: 0;
 }
 
+#cnv-settings .image-size{
+	font-size: 15px;
+	margin: 0 0 5px 2px;
+	width: 100%;
+	display: block;
+}
+
 #canvas-settings-align {
 	display: none;
 }

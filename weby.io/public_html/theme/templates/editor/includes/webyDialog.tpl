@@ -2,7 +2,7 @@
     <a href="" class="close-dialog"></a>
 
     <h1>My Weby</h1>
-        <input maxlength="50" type="text" id="weby-title-field" class="has-tooltip" data-tooltip="Please enter your title."
+        <input maxlength="150" type="text" id="weby-title-field" class="has-tooltip" data-tooltip="Please enter your title."
                placeholder="Weby title" value="{if $weby.metaFollow}{$weby.title}{/if}">
     {*
         When Weby is created, by default, meta_follow is false. Also, by default every Weby has

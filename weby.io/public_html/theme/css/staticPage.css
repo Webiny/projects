@@ -20,7 +20,7 @@ body {
 }
 
 .header .header-middle {
-    background: url("../images/sprite2.png") no-repeat -140px -2447px;
+    background: none;
     padding-left: 60px;
 }
 

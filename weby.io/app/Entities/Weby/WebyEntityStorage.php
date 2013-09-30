@@ -122,6 +122,20 @@ abstract class WebyEntityStorage extends EntityAbstract
     /**
      * Loads weby for given user
      *
+     * @param $limit
+     * @internal param \App\Entities\User\UserEntity $user
+     *
+     * @return ArrayObject|bool
+     */
+    protected static function _sqlGetRecentTags($limit)
+    {
+        $query = "SELECT tag, slug FROM " . self::_getDb()->w_tags . " ORDER BY id DESC LIMIT {$limit}";
+        return self::_getDb()->execute($query)->fetchAll();
+    }
+
+    /**
+     * Loads weby for given user
+     *
      * @param \App\Entities\User\UserEntity $user
      *
      * @return ArrayObject|bool
@@ -189,7 +203,7 @@ abstract class WebyEntityStorage extends EntityAbstract
     {
         $limitOffset = "LIMIT " . $limit . " OFFSET " . ($page - 1) * $limit;
         $query = "SELECT w.id, count(*) OVER() total_count FROM " . self::_getDb()->w_weby . " w
-                    ORDER BY w.created_on DESC {$limitOffset}";
+                    WHERE w.deleted = 0::bit AND meta_follow = 1::bit ORDER BY w.created_on DESC {$limitOffset}";
         return self::_getDb()->execute($query, [])->fetchAll();
     }
 
@@ -198,7 +212,8 @@ abstract class WebyEntityStorage extends EntityAbstract
         $limitOffset = "LIMIT " . $limit . " OFFSET " . ($page - 1) * $limit;
         $query = "SELECT w.id, count(*) OVER() total_count FROM " . self::_getDb()->w_follow . " f
                     JOIN " . self::_getDb()->w_weby . " w ON w.user = f.followed_user
-                    WHERE f.user = ? ORDER BY w.created_on DESC {$limitOffset}";
+                    WHERE f.user = ? AND w.deleted = 0::bit AND meta_follow = 1::bit
+                    ORDER BY w.created_on DESC {$limitOffset}";
         return self::_getDb()->execute($query, [$userId])->fetchAll();
     }
 
@@ -220,7 +235,8 @@ abstract class WebyEntityStorage extends EntityAbstract
         $query = "SELECT w.id, count(*) OVER() total_count FROM " . self::_getDb()->w_tags . " t
 	                JOIN " . self::_getDb()->w_weby2tag . " w2t ON w2t.tag = t.id
 	                JOIN " . self::_getDb()->w_weby . " w ON w.id = w2t.weby
-                    WHERE t.slug= ? ORDER BY created_on DESC {$limitOffset}";
+                    WHERE t.slug= ? AND w.deleted = 0::bit AND meta_follow = 1::bit
+                    ORDER BY created_on DESC {$limitOffset}";
         return self::_getDb()->execute($query, $bind)->fetchAll();
     }
 
@@ -242,7 +258,7 @@ abstract class WebyEntityStorage extends EntityAbstract
         $limitOffset = "LIMIT " . $limit . " OFFSET " . ($page - 1) * $limit;
         $query = "SELECT w.id, count(*) OVER() total_count FROM " . self::_getDb()->w_user . " u
 	                JOIN " . self::_getDb()->w_weby . " w ON w.user = u.id
-                    WHERE u.username = ? ORDER BY w.created_on DESC {$limitOffset}";
+                    WHERE u.username = ? AND w.deleted = 0::bit AND meta_follow = 1::bit ORDER BY w.created_on DESC {$limitOffset}";
         return self::_getDb()->execute($query, $bind)->fetchAll();
     }
 

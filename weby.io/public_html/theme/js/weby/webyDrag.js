@@ -32,7 +32,7 @@ var WebyDrag = function (el) {
 			return;
 		}
 
-		App.getContent().addClass('hide-content grabbing');
+		App.getWorkspace().addClass('hide-content grabbing');
 
 		var deltaX = (event.clientX - lastX) * deltaFactor;
 		var deltaY = (event.clientY - lastY) * deltaFactor;
@@ -54,7 +54,7 @@ var WebyDrag = function (el) {
 
 	this.stopDrag = function () {
 		drag = false;
-		App.getContent().removeClass('hide-content grabbing');
+		App.getWorkspace().removeClass('hide-content grabbing');
 	}
 
 	this.contentMouseUp = function (event) {

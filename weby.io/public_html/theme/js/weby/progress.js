@@ -14,6 +14,7 @@ function WebyProgress() {
 
 	this.startLoading = function () {
 		_el.find('.loading-title').show();
+		_progress.css({width: 20 + 'px'});
 	}
 
 	this.setMessage = function (message) {

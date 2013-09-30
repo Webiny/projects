@@ -1,19 +1,20 @@
 var AppClass = function () {
-    var _content = $('#content');
-    var _workspace = $('#workspace');
-    var _header = $('#header');
-    var _appToolbar;
-    var _dashboard = null;
-    var _favorites = null;
+	var _content = $('#content');
+	var _workspace = $('#workspace');
+	var _header = $('#header');
+	var _appToolbar;
+	var _dashboard = null;
+	var _favorites = null;
+    var _followers = null;
     var _weby = false;
-    var _webyDrag;
-    var _viewportHeight;
-    var _viewportWidth;
-    var _activeWidget = null
-    var _topOffset = 98;
-    var _bottomOffset = 27;
-    var _eventListeners = [];
-    var _webyLogger = null;
+	var _webyDrag;
+	var _viewportHeight;
+	var _viewportWidth;
+	var _activeWidget = null
+	var _topOffset = 98;
+	var _bottomOffset = 27;
+	var _eventListeners = [];
+	var _webyLogger = null;
 
     /**
      * Catch Ctrl+V key press
@@ -127,6 +128,7 @@ var AppClass = function () {
 
         _dashboard = new WebyDashboard();
         _favorites = new WebyFavorites();
+        _followers = new WebyFollowers();
 
         // Bind events
         $(document).keydown(function (e) {
@@ -190,6 +192,11 @@ var AppClass = function () {
             }
         });
 
+		_content.bind({
+			click: function (e) {
+				App.fireEvent("content.click", e);
+			}
+		});
 
         // Widget is clicked
         _content.on('click', '.widget', function (e) {
@@ -322,6 +329,13 @@ var AppClass = function () {
         return parseInt(_content.css("margin-left"));
     }
 
+	/**
+	 * Returns content offset from the left border of the window
+	 * @returns {number}
+	 */
+	this.getLeftOffset = function () {
+		return parseInt(_content.css("margin-left"));
+	}
 
     /**
      * Returns current viewport height
@@ -343,6 +357,13 @@ var AppClass = function () {
     this.getContent = function () {
         return _content;
     }
+
+	/**
+	 * Get jQuery content element
+	 */
+	this.getContent = function () {
+		return _content;
+	}
 
 	/**
 	 * Get jQuery content wrapper element

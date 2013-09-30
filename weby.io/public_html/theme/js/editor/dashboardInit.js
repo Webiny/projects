@@ -21,7 +21,12 @@ var dashboard = null;
 
 $(function () {
 	dashboard = new WebyDashboard();
-	dashboard.open(true);
+
+	if(checkBrowser("browser.editor", function(){
+		dashboard.open(true);
+	})){
+		dashboard.open(true);
+	}
 
 	// After closing feedback, return to dashboard
 	Feedback.onClose(function () {
@@ -29,4 +34,12 @@ $(function () {
 			dashboard.open(true);
 		}, 50);
 	});
+
+    // After closing feedback, return to dashboard
+    Feedback.onClose(function () {
+        setTimeout(function () {
+            dashboard.open(true);
+        }, 50);
+    });
+
 });

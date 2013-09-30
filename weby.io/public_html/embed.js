@@ -40,7 +40,7 @@
 
 			// Create embed iframe
 			var iframe = d.createElement("iframe");
-			iframe.src = attrs.src + "?embed=true";
+			iframe.src = attrs.src + "/embed/";
 			iframe.width = attrs.width;
 			iframe.height = attrs.height;
 			iframe.frameBorder = 0;

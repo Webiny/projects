@@ -185,5 +185,21 @@ BaseWidget.prototype = {
 			return $.trim(text).substring(0, length).split(" ").slice(0, -1).join(" ") + end;
 		}
 		return text;
-	}
+	},
+
+	showFailedToLoad: function () {
+		this.html().append('<div class="widget-unavailable-overlay"><p><span class="smiley-face"></span>We couldn\'t load this content!<br/>Try reloading the page.</p></div>');
+		this.body('*:not(".widget-unavailable-overlay")').remove();
+
+		// Resize unavailable overlay
+		this.html('.widget-unavailable-overlay').css({
+			width: '100%',
+			height: '100%',
+			margin: -this._padding + 'px 0 0 -' + this._padding + 'px'
+		});
+
+		this.html('.widget-unavailable-overlay p').css({
+			marginTop: ((this._html.outerHeight() / 2) - 70) + 'px'
+		});
+	},
 };

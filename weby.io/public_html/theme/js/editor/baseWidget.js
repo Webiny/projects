@@ -798,7 +798,14 @@ BaseWidget.prototype = {
 	},
 
 	showUnavailable: function () {
-		this.html().append('<div class="widget-unavailable-overlay"></div>');
+		this.html().append('<div class="widget-unavailable-overlay"><p>This service is currently unavailable!<br/>A page reload may fix it. If not, let us know using \'Feedback\' form. <span class="smiley-face"></span></p></div>');
+		this.body('*:not(".widget-unavailable-overlay")').remove();
+		this._resize();
+
+	},
+
+	showFailedToLoad: function () {
+		this.html().append('<div class="widget-unavailable-overlay"><p><span class="smiley-face"></span>We couldn\'t load this content!<br/>Try reloading the page.</p></div>');
 		this.body('*:not(".widget-unavailable-overlay")').remove();
 		this._resize();
 	},
@@ -1050,8 +1057,13 @@ BaseWidget.prototype = {
 
 		// Resize unavailable overlay
 		this.html('.widget-unavailable-overlay').css({
-			width: this.body()[0].scrollWidth + 'px',
-			height: this.body()[0].scrollHeight + 'px'
+			width: '100%',
+			height: '100%',
+			margin: -this._padding + 'px 0 0 -' + this._padding + 'px'
+		});
+
+		this.html('.widget-unavailable-overlay p').css({
+			marginTop: ((this._html.outerHeight() / 2) - 70) + 'px'
 		});
 	},
 
@@ -1183,44 +1195,49 @@ BaseWidget.prototype = {
 
 	bringForward: function () {
 		var overlaps = this._getOverlappingWidgets();
-		var indexes = [];
+		var lowestWidget = null;
 		for (var i in overlaps) {
 			var ow = overlaps[i];
 			if (ow.getZIndex() > this.getZIndex()) {
-				indexes.push(ow.getZIndex());
+				if(lowestWidget != null){
+					lowestWidget = ow.getZIndex() < lowestWidget.getZIndex() ? ow : lowestWidget;
+				} else {
+					lowestWidget = ow;
+				}
 			}
 		}
 
-		if (indexes.length == 0) {
+		if (lowestWidget == null) {
 			return;
 		}
 
-		var newIndex = Math.min.apply(Math, indexes) + 1;
-
-		if (newIndex > 900000) {
-			return;
-		}
-
-		this.setZIndex(newIndex);
+		var currentZIndex = this.getZIndex();
+		this.setZIndex(lowestWidget.getZIndex());
+		lowestWidget.setZIndex(currentZIndex);
 		return this;
 	},
 
 	sendBackward: function () {
 		var overlaps = this._getOverlappingWidgets();
-		var indexes = [];
+		var highestWidget = null;
 		for (var i in overlaps) {
 			var ow = overlaps[i];
-			if (ow.getZIndex() <= this.getZIndex()) {
-				indexes.push(ow.getZIndex());
+			if (ow.getZIndex() < this.getZIndex()) {
+				if(highestWidget != null){
+					highestWidget = ow.getZIndex() > highestWidget.getZIndex() ? ow : highestWidget;
+				} else {
+					highestWidget = ow;
+				}
 			}
 		}
 
-		if (indexes.length == 0) {
+		if (highestWidget == null) {
 			return;
 		}
 
-		var newIndex = Math.max.apply(Math, indexes) - 1;
-		this.setZIndex(newIndex);
+		var currentZIndex = this.getZIndex();
+		this.setZIndex(highestWidget.getZIndex());
+		highestWidget.setZIndex(currentZIndex);
 		return this;
 	},
 

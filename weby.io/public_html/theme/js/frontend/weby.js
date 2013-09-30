@@ -119,14 +119,20 @@ function Weby() {
             var widget = new window[widgetData.common["class"]]();
             var html = widget.createFromData(widgetData, parseInt(i) + 1);
 
-            // Bind load events
-            if (html.find('.widget-body iframe').length > 0) {
-                html.find('iframe').load(_checkLoading);
-            } else if (html.find('.widget-body img').length > 0) {
-                html.find('img').load(_checkLoading);
-            } else {
-                _checkLoading();
-            }
+			// Bind load events
+			if (html.find('.widget-body iframe').length > 0) {
+				html.find('iframe').load(_checkLoading).error(function(){
+					widget.showFailedToLoad();
+					_checkLoading();
+				});
+			} else if (html.find('.widget-body img').length > 0) {
+				html.find('img').load(_checkLoading).error(function(){
+					widget.showFailedToLoad();
+					_checkLoading();
+				});
+			} else {
+				_checkLoading();
+			}
 
             // Append to DOM
             App.getContent().append(html);

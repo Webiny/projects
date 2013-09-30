@@ -1,10 +1,27 @@
-{extends file="layouts/master.tpl"}
+{extends file="layouts/staticPage.tpl"}
 
-{block name="title"}Weby editor{/block}
-{block name="head"}
-{/block}
+{block name="title"}Page not found{/block}
+{block name="head"}{/block}
 {block name="content"}
-    <span style="font-size: 100px; margin: 0 auto 0 auto">
-            404 NOT FOUND
-    </span>
+    <div class="error-text">
+        <div class="box404">
+            <h1>404</h1>
+            <span>Error page</span>
+        </div>
+        <div class="message404">
+            <h2>
+                Oop, this weby no longer exists!
+            </h2>
+            <p>
+                Check out the most popular webies by tags:
+            </p>
+            <div class="tags">
+                {foreach from=$recentTags item=tag}
+                <span class="weby-tag-blue">
+                    <a style="color:white; text-decoration: none;" href="{$viewObject.webPath}tag/{$tag.slug}">{$tag.tag}</a>
+                </span>
+                {/foreach}
+            </div>
+        </div>
+    </div>
 {/block}

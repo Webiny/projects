@@ -8,8 +8,9 @@ var WebyParser = function () {
 		// Validate data
 		var domain = WEB.replace(/\//g, '\\/');
 		domain = domain.replace(/\./g, '\\.');
+		domain = domain.replace('http://', '');
 
-		var regex = new RegExp(domain + "[a-z0-9-]*\\/[a-z0-9-]*\\/([a-z0-9]{13})", "i");
+		var regex = new RegExp(domain + "[.a-z0-9-]*\\/[a-z0-9-]*\\/([a-z0-9]{13})", "i");
 		if(regex.test(data)){
 			this._webyUrl = data;
 			return this._webyId = RegExp.$1;

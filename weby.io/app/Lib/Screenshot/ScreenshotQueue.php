@@ -32,7 +32,14 @@ class ScreenshotQueue
 	use StdLibTrait, DatabaseTrait, AppTrait;
 
 	public function add($webyId) {
-		$query = "SELECT * FROM {$this->db()->w_screenshot_queue} WHERE weby = ? AND status IN ('waiting', 'running')";
+		$query = "SELECT weby FROM {$this->db()->w_screenshot_queue} WHERE weby = ? AND status IN ('waiting', 'running')";
+		$bind = [$webyId];
+		$res = $this->db()->execute($query, $bind)->fetchValue();
+
+		if($res){
+			return $this;
+		}
+
 		$query = "INSERT INTO {$this->db()->w_screenshot_queue} (weby, added) VALUES (?, NOW())";
 		$bind = [$webyId];
 		$this->db()->execute($query, $bind);
@@ -49,7 +56,7 @@ class ScreenshotQueue
 
 	public function abort($webyId, $message = '') {
 		$query = "UPDATE {$this->db()->w_screenshot_queue} SET completed = NOW(), status = 'aborted', message = ? WHERE weby = ? AND status = 'running'";
-		$bind = [$webyId, $message];
+		$bind = [$message, $webyId];
 		$this->db()->execute($query, $bind);
 
 		return $this;
@@ -64,7 +71,7 @@ class ScreenshotQueue
 			$interval = $datetime1->diff($datetime2);
 			$minutes = $interval['i'];
 			if($minutes > 3) {
-				$this->abort($job['weby']);
+				$this->abort($job['weby'], 'Timeout');
 			} else {
 				return $this;
 			}

@@ -9,22 +9,30 @@ app:
     default_class: '\App\Handlers\PagesHandler'
     default_method: page404
     mode: development
-    content_validators: # Will be randomly switched by the app
-        - http://dev.weby.io:9005
+    content_validators: #will be randomly switched by the app
+        - http://mrcina.ath.cx:8080
+    tag_finders: #will be randomly switched by the app
+        - http://weby.com:8079
+
+screenshots:
+    enabled: false
+    ip: 192.168.249.128
 
 database:
-    name: weby.io
-    user: adrian
-    password: 4ndr055!
+    name: postgres
+    user: root
+    password: 'paveL!'
     host: localhost
 
 caching_ttl: # TTL times for caches (in seconds)
-    social_share_counts: 10
-    tag_search_queries: 5
+    - social_share_counts: 5
 
 images:
     dashboard: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
     original_screenshot: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
+    frontend_square: http://weby.com/theme/images/default/frontend_square.jpg
+    frontend_vertical: http://weby.com/theme/images/default/frontend_vertical.jpg
+    frontend_horizontal: http://weby.com/theme/images/default/frontend_horizontal.jpg
 
 other:
     user_inactive_period: 5 #Sets the number of days which need to pass from users last sign in to proclaim him as inactive
