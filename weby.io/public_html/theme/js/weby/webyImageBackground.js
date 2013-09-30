@@ -10,6 +10,8 @@ function WebyImageBackground(el) {
 	var _mode = 'aligned';
 	var _align = 'top left';
 	var _imageMode = null;
+	var _width = null;
+	var _height = null;
 
 
 	this.setImage = function (image) {
@@ -37,6 +39,12 @@ function WebyImageBackground(el) {
 		return _mode;
 	}
 
+	this.setSize = function(width, height){
+		_width = width;
+		_height = height;
+		return this;
+	}
+
 	this.setAlign = function (align) {
 		_align = align;
 		_imageMode.setAlignment(align);
@@ -51,6 +59,8 @@ function WebyImageBackground(el) {
 		_image = data.image == "" ? null : data.image;
 		_align = data.align;
 		_mode = data.mode;
+		_width = data.width;
+		_height = data.height;
 		return this;
 	}
 
@@ -75,7 +85,9 @@ function WebyImageBackground(el) {
 		return {
 			image: _image,
 			mode: _mode,
-			align: _align
+			align: _align,
+			width: _width,
+			height: _height
 		}
 	}
 
@@ -124,7 +136,8 @@ function WebyImageBackground(el) {
 		var img = $('<img />');
 		img.attr('src', _image);
 		img.css({
-			width: App.getContent().width() + 'px'
+			width: _width + 'px',
+			height: _height + 'px'
 		});
 
 		_el.append(img);

@@ -79,7 +79,7 @@ class ToolsHandler extends AbstractHandler
 		$weby = new WebyEntity();
 		$weby->load($webyId);
 		Stats::getInstance()->updateWebyHits($weby);
-		die(json_encode($weby->getSummaryData()));
+		die($weby->getSummaryData());
 	}
 
     /**

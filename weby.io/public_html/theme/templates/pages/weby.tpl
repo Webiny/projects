@@ -25,14 +25,13 @@
     {include file="templates/common/favorites.tpl"}
     {include file="templates/common/linkWidgetTemplates.tpl"}
     <div class="bootstrap" data-role="weby">{$weby->toJson()}</div>
-    <div class="bootstrap" data-role="json-data">{$weby->getSummaryData()}</div>
-    {*
-    {if $viewObject.mode}
-    var data = {$weby->getSummaryData()};
+    {if $viewObject.mode == 'development'}
+        <div class="bootstrap" data-role="json-data">{$weby->getSummaryData()}</div>
     {else}
-    var data = {literal}<esi:include src="/tools/weby-summary/{/literal}{$weby->getId()}{literal}"/>{/literal}
+        <div class="bootstrap" data-role="json-data">
+            {literal}<esi:include src="/tools/weby-summary/{/literal}{$weby->getId()}{if $viewObject.user}/{$viewObject.user.id}/{else}/null/{/if}{literal}"/>{/literal}
+        </div>
     {/if}
-    *}
 
 {/block}
 {block name="headerRightTools"}

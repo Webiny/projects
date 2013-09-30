@@ -246,7 +246,7 @@ function WebyToolbar() {
 					$('span.error-message').html(e.response.msg).show();
 				}
 			} else {
-				App.getWeby().getBackground().getImageBackground().setMode('aligned').setImage(e.response.url).setAlign('left top').render();
+				App.getWeby().getBackground().getImageBackground().setMode('aligned').setImage(e.response.url).setAlign('left top').setSize(e.response.width, e.response.height).render();
 				_fileWidget.hide();
 				_removeImageBtn.show();
 			}

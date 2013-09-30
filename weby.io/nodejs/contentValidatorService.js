@@ -6,6 +6,9 @@ var numberOfListeners = parseInt(arguments[1]) || 3;
  * Get hostIp and hostPort
  */
 
+// Force this referer
+var REQUEST_REFERER = false;
+
 var temp = arguments[0].split(':');
 var hostIp = temp[0];
 var hostPort = parseInt(temp[1]);
@@ -52,24 +55,29 @@ console.log("\nMaster process listening on " + hostIp + ':' + hostPort + ' PID: 
 // Create proxy server
 var i = 0;
 httpProxy.createServer(function (req, res, proxy) {
-	// Make sure request came from domain name that is allowed to use this service
-	if('referer' in req.headers){
-		if(req.headers['referer'].indexOf('homeftp.net') > - 1){
-			proxy.proxyRequest(req, res, addresses[i]);
-			i = (i + 1) % addresses.length;
-			return;
+
+	if(REQUEST_REFERER){
+		// Make sure request came from domain name that is allowed to use this service
+		if('referer' in request.headers){
+			if(request.headers['referer'].indexOf(REQUEST_REFERER) > -1){
+				proxy.proxyRequest(req, res, addresses[i]);
+				i = (i + 1) % addresses.length;
+				return;
+			}
 		}
+		// Deny request
+		res.writeHead(404, {
+			'Content-Type': 'application/json',
+			'Cache-Control': 'no-cache',
+			'Connection': 'close'
+		});
+		res.write(JSON.stringify({urlExists:false, message: "You shouldn't really be here..."}));
+		res.end();
 	}
 
-	// Deny request
-	res.writeHead(404, {
-		'Content-Type': 'application/json',
-		'Cache-Control': 'no-cache',
-		'Connection': 'close'
-	});
-	res.write(JSON.stringify({urlExists:false, message: "You shouldn't really be here..."}));
-	res.end();
-
+	proxy.proxyRequest(req, res, addresses[i]);
+	i = (i + 1) % addresses.length;
+	return;
 }).listen(hostPort, hostIp);
 
 var killListeners = function () {

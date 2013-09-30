@@ -79,6 +79,7 @@
 	margin-top: 2px;
 	background-size: cover;
 	background-position: center;
+	overflow:hidden;
 }
 
 .link-widget .link .website{

@@ -47,6 +47,8 @@
     frontend/widgets/flickerWidget.js,
     frontend/widgets/googlePlusWidget.js,
     frontend/widgets/webyWidget.js,
+    editor/baseTool.js,
+    editor/tools/linkTool.js,
     embed/initContent.js
 {/minify}
 <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
