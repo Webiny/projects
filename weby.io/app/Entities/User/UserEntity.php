@@ -196,7 +196,7 @@ class UserEntity extends UserEntityCrud
 
 	public
 	function getProfileUrl() {
-		return $this->app()->getConfig()->app->web_path . 'editor/' . $this->getUsername() . '/';
+		return $this->app()->getConfig()->app->web_path . $this->getUsername() . '/';
 	}
 
 	/**
