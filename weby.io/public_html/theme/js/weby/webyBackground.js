@@ -7,7 +7,7 @@ function WebyBackground(settings) {
 
 	var _backgrounds = {
 		color: new WebyColorBackground($('#weby-background-color')),
-		pattern: new WebyPatternBackground(App.getContent(), 'purty_wood.png'),
+		pattern: new WebyPatternBackground($('#weby-background-pattern'), 'purty_wood.png'),
 		image: new WebyImageBackground($('#weby-background-image')),
 		video: new WebyVideoBackground($('#weby-background-video'))
 	};
@@ -232,10 +232,14 @@ function WebyBackground(settings) {
 		} else {
 			App.getContent().css("margin", "0 auto");
 		}
+		this.triggerBackgroundResized();
+	};
+
+	this.triggerBackgroundResized = function(){
 		for (var i in _backgrounds) {
 			if("webyBackgroundResized" in _backgrounds[i]){
 				_backgrounds[i].webyBackgroundResized();
 			}
 		}
-	};
+	}
 }

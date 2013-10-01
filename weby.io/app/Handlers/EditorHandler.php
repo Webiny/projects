@@ -77,7 +77,10 @@ class EditorHandler extends AbstractHandler
 
 		// Clear cache
 		$this->cache()->delete('weby.json.' . $id);
-		system('varnishadm -T 127.0.0.1:6082 -S /etc/varnish/secret ban req.url == "' . $weby->getPublicUrl(true) . '"');
+		if($this->app()->getConfig()->varnish->enabled){
+			$varnishFlush = $this->str($this->app()->getConfig()->varnish->flush_weby);
+			system($varnishFlush->replace('{webyUrl}', $weby->getPublicUrl())->val());
+		}
 
 		// Add to screenshot queue if requested
 		if($this->request()->post('takeScreenshot', false) && $this->app()->getConfig()->screenshots->enabled) {

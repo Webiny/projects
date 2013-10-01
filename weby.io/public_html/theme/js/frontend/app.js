@@ -1,6 +1,7 @@
 var AppClass = function (topOffset) {
 
 	var _content = $('#content');
+	var _document = $('#document-container');
 	var _workspace = $('#workspace');
 	var _header = $('#header');
 	var _dashboard = null;
@@ -182,6 +183,10 @@ var AppClass = function (topOffset) {
 	 */
 	this.getContent = function () {
 		return _content;
+	}
+
+	this.getDocument = function(){
+		return _document;
 	}
 
 	/**

@@ -12,11 +12,14 @@ function WebyImageBackground(el) {
 	var _imageMode = null;
 	var _width = null;
 	var _height = null;
+	var _top = 0;
+	var _left = 0;
 
 
 	this.setImage = function (image) {
 		if (image == null) {
 			_el.attr("style", "").find('img').remove();
+			_mode = 'aligned';
 			_imageMode.hide();
 		} else {
 			_imageMode.show();
@@ -65,6 +68,8 @@ function WebyImageBackground(el) {
 	}
 
 	this.render = function () {
+		_prepareContainer();
+
 		if (_image == null) {
 			_el.css("background", "none").find("img").remove();
 			return;
@@ -92,7 +97,6 @@ function WebyImageBackground(el) {
 	}
 
 	var _renderAligned = function () {
-		_el.find('img').remove();
 		_el.css({
 			backgroundImage: 'url(' + _image + ')',
 			backgroundPosition: _align == null ? 'left top' : _align,
@@ -101,14 +105,13 @@ function WebyImageBackground(el) {
 			backgroundAttachment: 'inherit',
 			width: App.getContent().width() + 'px',
 			height: App.getContent().height() + 'px',
-			top: 0,
-			left: 0,
+			top: _top,
+			left: _left,
 			position: 'absolute'
 		});
 	}
 
 	var _renderRepeat = function () {
-		_el.find('img').remove();
 		_el.css({
 			backgroundImage: 'url(' + _image + ')',
 			backgroundRepeat: 'repeat',
@@ -116,22 +119,23 @@ function WebyImageBackground(el) {
 			backgroundAttachment: 'inherit',
 			width: App.getContent().width() + 'px',
 			height: App.getContent().height() + 'px',
-			top: 0,
-			left: 0,
+			top: _top,
+			left: _left,
 			position: 'absolute'
 		});
 	}
 
 	var _renderFixed = function () {
-		var wp = App.getWorkspace().offset();
+		var top = App.getWorkspace().offset().top;
 		_el.find('img').remove();
 		_el.css({
-			top: wp.top + 'px',
-			left: wp.left + 'px',
-			position: 'fixed',
+			top: _top,
+			left: _left,
+			position: 'absolute',
 			width: _getVisibleWidth() + 'px',
 			height: _getVisibleHeight() + 'px',
-			overflow:'hidden'
+			overflow:'hidden',
+			backgroundImage: 'none'
 		});
 		var img = $('<img />');
 		img.attr('src', _image);
@@ -147,15 +151,31 @@ function WebyImageBackground(el) {
 		var img = $('<img src="' + _image + '"/>');
 		_el.css({
 			background: 'none',
-			top: 0,
-			left: 0,
-			position: 'absolute'
+			top: _top,
+			left: _left,
+			position: 'absolute',
+			width: App.getContent().width() + 'px',
+			height: App.getContent().height() + 'px'
 		});
 		img.css({
 			width: App.getContent().width() + 'px',
 			height: App.getContent().height() + 'px'
 		});
 		_el.append(img);
+	}
+
+	var _prepareContainer = function(){
+		_el.find('img').remove();
+		var el = _el.detach();
+		if(App.getWeby().getBackground().getImageBackground().getMode() == 'fixed'){
+			App.getDocument().append(el);
+			_top = App.getWorkspace().css('top');
+			_left = App.getContent().css('marginLeft');
+		} else {
+			App.getContent().append(el);
+			_top = 0;
+			_left = 0;
+		}
 	}
 
 	/**
@@ -177,15 +197,7 @@ function WebyImageBackground(el) {
 
 	this.webyBackgroundResized = function () {
 		_el.show();
-		if (_mode == 'fixed') {
-			_renderFixed();
-		} else {
-			var css = {
-				width: App.getContent().width() + 'px',
-				height: App.getContent().height() + 'px'
-			};
-			_el.css(css).find('img').css(css);
-		}
+		this.render();
 	}
 
 	var _getVisibleWidth = function(){

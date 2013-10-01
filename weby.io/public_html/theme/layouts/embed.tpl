@@ -40,7 +40,7 @@
 </head>
 <body class="embed">
 <div class="header embed-header">
-    <span class="user-photo"><img width="34" height="34" src="{$weby->getUser()->getAvatarUrl()} title="{$weby->getUser()->getUsername()}" /></span>
+    <span class="user-photo"><img width="34" height="34" src="{$weby->getUser()->getAvatarUrl()}" title="{$weby->getUser()->getUsername()}" /></span>
 
     <p class="user-name">{$weby->getUser()->getUsername()}</p>
 

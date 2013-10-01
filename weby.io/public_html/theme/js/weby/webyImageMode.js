@@ -27,6 +27,7 @@ function WebyImageMode(){
 		} else {
 			_align.hide();
 		}
+
 		return this;
 	}
 
@@ -47,6 +48,7 @@ function WebyImageMode(){
 
 	this.render = function(){
 		App.getWeby().getBackground().getImageBackground().setMode(_currentMode).setAlign(_currentAlignment).render();
+		App.getWeby().getBackground().triggerBackgroundResized();
 	}
 
 	this.show = function(){

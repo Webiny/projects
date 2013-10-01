@@ -1,5 +1,6 @@
 var AppClass = function () {
 	var _content = $('#content');
+	var _document = $('#document-container');
 	var _workspace = $('#workspace');
 	var _header = $('#header');
 	var _appToolbar;
@@ -151,10 +152,7 @@ var AppClass = function () {
             App.fireEvent("document.mouse.move", e);
         });
 
-        _content.bind({
-            click: function (e) {
-                App.fireEvent("content.click", e);
-            },
+        _workspace.bind({
             mouseleave: function () {
                 _webyDrag.stopDrag();
             },
@@ -357,6 +355,10 @@ var AppClass = function () {
     this.getContent = function () {
         return _content;
     }
+
+	this.getDocument = function(){
+		return _document;
+	}
 
 	/**
 	 * Get jQuery content element

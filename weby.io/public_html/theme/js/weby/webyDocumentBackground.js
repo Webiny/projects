@@ -1,8 +1,8 @@
 function WebyDocumentBackground(settings) {
 
 	var _backgrounds = {
-		color: new WebyColorBackground($('#workspace')),
-		pattern: new WebyPatternBackground($('#workspace'), null)
+		color: new WebyColorBackground(App.getDocument()),
+		pattern: new WebyPatternBackground(App.getDocument(), null)
 	};
 
 	if (typeof settings != "undefined") {

@@ -2,6 +2,8 @@ function WebyPatternBackground(el, defaultPattern) {
 
 	var _el = el;
 	var _pattern = defaultPattern;
+	var _top = 0;
+	var _left = 0;
 
 	this.setPattern = function (pattern) {
 		_pattern = pattern;
@@ -18,9 +20,10 @@ function WebyPatternBackground(el, defaultPattern) {
 	}
 
 	this.render = function () {
+		_prepareContainer();
 		if (_pattern == null || _pattern == 'no-pattern.png') {
 			return _el.css({
-				'background-image': 'none'
+				backgroundImage: 'none'
 			});
 		}
 
@@ -29,7 +32,11 @@ function WebyPatternBackground(el, defaultPattern) {
 			'background-color': 'transparent',
 			'background-repeat': 'repeat',
 			'background-size': '',
-			'background-attachment': 'local'
+			'background-attachment': 'local',
+			width: App.getContent().width() + 'px',
+			height: App.getContent().height() + 'px',
+			top: _top,
+			left: _left
 		});
 	}
 
@@ -39,7 +46,23 @@ function WebyPatternBackground(el, defaultPattern) {
 		}
 	}
 
+	var _prepareContainer = function(){
+		if(_el == App.getDocument()){
+			return;
+		}
+		var el = _el.detach();
+		if(App.getWeby().getBackground().getImageBackground().getMode() == 'fixed'){
+			App.getDocument().append(el);
+			_top = App.getWorkspace().css('top');
+			_left = App.getContent().css('marginLeft');
+		} else {
+			App.getContent().append(el);
+			_top = 0;
+			_left = 0;
+		}
+	}
+
 	this.webyBackgroundResized = function () {
-		// Need to have at least an empty method
+		this.render();
 	};
 }

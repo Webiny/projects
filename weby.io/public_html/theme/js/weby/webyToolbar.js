@@ -221,9 +221,10 @@ function WebyToolbar() {
 	}).data("kendoColorPicker");
 
 	_removeImageBtn.click(function () {
-		App.getWeby().getBackground().getImageBackground().setImage(null).render();
+		App.getWeby().getBackground().getImageBackground().setImage(null);
 		_fileWidget.show();
 		_removeImageBtn.hide();
+		App.getWeby().getBackground().triggerBackgroundResized();
 	});
 
 	$("#file").kendoUpload({
