@@ -1,6 +1,6 @@
 {extends file="templates/pages/listing.tpl"}
 
-{block name="title"}Recent Webies{/block}
+{block name="title"}Webies - tag{/block}
 {block name="headTitle"}
     <span class="header-icon tag"></span>
     <h2>{$searchValue}</h2>

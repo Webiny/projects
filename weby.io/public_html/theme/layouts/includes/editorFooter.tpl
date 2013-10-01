@@ -1,9 +1,6 @@
 <div class="footer">
     <ul>
         <li>
-            <a href="#">Help</a>
-        </li>
-        <li>
             <a href="#">About</a>
         </li>
         <li>

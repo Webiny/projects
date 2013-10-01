@@ -222,10 +222,6 @@ abstract class WebyEntityStorage extends EntityAbstract
      * @param $tag
      * @param $page
      * @param int $limit
-     * @internal param $tagSlug
-     * @internal param $slug
-     * @internal param $tag
-     * @internal param $tags
      * @return Array|bool
      */
     protected static function _sqlGetWebiesByTag($tag, $page, $limit = 9)
@@ -245,11 +241,7 @@ abstract class WebyEntityStorage extends EntityAbstract
      * @param $username
      * @param $page
      * @param int $limit
-     * @internal param $tag
-     * @internal param $tagSlug
      * @internal param $slug
-     * @internal param $tag
-     * @internal param $tags
      * @return Array|bool
      */
     protected static function _sqlGetWebiesByUser($username, $page, $limit = 9)
@@ -262,6 +254,28 @@ abstract class WebyEntityStorage extends EntityAbstract
         return self::_getDb()->execute($query, $bind)->fetchAll();
     }
 
+    /**
+     * Searches database for Webies from given user
+     * @param $search
+     * @param $page
+     * @param int $limit
+     * @return Array|bool
+     */
+    protected static function _sqlGetWebiesBySearch($search, $page, $limit = 9)
+    {
+        $bind = ['%' . $search . '%'];
+        $limitOffset = "LIMIT " . $limit . " OFFSET " . ($page - 1) * $limit;
+        $query = "SELECT w.id, count(*) OVER() total_count FROM " . self::_getDb()->w_weby . " w " .
+                    "WHERE w.title LIKE ? AND w.deleted = 0::bit AND meta_follow = 1::bit
+                    ORDER BY w.created_on DESC {$limitOffset}";
+        return self::_getDb()->execute($query, $bind)->fetchAll();
+    }
+
+    /**
+     * Searches for tags
+     * @param $search
+     * @return bool|ArrayObject
+     */
     protected static function _sqlSearchTags($search)
     {
         $query = "SELECT * FROM " . self::_getDb()->w_tags . " WHERE tag LIKE ? LIMIT 10";

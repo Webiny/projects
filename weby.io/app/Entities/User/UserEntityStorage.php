@@ -12,6 +12,7 @@ abstract class UserEntityStorage extends EntityAbstract
     use StdLibTrait, HttpTrait;
     protected $_id = 0;
     protected $_serviceName = '';
+    protected $_serviceUserId = '';
     protected $_email = '';
     protected $_username = '';
     protected $_firstName = '';
@@ -29,16 +30,16 @@ abstract class UserEntityStorage extends EntityAbstract
     protected function _sqlSave()
     {
         if ($this->_id == 0) {
-            $query = "INSERT INTO {$this->_getDb()->w_user} (username, service_name, email, first_name, last_name, avatar_url, created_on, last_login)
-                        VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id";
-            $bind = [$this->_username, $this->_serviceName, $this->_email, $this->_firstName, $this->_lastName, $this->_avatarUrl];
+            $query = "INSERT INTO {$this->_getDb()->w_user} (username, service_name, service_user_id, email, first_name, last_name, avatar_url, created_on, last_login)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id";
+            $bind = [$this->_username, $this->_serviceName, $this->_serviceUserId, $this->_email, $this->_firstName, $this->_lastName, $this->_avatarUrl];
             $this->_id = $this->_getDb()->execute($query, $bind)->fetchValue();
             return true;
         }
 
-        $query = "UPDATE {$this->_getDb()->w_user} SET service_name=?, first_name=?, last_name=?, avatar_url=?, last_login=NOW() WHERE id=?";
+        $query = "UPDATE {$this->_getDb()->w_user} SET service_name=?, service_user_id=?, first_name=?, last_name=?, avatar_url=?, last_login=NOW() WHERE id=?";
 
-        $bind = [$this->_serviceName, $this->_firstName, $this->_lastName, $this->_avatarUrl, $this->_id];
+        $bind = [$this->_serviceName, $this->_serviceUserId, $this->_firstName, $this->_lastName, $this->_avatarUrl, $this->_id];
         return $this->_getDb()->execute($query, $bind);
     }
 
@@ -70,12 +71,30 @@ abstract class UserEntityStorage extends EntityAbstract
      */
     protected function _sqlGetFavoriteWebies() {
         $query = "SELECT weby, created_on, count(*) OVER() total_count FROM {$this->_getDb()->w_favorite} WHERE \"user\"=?";
-        $bind = array($this->_id);
-        $res = $this->_getDb()->execute($query, $bind)->fetchAll();
-        if($res->count()) {
-            self::$_totalRows = $res->first()->key('total_count');
+        $bind = [$this->_id];
+
+        if (self::request()->query('$top')) {
+            $query .= " LIMIT ?";
+            $bind[] = self::request()->query('$top');
         }
-        return $res;
+
+        if (self::request()->query('$skip')) {
+            $query .= " OFFSET ?";
+            $bind[] = self::request()->query('$skip');
+        }
+
+        $res = self::_getDb()->execute($query, $bind)->fetchAll();
+        if ($res->count() == 0) {
+            self::$_totalRows = 0;
+            return [];
+        }
+
+        self::$_totalRows = $res->first()->key('total_count');
+        $data = [];
+        foreach ($res as $r) {
+            $data[] = ['weby' => $r->key('weby'), 'created_on' => $r->key('created_on')];
+        }
+        return $data;
 
     }
 

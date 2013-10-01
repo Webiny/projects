@@ -14,7 +14,6 @@
 	border: 1px dashed #B9B9B9 !important;
 	overflow: hidden;
 	padding: 0 !important;
-	/*text-shadow: 2px 2px #D6D6D6;*/
 	letter-spacing: 2px;
 	background: none !important;
 }
@@ -38,8 +37,21 @@
 	font-size: 100%;
 	border: 0 none;
 	outline: 0;
+    letter-spacing: 1px;
 }
 
 .text-widget a, .text-widget a:link, .text-widget a:visited{
 	color: #0b0080;
+}
+
+.text-widget p{
+    min-height:15px;
+}
+
+br[_moz_dirty]{
+    height: 0;
+    line-height: 0;
+    margin:0;
+    padding:0;
+    display:none;
 }

@@ -13,12 +13,11 @@ $(function () {
 	$('body').append(html(data));
 	$('#weby-details-tpl').remove();
 	new WebyDetails();
-
 	$('[data-role="facebook-share"] .social-counter').text(data.shareCount.facebook);
 	$('[data-role="twitter-share"] .social-counter').text(data.shareCount.twitter);
 	$('[data-role="gplus-share"] .social-counter').text(data.shareCount.google);
 	$('.username').text(data.currentUser.name);
-	$('.user-photo').css({background: 'url('+data.currentUser.avatar+') top left', backgroundSize: 'cover'});
+	$('.header-right .user-photo').css({background: 'url('+data.currentUser.avatar+') top left', backgroundSize: 'cover'});
 
 	$(function () {
 		App = new AppClass();

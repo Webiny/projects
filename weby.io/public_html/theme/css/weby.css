@@ -1,10 +1,10 @@
 #workspace {
 	overflow:auto;
-	position:relative;
 	cursor: hand;
 	cursor: grab;
 	cursor: -moz-grab;
 	cursor: -webkit-grab;
+    position:fixed;
 }
 
 #workspace.grabbing, #workspace.grabbing .widget {

@@ -35,8 +35,8 @@
                     <a class="image-weby-link" href="{$weby.publicUrl}"></a>
 
                     <div class="author">
-                        <a class="author-photo" href="user-url"><img src="{$weby.avatarUrl}"></a>
-                        <a class="author-name" href="user-url">{$weby.username}</a>
+                        <a class="author-photo" href="{$webPath}user/{$weby.username}"><img src="{$weby.avatarUrl}"></a>
+                        <a class="author-name" href="{$webPath}user/{$weby.username}">{$weby.username}</a>
                     </div>
                 </div>
 

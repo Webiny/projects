@@ -123,7 +123,7 @@ function WebyImageBackground(el) {
 	}
 
 	var _renderFixed = function () {
-		var wp = App.getContent().offset();
+		var wp = App.getWorkspace().offset();
 		_el.find('img').remove();
 		_el.css({
 			top: wp.top + 'px',

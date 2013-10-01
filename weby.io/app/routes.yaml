@@ -10,6 +10,7 @@ routes:
     - ['/^following\/?(\d+)?$/', \App\Handlers\PagesHandler, listFollowingWebies] #search recently created Webies
     - ['/^recent\/?(\d+)?$/', \App\Handlers\PagesHandler, listRecentWebies] #search recently created Webies
     - ['/^tag\/(\S+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByTag] #search Webies by tag
+    - ['/^search\/(\S+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesBySearch] #search Webies
     - ['user/intro-done', \App\Handlers\UsersHandler, markOnboardingDone]
     - ['/^user\/([\.a-z0-9_-]*)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByUser] #search Webies by user
 

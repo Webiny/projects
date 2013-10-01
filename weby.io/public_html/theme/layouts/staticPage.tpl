@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>{block name="title"}{/block}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
     <script type="text/javascript">
         var THEME = '{$viewObject.themeWebPath}';
         var WEB = '{$viewObject.webPath}';
@@ -38,6 +40,7 @@
         weby/webyFollowers.js,
         frontend/authorization.js,
         frontend/staticPageInit.js,
+        weby/webySearch.js
     {/minify}
 
     {block name="head"}{/block}
@@ -55,9 +58,7 @@
     <div class="header-right">
         <ul>
                 {if $viewObject.user}
-                    <li class="my-webies">
-                        <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
-                    </li>
+                    {include file="templates/common/searchWebies.tpl"}
                 {/if}
 
                 {if $viewObject.user}

@@ -210,7 +210,7 @@ function ListingClass() {
         _animateResult();
         if (initialResultCount>0 && initialResultCount < 9) {
             _loading = true;
-            _pagination.html('End of results')
+            _pagination.html('No more Webies')
         } else {
             _page++;
         }

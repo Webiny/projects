@@ -24,10 +24,9 @@ class UsersHandler extends AbstractHandler
     {
         // Get data from OAuth service
         $serviceData = $this->request()->session('oauth_user')->get('oauth2_user');
-
+        $serviceData->serviceUserId = $serviceData->profileId;
         // Load user by email
         $user = UserEntity::getByEmail($serviceData->email);
-
 
         if (!$user) {
             // If user doesn't exist, create him, send him an e-mail,
@@ -36,6 +35,7 @@ class UsersHandler extends AbstractHandler
             $user = new UserEntity();
             $serviceData->username = UserEntity::generateUsername($serviceData->email);
             $user->populate($serviceData)->save();
+
 
             // Sending welcome e-mail to our newly created user
             $this->_sendEmail($user);
@@ -129,14 +129,15 @@ class UsersHandler extends AbstractHandler
 
         $data = [
             $user->getEmail() => [
-                '{fullname}' => $user->getFirstName() . ' ' . $user->getLastName()
+                '{fullname}' => $user->getFirstName() . ' ' . $user->getLastName(),
+                '{email}' => $user->getEmail()
             ]
         ];
 
         // Let's build our message
         $msg = $mailer->getMessage();
         $msg->setSubject('Welcome to Weby.io!')
-            ->setBodyFromTemplate($config->theme_abs_path . 'templates/emails/welcoming.tpl')
+            ->setBodyFromTemplate($config->theme_abs_path . 'templates/emails/beta-welcome.tpl')
             ->setContentType('text/html')
             ->setTo($user->getEmail());
 

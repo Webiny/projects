@@ -1,6 +1,6 @@
 {extends file="templates/pages/listing.tpl"}
 
-{block name="title"}By user{/block}
+{block name="title"}Webies - {$username}{/block}
 {block name="headTitle"}
     <span class="header-icon userAvatar"
           {if $webyUser.avatarUrl}style="background-image: url({$webyUser.avatarUrl}); background-size: cover; background-position: top left"{/if}></span>

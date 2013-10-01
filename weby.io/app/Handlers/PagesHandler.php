@@ -137,6 +137,20 @@ class PagesHandler extends AbstractHandler
         $this->searchValue = $slug;
     }
 
+    /**
+     * Lists Webies by user's search
+     * @param $search
+     * @param int $page
+     * @internal param \App\Handlers\All $slug searches are made not by tag directly, it's done by slug
+     * @internal param $userId
+     */
+    public function listWebiesBySearch($search, $page = 1)
+    {
+        $data = WebyEntity::listWebiesBySearch($search, $page, $this->_listLimit);
+        $this->_listWebies($data, $page);
+        $this->searchValue = $search;
+    }
+
     public function page404()
     {
         $this->recentTags = WebyEntity::getRecentTags(10);
@@ -163,7 +177,7 @@ class PagesHandler extends AbstractHandler
 
             $data['count'] = $result[0]['total_count'];
             $data['pagination'] = $this->_getNavigation($data['count'], $page, $this->_listLimit);
-
+            $data['webPath'] = $this->app()->getConfig()->app->web_path;
             foreach ($result as $w) {
                 $weby = new WebyEntity();
                 $weby->load($w['id']);

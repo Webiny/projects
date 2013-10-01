@@ -83,6 +83,23 @@ abstract class UserEntityProperties extends UserEntityStorage
     /**
      * @return string
      */
+    public function getServiceName()
+    {
+        return $this->_serviceName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceUserId()
+    {
+        return $this->_serviceUserId;
+    }
+
+
+    /**
+     * @return string
+     */
     public function getUsername()
     {
         return $this->_username;

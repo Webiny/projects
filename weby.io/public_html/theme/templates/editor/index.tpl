@@ -12,9 +12,7 @@
 {/block}
 
 {block name="headerRightTools"}
-    <li class="my-webies">
-        <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
-    </li>
+    {include file="templates/common/searchWebies.tpl"}
     {include file="templates/common/socialShare.tpl"}
     {include file="templates/common/userOptions.tpl"}
 {/block}
@@ -34,7 +32,8 @@
     {include file="templates/editor/includes/webyToolbar.tpl"}
     {include file="templates/common/dashboard.tpl"}
     <div id="outer-widgets" class="dialog" style="display:none">
-        <img src="{$viewObject.themeWebPath}images/widgets-too-far.png" />
+        <img src="{$viewObject.themeWebPath}images/widgets-too-far.png"/>
+
         <p class="buttons">
             <span id="button-dont-move-widgets" class="button">No, leave them.</span>
             <span id="button-move-widgets" class="button main" data-role="weby-dialog-save">Yes, sure!</span>
@@ -42,6 +41,7 @@
     </div>
     {include file="templates/common/favorites.tpl"}
     {include file="templates/common/followers.tpl"}
+
     {if !$viewObject.user->completedOnboarding()}
         {include file="templates/editor/includes/introDialog.tpl"}
     {/if}

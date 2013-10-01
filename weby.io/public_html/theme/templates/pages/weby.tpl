@@ -8,8 +8,14 @@
     <meta property="og:url" content="{$weby.publicUrl}"/>
     <meta property="og:image" content="{$weby->getImage('original-screenshot')}"/>
     <meta property="og:description" content="{$weby.description|default:'Created with Weby.io'}"/>
-    {if !$weby.metaFollow}<meta name="robots" content="noindex, nofollow">{/if}
-
+    {if !$weby.metaFollow}
+        <meta name="robots" content="noindex, nofollow">
+    {/if}
+    {if $weby.user.serviceName == 'google'}
+        <link rel="author" href="https://plus.google.com/{$weby.user.serviceUserId}">
+    {else}
+        {*<link href="https://plus.google.com/TREBA-NAM-GPLUS" rel="publisher"/>*}
+    {/if}
     <link data-page-subject="true" href="{$weby->getImage('original-screenshot')}" rel="image_src"/>
     {include file="templates/pages/includes/appIncludes.tpl"}
     {include file="templates/pages/includes/appRemoteIncludes.tpl"}
@@ -36,9 +42,7 @@
 {/block}
 {block name="headerRightTools"}
     {if $viewObject.user}
-        <li class="my-webies">
-            <a href="javascript:void(0)" data-role="dashboard-dialog-open"></a>
-        </li>
+        {include file="templates/common/searchWebies.tpl"}
     {/if}
 
     {include file="templates/common/socialShare.tpl"}

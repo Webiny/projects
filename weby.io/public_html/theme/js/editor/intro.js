@@ -16,8 +16,8 @@ function Intro() {
         {element: $('div.header-middle'), text: '<h1>Your Weby Name</h1>This is your Weby name and URL which you can use to share it with your friends and the rest of the world...', position: 'bottom'},
         {element: $('#social-sharing'), text: '<h1>One-click sharing</h1>...or you can do it with a single click using social networks (you have to be logged in to Facebook or Twitter of course).', position: 'bottom'},
         {element: $('li.my-webies'), text: '<h1>My Webies</h1>Click on "My Webies" to quickly access your previously created “webies” or to create new ones. You can create as many as you like!', position: 'right'},
-        {element: $('.footer-keyboard-shortcuts'), text: '<h1>Keyboard shortcuts</h1>Any keyboard shortcuts?', position: 'top'},
-        {element: $('.footer-feedback'), text: '<h1>Feedback</h1>In the end, we would love to hear your feedback!', position: 'top'},
+        {element: $('.footer-keyboard-shortcuts'), text: "<h1>Keyboard shortcuts</h1>By the way, don\'t forget to check keyboard shortcuts as they can make your life a lot easier!", position: 'top'},
+        {element: $('.footer-feedback'), text: '<h1>Feedback</h1>And finally, if you have anything to say to us, use this link to send a quick feedback. We would love to hear your thoughts. Thank you!', position: 'top'},
     ];
 
     // It gets all steps and attaches neccessary data tags to each one
@@ -111,7 +111,7 @@ function Intro() {
                             $('.introjs-skipbutton').before('<span class="introjs-button" id="introjs-restart">Start over</span>');
 
                             $('.introjs-prevbutton').hide();
-                            $('.introjs-skipbutton').before('<a href="' + WEB + 'examples"><span class="introjs-button" id="introjs-examples">See examples</span></a>');
+                            $('.introjs-skipbutton').before('<a target="_blank" href="' + WEB + 'recent"><span class="introjs-button" id="introjs-examples">See examples</span></a>');
 
                             // Start over - show first fancybox dialog with introduction text
                             $('#introjs-restart').on('click', function() {

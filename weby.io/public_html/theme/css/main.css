@@ -139,7 +139,7 @@ body.unselectable * {
     display: none;
     background-color: #fff;
     position: absolute;
-    top: 40px;
+    top: 41px;
     z-index: 5000;
     right: 0;
 }
@@ -472,10 +472,183 @@ body.unselectable * {
     margin: 10px 20px 20px;
 }
 
+/* Search Webies */
 
+.header-right .search-btn {
+    position: relative;
+    width: 43px;
+    height: 47px;
+    float: left;
+}
 
+.header-right .search-btn a.search-icon {
+    width: 43px;
+    height: 47px;
+    background-image: url("../images/sprite2.png");
+    background-repeat: no-repeat;
+    background-position: 50% -3143px;
+    display: inline-block;
+    position: absolute;
+    border-left: 1px solid #fff;
+    border-top: 1px solid #fff;
+    margin-top: -1px;
+    z-index: 3000;
+}
 
-.container{
+.header-right .search-btn:hover a.search-icon {
+    opacity: 0.85;
+}
+
+.header-right .search-btn .search-field {
+    position: absolute;
+    border: 1px solid #f0f0f0;
+    background-color: #fff;
+    padding: 20px 20px 0 20px;
+    list-style: none;
+    margin: 0 0;
+    top: 45px;
+    display: none;
+    z-index: 3100;
+    -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+}
+
+.header-right .search-btn .search-field input {
+    width: 320px;
+    border: 1px solid #f0f0f0;
+    padding: 10px 0 10px 10px;
+}
+
+.header-right .search-input {
+    margin-top: 10px;
+}
+
+.header-right .search-btn .search-field ul.search-results {
+    display: block;
+    margin-top: 10px;
+    float: left;
+    width: 332px;
+}
+
+.header-right .search-btn .search-field ul.search-results li {
+    display: block;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.header-right .search-btn .search-field ul.search-results li span {
+    display: block;
+}
+
+.header-right .search-btn .search-field ul.search-results li {
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+}
+
+.header-right .search-btn .search-field ul.search-results li:hover {
+    background-color: #f7f7f7;
+}
+
+.header-right .search-btn .search-field ul.search-results li span.search-img {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    float: left;
+    background-color: #f0f0f0;
+    margin-right: 10px;
+}
+
+.header-right .search-btn .search-field ul.search-results li p {
+    display: inline-block;
+    margin: 0 0;
+    line-height: 1;
+    float: left;
+    padding: 0 0;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.header-right .search-btn .search-field ul.search-results li ul.search-info {
+    display: inline-block;
+    float: left;
+    width: 292px;
+    margin-top: 1px;
+}
+
+.header-right ul.search-info a {
+    text-decoration: none;
+    color: #666666;
+}
+
+.header-right .search-btn .search-field ul.search-results li ul.search-info li {
+    display: inline-block;
+    float: left;
+    line-height: 1.4;
+    font-size: 12px;
+    padding-right: 5px;
+    font-weight: 400;
+    color: #959494;
+    width: auto;
+    margin-bottom: 0px;
+}
+
+.header-right .search-btn .search-field ul.search-results li ul.search-info li:before {
+    content: "-";
+    padding-right: 5px;
+}
+
+.header-right .search-btn .search-field ul.search-results li ul.search-info li:first-child:before {
+    content: " ";
+    padding-right: 0px;
+}
+
+.header-right .search-btn .search-field ul.search-results li span a {
+    background-image: none;
+    height: auto;
+    border: none;
+}
+
+.header-right .search-btn .search-field ul.search-results li p a {
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -moz-binding: url('ellipsis.xml#ellipsis');
+    display: block;
+    width: auto;
+    background-image: none;
+    height: auto;
+    border: none;
+    color: #666;
+}
+
+.header-right .search-btn .search-field ul.search-results li.view-all-results {
+    line-height: 2;
+    text-align: center;
+    background-color: #f7f7f7;
+}
+
+.header-right .search-btn .search-field ul.search-results li.view-all-results:hover {
+    background-color: #f3f3f3;
+}
+
+.header-right .search-btn .search-field ul.search-results li.view-all-results a {
+    text-decoration: none;
+    color: #f25b2b;
+    display: block;
+}
+
+.header a.close-form.close-search {
+    top: 10px;
+    right: 13px;
+}
+
+/* Static page container */
+
+.container {
     width: 700px;
     padding: 42px 130px;
     background-image: url("../images/white-transparent-bg.png");
@@ -484,19 +657,19 @@ body.unselectable * {
     text-align: center;
 }
 
-.container h1{
+.container h1 {
     font-weight: 400;
     font-size: 30px;
 }
 
-.container ul.social{
+.container ul.social {
     list-style: none;
     margin: 40px 0 40px 0;
     padding: 0 0;
     overflow: hidden;
 }
 
-.container ul.social li{
+.container ul.social li {
     display: inline-block;
     overflow: hidden;
 }
@@ -511,7 +684,7 @@ body.unselectable * {
     background-repeat: no-repeat;
 }
 
-.container ul.social li.signin-facebook{
+.container ul.social li.signin-facebook {
     float: left;
 }
 
@@ -525,13 +698,13 @@ body.unselectable * {
     color: #4966a1;
 }
 
-.container ul.social li.signin-facebook a:hover{
+.container ul.social li.signin-facebook a:hover {
     background-color: #4966a1;
     color: #fff;
     border-bottom: 3px solid #3a5181;
 }
 
-.container ul.social li a{
+.container ul.social li a {
     text-decoration: none;
     font-size: 24px;
     font-weight: 400;
@@ -545,7 +718,7 @@ body.unselectable * {
     border-bottom: 3px solid #cccccc;
 }
 
-.container ul.social li.signin-google{
+.container ul.social li.signin-google {
     float: right;
 }
 
@@ -559,13 +732,13 @@ body.unselectable * {
     color: #dd211c;
 }
 
-.container ul.social li.signin-google a:hover{
+.container ul.social li.signin-google a:hover {
     background-color: #dd211c;
     color: #fff;
     border-bottom: 3px solid #be1d18;
 }
 
-.container h2{
+.container h2 {
     font-weight: 300;
     font-size: 24px;
     padding-bottom: 20px;

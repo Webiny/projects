@@ -1,9 +1,9 @@
 {extends file="templates/pages/listing.tpl"}
 
-{block name="title"}Followed users{/block}
+{block name="title"}Webies - following users{/block}
 {block name="headTitle"}
     <span class="header-icon following-users-webies"></span>
-    <h2>Followed users</h2>
+    <h2>Webies - following users</h2>
 {/block}
 {block name="content"}
     <div class="bootstrap">

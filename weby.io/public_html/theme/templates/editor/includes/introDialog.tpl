@@ -33,7 +33,7 @@
 
     <p class="buttons" style="text-align: center">
         <span data-role="start-introduction" class="button main">Start introduction</span>
-        <span data-role="start-introduction" class="button">What can you do with Weby</span>
+        <a target="_blank" href="{$viewObject.webPath}recent"><span data-role="start-introduction" class="button">What can you do with Weby</span></a>
         <span class="button" data-role="skip-introduction">Skip</span>
     </p>
 

@@ -71,6 +71,34 @@ function findTags(query, response) {
 	});
 }
 
+function findWebies(query, response) {
+    if (typeof query == "undefined") {
+        return sendResponse([], response);
+    }
+
+    query = stripTags(query).toLowerCase();
+
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            done();
+            return sendResponse([], response);
+        }
+        client.query('SELECT w.id, w.slug, w.hits, w.title, MIN(u.username) username, MIN(wi.file) screenshot, COUNT(f.weby) favorited_count FROM w_weby w ' +
+                        'JOIN w_user u ON u.id = w.user ' +
+                        "LEFT JOIN w_weby_image wi ON wi.weby = w.id AND tag ='frontend-square' " +
+                        'LEFT JOIN w_favorite f ON f.weby = w.id ' +
+                        'WHERE w.title LIKE $1::varchar GROUP BY w.id LIMIT 5',
+                        ['%'+query+'%'], function(err, result) {
+            done();
+            if(err) {
+                return sendResponse([], response);
+            }
+
+            return sendResponse(result.rows, response);
+        });
+    });
+}
+
 function sendResponse(data, response) {
 	response.writeHead(200, {
 		'Content-Type': 'application/json',
@@ -106,7 +134,12 @@ var server = http.createServer(function (request, response) {
 	var urlParts = url.parse(request.url, true);
 
 	// Find tags
-	return findTags(urlParts.query.tag, response);
+    if (typeof urlParts.query.tag !='undefined') {
+        return findTags(urlParts.query.tag, response);
+    }
+    if (typeof urlParts.query.search !='undefined') {
+        return findWebies(urlParts.query.search, response);
+    }
 
 });
 

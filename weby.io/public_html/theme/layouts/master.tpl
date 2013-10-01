@@ -40,7 +40,8 @@
         third_party/jquery.cookies.min.js,
         weby/webyDashboard.js,
         weby/webyFavorites.js,
-        weby/webyFollowers.js
+        weby/webyFollowers.js,
+        weby/webySearch.js
     {/minify}
     <script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
     <script type="text/javascript">
