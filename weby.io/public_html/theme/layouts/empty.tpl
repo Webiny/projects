@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <script src="{$viewObject->themeWebPath}js/jquery-2.0.3.min.js"></script>
+    <script src="{$viewObject->themeWebPath}js/third_party/jquery-2.0.3.min.js"></script>
     <style type="text/css">
         html, body{
             min-width: 100%;

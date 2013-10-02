@@ -7,7 +7,7 @@ function Weby() {
 
 	var _saveInProgress = false;
 	var _saveInterval = null;
-	var _saveIntervalTime = 15000;
+	var _saveIntervalTime = 30000;
 	var _FF = !(window.mozInnerScreenX == null);
 	var _widgets = {};
 	var _invalidUrls = [];
@@ -93,6 +93,13 @@ function Weby() {
 			_documentBackground.render();
 		}
 	};
+
+	this.disableSave = function(){
+		clearInterval(_saveInterval);
+		$(window).bind("beforeunload", function () {
+			return;
+		});
+	}
 
 	/**
 	 * Returns a scrollbar width depending on browser
@@ -283,19 +290,13 @@ function Weby() {
 					_counter = {};
 					_unknownFileTypes = [];
 					_invalidUrls = [];
-					_webySave.setMessage('Last saved at ' + data.data.time);
-					_labelTimeout = setTimeout(function () {
-						_webySave.hide();
-					}, 2000)
+					_webySave.setMessage('Last saved: <time class="passed" datetime="'+data.data.time+'">'+data.data.time+'</time>');
 					clearInterval(_saveInterval);
 					_saveInterval = setInterval(_save, _saveIntervalTime);
 
 					App.fireEvent('weby.saved', data.data);
 				} else {
-					_webySave.setMessage('Couldn\'t save your Weby :(');
-					_labelTimeout = setTimeout(function () {
-						_webySave.hide();
-					}, 2000)
+					_webySave.setMessage('Couldn\'t save your Weby :( Try again pressing Ctrl+S');
 					clearInterval(_saveInterval);
 					_saveInterval = setInterval(_save, _saveIntervalTime);
 				}

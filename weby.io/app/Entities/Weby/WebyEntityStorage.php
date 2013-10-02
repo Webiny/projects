@@ -101,7 +101,7 @@ abstract class WebyEntityStorage extends EntityAbstract
     protected function _sqlLoad()
     {
         $this->_images = $this->arr();
-        $query = "SELECT * FROM {$this->_getDb()->w_weby} WHERE id=? AND deleted = 0::bit LIMIT 1";
+        $query = "SELECT * FROM {$this->_getDb()->w_weby} WHERE id=? LIMIT 1";
         $bind = [$this->_id];
 
         return $this->_getDb()->execute($query, $bind)->fetchArray();

@@ -46,6 +46,9 @@
                     <a id="canvas-settings-fixed" data-mode="fixed" href="javascript:void(0)">Fixed</a>
                 </li>
                 <li>
+                    <a id="canvas-settings-fit" data-mode="fit" href="javascript:void(0)">Fit to screen</a>
+                </li>
+                <li>
                     <a id="canvas-settings-scale" data-mode="scale" href="javascript:void(0)">Scale</a>
                 </li>
             </ul>
@@ -64,19 +67,19 @@
                     <a href="javascript:void(0)" data-align="right top">Top right</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" data-align="left center">Left</a>
+                    <a href="javascript:void(0)" data-align="left center">Middle left</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" data-align="center center">Center</a>
+                    <a href="javascript:void(0)" data-align="center center">Middle center</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" data-align="right center">Right</a>
+                    <a href="javascript:void(0)" data-align="right center">Middle right</a>
                 </li>
                 <li>
                     <a href="javascript:void(0)" data-align="left bottom">Bottom left</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" data-align="center bottom">Bottom</a>
+                    <a href="javascript:void(0)" data-align="center bottom">Bottom center</a>
                 </li>
                 <li>
                     <a href="javascript:void(0)" data-align="right bottom">Bottom right</a>

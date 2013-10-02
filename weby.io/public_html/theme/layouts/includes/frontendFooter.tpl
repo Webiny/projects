@@ -1,9 +1,6 @@
 <div class="footer">
     <ul>
         <li>
-            <a href="{$viewObject.webPath}about">About</a>
-        </li>
-        <li>
             <a href="{$viewObject.webPath}terms-of-service">Terms of Service</a>
         </li>
         <li>

@@ -108,11 +108,13 @@ function WebyToolbar() {
 			App.fireEvent("widget.settings.activate");
 			_widgetSettings.show();
 			_activeWidget.hideTools();
+			_activeWidget.disableDragging();
 			_colorPicker.value(_colorPicker.value());
 		} else {
 			App.fireEvent("widget.settings.deactivate");
 			_widgetSettings.hide();
 			_activeWidget.showTools();
+			_activeWidget.enableDragging();
 		}
 	});
 
@@ -420,6 +422,11 @@ function WebyToolbar() {
 		_widgetSettings.hide();
 		_canvasSettings.hide();
 		_documentBackgroundSettings.hide();
+
+		if (_activeWidget != null){
+			_activeWidget.enableDragging();
+		}
+
 		if (_activeWidget != null && !App.isInputFocused(e) && !_activeWidget._isEditable) {
 			_activeWidget.showTools().html('.widget-disabled-overlay').show();
 		}
@@ -430,6 +437,7 @@ function WebyToolbar() {
 			return;
 		}
 		_activeWidget = widget;
+		_activeWidget.enableDragging();
 		$('#weby-toolbar-wrapper a.tool-icon').removeClass('disabled');
 		// Get widget settings
 		var settings = _activeWidget.getFrameSettings();

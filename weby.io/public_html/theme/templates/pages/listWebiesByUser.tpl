@@ -13,7 +13,7 @@
 {block name="headTitle"}
     <span class="header-icon userAvatar"
           {if $user.avatarUrl}style="background-image: url({$user.avatarUrl}); background-size: cover; background-position: top left"{/if}></span>
-    <h2>{$user.username}</h2>
+    <h2>{$searchValue}</h2>
     {/block}
 {block name="content"}
     <span class="header-icon tag"></span>

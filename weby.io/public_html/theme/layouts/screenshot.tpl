@@ -21,10 +21,10 @@
     {/minify}
 
     {minify type="js"}
-        jquery-2.0.3.min.js,
-        jquery-ui-1.9.2.webyio.js,
+        third_party/jquery-2.0.3.min.js,
+        third_party/jquery-ui-1.9.2.webyio.js,
         jQueryFix.js,
-        jquery.fancybox.pack.js
+        third_party/jquery.fancybox.pack.js
     {/minify}
 
     <script type="text/javascript">

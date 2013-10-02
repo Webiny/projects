@@ -18,7 +18,7 @@
                 <span class="favorites-icon"></span>
                 #}#
                 #}else{#
-                <span class="favorites-icon pointer-cursor" data-role="create-weby"></span>
+                <span class="favorites-icon pointer-cursor" data-role="add-to-favorites"></span>
                 #}#
                 <div class="weby-stats">
                     <p>
@@ -108,12 +108,12 @@
             <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">&laquo; view less tags</a>
         </div>
         </div>
-        <label class="checkbox-mute"><input type="checkbox" data-role="video-background-mute"/><span>Mute sound</span></label>
+        <label class="checkbox-mute" data-role="video-background-mute">Mute sound</label>
         </div>
     </script>
     <script type="weby/tpl" id="user-favorited">
         <li class="has-tooltip-top" data-tooltip="{username}">
-            <a class="photo" href="javascript:void();"><img src="{avatarUrl}"></a>
+            <a class="photo" href="{userUrl}"><img src="{avatarUrl}"></a>
         </li>
     </script>
 {/literal}

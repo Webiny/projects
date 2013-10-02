@@ -30,7 +30,7 @@ class PagesHandler extends AbstractHandler
     public function index()
     {
         $user = $this->security()->getUser();
-        if ($user && $user->isAuthenticated()) {
+        if ($user && $user->isAuthenticated() && $this->user()) {
             $this->request()->redirect($this->user()->getProfileUrl());
         }
     }
@@ -46,6 +46,13 @@ class PagesHandler extends AbstractHandler
 		// Try to load Weby
 		$weby = new WebyEntity();
 		$weby->load($id);
+
+		if(!$weby->getId() || $weby->isDeleted()){
+			header("HTTP/1.0 404 Not Found");
+			$this->recentTags = WebyEntity::getRecentTags(10);
+			$this->setTemplate('page404');
+			return;
+		}
 
 		// Will check if requested Weby and URL params are valid
 		$this->_checkRequest($weby, $user, $slug, $id);
@@ -112,9 +119,12 @@ class PagesHandler extends AbstractHandler
      */
     public function listWebiesByUser($username, $page = 1)
     {
+        $this->searchValue = $username;
+
         $webyUser = UserEntity::getByUsername($username);
         $this->user = $webyUser;
         if (!$webyUser) {
+            $this->page = 1;
             $this->html = View::getInstance()->fetch('templates/pages/includes/smartyListEmpty.tpl');
         } else {
             $data = WebyEntity::listWebiesByUser($username, $page, $this->_listLimit);

@@ -78,10 +78,15 @@ function WebyDetails() {
         });
     });
 
-    _addToFavoritesButton.click(function () {
+    _addToFavoritesButton.on('click', function () {
         if (_processingFavorites) {
             return false;
         }
+
+        if (!App.userLoggedIn()) {
+            return new Authorization(true);
+        }
+        
         _processingFavorites = true;
         $.ajax({
             url: WEB + 'tools/favorite/' + App.getWeby().getId(),
@@ -113,6 +118,7 @@ function WebyDetails() {
                         var tpl = $('script#user-favorited').html();
                         tpl = tpl.replace('{avatarUrl}', r.data.favoritedBy[i].avatarUrl);
                         tpl = tpl.replace('{username}', r.data.favoritedBy[i].username);
+                        tpl = tpl.replace('{userUrl}', WEB + r.data.favoritedBy[i].username);
                         _favoritedBy.find('ul').append(tpl);
                     }
                     _favoritedBy.show();

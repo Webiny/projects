@@ -33,6 +33,7 @@ function WebyVideoBackground(el) {
 			_removeBtn.hide();
 			_infoMessage.hide();
 			_volumeControl.hide();
+			_toggleMuteButton();
 			return;
 		} else {
 			_videoInput.hide();
@@ -49,6 +50,7 @@ function WebyVideoBackground(el) {
 			}
 		}
 		_loadYoutubeBackground();
+		_toggleMuteButton();
 	};
 
 	this.populate = function (data) {
@@ -163,26 +165,37 @@ function WebyVideoBackground(el) {
 				}
 			}
 		});
+	};
 
+	var _toggleMuteButton = function(){
+		if(_video == null){
+			_muteSound.hide();
+			return;
+		}
 		/**
 		 * Mute sound control
 		 */
 		if(_muteSound.length > 0){
 			if(_volume > 0){
-				_muteSound.parent().show();
-				_muteSound.parent().click(function(){
-					if(_muteSound.is(':checked')){
-						_player.setVolume(0);
+				_muteSound.show();
+				_muteSound.click(function(){
+					if(_muteSound.hasClass('checked')){
+						if(_player != null){
+							_player.setVolume(0);
+						}
 					} else {
-						_player.setVolume(_volume);
+						if(_player != null){
+							_player.setVolume(_volume);
+						}
 					}
+					_muteSound.toggleClass('checked');
 				});
 			} else {
-				_muteSound.next().text('Muted by author.');
-				_muteSound.attr("disabled", true).css('opacity', '0.3')
+				_muteSound.text('Muted by author.');
+				_muteSound.css('opacity', '0.3')
 			}
 		}
-	};
+	}
 
 	var _getWidth = function () {
 		var width = App.getViewportWidth();

@@ -34,7 +34,7 @@
 }
 
 .header-middle.header-middle-wrap .header-icon.userAvatar {
-    background: url(../images/sprite2.png) -152px -3294px;
+    background: url(../images/sprite2.png) -152px -431px;
 }
 
 .header-middle.header-middle-wrap .header-icon.following-users-webies {
@@ -313,7 +313,7 @@
 
 .box .weby-info ul {
     list-style: none;
-    margin: 0 0;
+    margin: -5px 0 0 0;
     padding: 0 0;
     overflow: hidden;
 }

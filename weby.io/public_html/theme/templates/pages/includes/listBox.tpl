@@ -13,7 +13,7 @@
             </div>
 
             <div class="weby-info">
-                <h2><a class="header-url" title="{webyTitle}" href="{publicUrl}">{webyTitle}</h2>
+                <h2><a class="header-url" title="{webyTitle}" href="{publicUrl}">{webyTitle}</a></h2>
                 <ul>
                     <li class="favs">
                              <span>

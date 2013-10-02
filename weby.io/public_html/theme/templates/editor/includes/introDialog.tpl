@@ -28,12 +28,12 @@
     </p>
 
     <p>
-        Go through our short 5-step intro or immediately create your first Weby!
+        Go through our short few steps intro or immediately create your first Weby!
     </p>
 
     <p class="buttons" style="text-align: center">
         <span data-role="start-introduction" class="button main">Start introduction</span>
-        <a target="_blank" href="{$viewObject.webPath}recent"><span data-role="start-introduction" class="button">What can you do with Weby</span></a>
+        <a target="_blank" href="{$viewObject.webPath}recent"><span class="button">What can you do with Weby</span></a>
         <span class="button" data-role="skip-introduction">Skip</span>
     </p>
 

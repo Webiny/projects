@@ -11,8 +11,8 @@ function WebySearchClass() {
     var _searchResultsHolder = $('ul.search-results');
     var _searchField = $('#search-field');
 
-    var _defaultImageSrc = 'http://weby.com/theme/images/default/frontend_square.jpg';
-    var _screenshotRoot = 'http://weby.com/uploads/webies/';
+    var _defaultImageSrc = WEB + 'theme/images/default/frontend_square.jpg';
+    var _screenshotRoot = WEB + 'uploads/webies/';
 
     var _timer = false;
 
@@ -54,16 +54,16 @@ function WebySearchClass() {
         _searchResultsHolder.empty();
     }
 
-
     _searchInput.on('keyup', function (e) {
         var event = e || window.event;
         var charCode = event.which || event.keyCode;
+
         switch (charCode) {
             case 27: // Esc key
                 _closeSearchField();
                 break;
         }
-    })
+    });
 
     _searchInput.on('input', function (e) {
         if (_searchInput.val().length > 2) {

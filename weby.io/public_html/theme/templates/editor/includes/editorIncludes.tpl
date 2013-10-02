@@ -98,4 +98,4 @@
     editor/parsers/googlePlusParser.js,
     editor/parsers/webyParser.js
 {/minify}
-<script src="{$viewObject.themeWebPath}js/kendo.web.min.js" charset="utf-8"></script>
+<script src="{$viewObject.themeWebPath}js/third_party/kendo.web.min.js" charset="utf-8"></script>

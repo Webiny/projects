@@ -42,7 +42,7 @@ function WebyImageBackground(el) {
 		return _mode;
 	}
 
-	this.setSize = function(width, height){
+	this.setSize = function (width, height) {
 		_width = width;
 		_height = height;
 		return this;
@@ -83,6 +83,8 @@ function WebyImageBackground(el) {
 			_renderFixed();
 		} else if (_mode == 'scale') {
 			_renderScale();
+		} else if (_mode == 'fit') {
+			_renderFit();
 		}
 	}
 
@@ -126,7 +128,6 @@ function WebyImageBackground(el) {
 	}
 
 	var _renderFixed = function () {
-		var top = App.getWorkspace().offset().top;
 		_el.find('img').remove();
 		_el.css({
 			top: _top,
@@ -134,7 +135,7 @@ function WebyImageBackground(el) {
 			position: 'absolute',
 			width: _getVisibleWidth() + 'px',
 			height: _getVisibleHeight() + 'px',
-			overflow:'hidden',
+			overflow: 'hidden',
 			backgroundImage: 'none'
 		});
 		var img = $('<img />');
@@ -146,6 +147,28 @@ function WebyImageBackground(el) {
 
 		_el.append(img);
 	}
+
+	var _renderFit = function () {
+		_el.find('img').remove();
+		_el.css({
+			top: _top,
+			left: _left,
+			position: 'absolute',
+			width: _getVisibleWidth() + 'px',
+			height: _getVisibleHeight() + 'px',
+			overflow: 'hidden',
+			backgroundImage: 'none'
+		});
+		var img = $('<img />');
+		img.attr('src', _image);
+		img.css({
+			width: _getVisibleWidth() + 'px',
+			height: 'auto'
+		});
+
+		_el.append(img);
+	}
+
 	var _renderScale = function () {
 		_el.find('img').remove();
 		var img = $('<img src="' + _image + '"/>');
@@ -164,10 +187,11 @@ function WebyImageBackground(el) {
 		_el.append(img);
 	}
 
-	var _prepareContainer = function(){
+	var _prepareContainer = function () {
 		_el.find('img').remove();
 		var el = _el.detach();
-		if(App.getWeby().getBackground().getImageBackground().getMode() == 'fixed'){
+		var imageMode = App.getWeby().getBackground().getImageBackground().getMode();
+		if (imageMode == 'fixed' || imageMode == 'fit') {
 			App.getDocument().append(el);
 			_top = App.getWorkspace().css('top');
 			_left = App.getContent().css('marginLeft');
@@ -183,7 +207,7 @@ function WebyImageBackground(el) {
 	 */
 
 	this.webyLoaded = function () {
-		if("WebyImageMode" in window){
+		if ("WebyImageMode" in window) {
 			_imageMode = new WebyImageMode();
 			if (_image == null) {
 				_imageMode.hide();
@@ -191,7 +215,7 @@ function WebyImageBackground(el) {
 		}
 	}
 
-	this.webyBackgroundBeforeResize = function(){
+	this.webyBackgroundBeforeResize = function () {
 		_el.hide();
 	}
 
@@ -200,17 +224,17 @@ function WebyImageBackground(el) {
 		this.render();
 	}
 
-	var _getVisibleWidth = function(){
+	var _getVisibleWidth = function () {
 		var width = App.getViewportWidth();
-		if(App.getContent().width() < width){
+		if (App.getContent().width() < width) {
 			width = App.getContent().width();
 		}
 		return width;
 	}
 
-	var _getVisibleHeight = function(){
+	var _getVisibleHeight = function () {
 		var height = App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset();
-		if(App.getContent().height() < height){
+		if (App.getContent().height() < height) {
 			height = App.getContent().height();
 		}
 		return height;

@@ -45,7 +45,8 @@ function WebyColorBackground(el) {
 		}
 
 		var el = _el.detach();
-		if(App.getWeby().getBackground().getImageBackground().getMode() == 'fixed'){
+		var imageMode = App.getWeby().getBackground().getImageBackground().getMode();
+		if (imageMode == 'fixed' || imageMode == 'fit') {
 			App.getDocument().append(el);
 			_top = App.getWorkspace().css('top');
 			_left = App.getContent().css('marginLeft');

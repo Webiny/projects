@@ -70,6 +70,9 @@ function WebyFavorites() {
             _loading.show();
         },
         requestEnd: function (e) {
+            if (!e.response.user) {
+                window.location = WEB;
+            }
             _loading.hide().setMessage("Loading favorites...")
             if (e.type == "read" && e.response.count == 0) {
                 _dialog.find(".empty-list").show();

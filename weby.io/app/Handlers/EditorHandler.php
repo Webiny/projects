@@ -54,6 +54,9 @@ class EditorHandler extends AbstractHandler
 			$id = $requestData['id'];
 			if($id) {
 				$weby->load($id);
+				if($weby && $weby->isDeleted()){
+					$this->ajaxResponse(false, 'This Weby doesn\'t exist!');
+				}
 				// TODO: check if weby belongs to this user
 			}
 
@@ -98,7 +101,7 @@ class EditorHandler extends AbstractHandler
 		}
 
 		$data = [
-			'time'        => date('H:i:s'),
+			'time'        => date('Y-m-d H:i:s'),
 			'title'       => $weby->getTitle(),
 			'description' => $weby->getDescription(),
 			'publicUrl'   => $weby->getPublicUrl(),
@@ -130,7 +133,7 @@ class EditorHandler extends AbstractHandler
 			$this->_weby = new WebyEntity();
 			$this->_weby->load($webyId);
 
-			if(!$this->_weby->getId()) {
+			if(!$this->_weby->getId() || $this->_weby->isDeleted()) {
 				$this->request()->redirect($this->user()->getProfileUrl());
 			}
 

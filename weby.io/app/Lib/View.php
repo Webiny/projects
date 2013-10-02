@@ -110,7 +110,7 @@ class View
 			$m->setThemeWebPath($config->theme_web_path);
 			$minifiedPath = $m->minifyJS($files);
 			if(!$m->fromCache && isset($params['obfuscate']) && $params['obfuscate'] == true) {
-				exec('/usr/bin/uglifyjs --overwrite "' . $minifiedPath . '"');
+				system('/usr/bin/uglifyjs --overwrite "' . $minifiedPath . '"');
 			}
 		}
 

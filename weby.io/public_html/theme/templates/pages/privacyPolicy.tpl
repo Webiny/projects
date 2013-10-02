@@ -90,7 +90,7 @@
         <h2>Terms of Service</h2>
 
         <p>Please also visit our Terms of Service page establishing the use, disclaimers, and limitations of liability
-            governing the use of our website at <a href="www.weby.io/terms-of-service/">www.weby.io/terms-of-service</a>
+            governing the use of our website at <a href="{$viewObject.webPath}terms-of-service/">www.weby.io/terms-of-service</a>
         </p>
 
         <h2>Your Consent</h2>

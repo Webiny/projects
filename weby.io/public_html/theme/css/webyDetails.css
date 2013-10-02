@@ -379,20 +379,15 @@
 
 /* SOUND CHECKBOX */
 .weby-details .checkbox-mute {
+	background: url(../images/sprite2.png) no-repeat -163px -4150px;
 	margin: 5px 0;
 	float: left;
 	display: none;
 	cursor: pointer;
+	padding: 2px 0 0 22px;
 	display: block;
 }
 
-.weby-details .checkbox-mute span {
-	vertical-align: top;
-	margin: 2px 0 0 2px;
-	float: right;
-	font-size: 12px;
-}
-
-.weby-details .checkbox-mute input {
-	cursor: pointer;
+.weby-details .checkbox-mute.checked {
+	background-position: -163px -4370px;
 }

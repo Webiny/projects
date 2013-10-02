@@ -7,8 +7,8 @@ var url = require('url');
 var REQUEST_REFERER = false;
 
 // Database config
-var DB_USER = "root";
-var DB_PASS = "paveL!";
+var DB_USER = "adrian";
+var DB_PASS = "4ndr055!";
 var DB_NAME = "weby.io";
 
 // Get hostIp and hostPort
@@ -87,7 +87,7 @@ function findWebies(query, response) {
                         'JOIN w_user u ON u.id = w.user ' +
                         "LEFT JOIN w_weby_image wi ON wi.weby = w.id AND tag ='frontend-square' " +
                         'LEFT JOIN w_favorite f ON f.weby = w.id ' +
-                        'WHERE w.title LIKE $1::varchar GROUP BY w.id LIMIT 5',
+                        'WHERE lower(w.title) LIKE $1::varchar AND w.deleted = 0::bit AND meta_follow = 1::bit GROUP BY w.id LIMIT 5',
                         ['%'+query+'%'], function(err, result) {
             done();
             if(err) {

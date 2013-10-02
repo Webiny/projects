@@ -15,6 +15,7 @@ var AppClass = function (topOffset) {
 	var _bottomOffset = 27;
 	var _eventListeners = [];
 	var _noHeader = false;
+    var _userLoggedIn = !!parseInt($('[data-role="user-logged-in"]').text());
 
 	if (typeof topOffset != "undefined") {
 		_topOffset = topOffset;
@@ -29,7 +30,7 @@ var AppClass = function (topOffset) {
 			App.fireEvent("document.mouse.move", e);
 		});
 
-		if("WebyDashboard" in window && "WebyFavorites" in window){
+		if("WebyDashboard" in window && "WebyFavorites" in window && _userLoggedIn){
 			_dashboard = new WebyDashboard();
 			_favorites = new WebyFavorites();
 			_followers = new WebyFollowers();
@@ -97,6 +98,10 @@ var AppClass = function (topOffset) {
 		_weby.init();
 	}
 
+    this.userLoggedIn = function() {
+        return _userLoggedIn;
+    }
+    
     this.isEditor = function() {
         return false;
     }

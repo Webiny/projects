@@ -82,13 +82,14 @@ function Intro() {
                 })
             }).onchange(function (e) {
                 var step = parseInt($(e).attr('data-step'));
+
                 switch (step) {
                     case 0:
                         $('.introjs-helperLayer').removeClass('highlighted');
                         break;
                     case 1:
+                        window.scroll(0,0);
                         $('.introjs-helperLayer').addClass('highlighted');
-
                         break;
                     case steps.length - 3: // Adding more transparency because of footer links
                         $('.introjs-helperLayer').removeClass('more-transparent');
@@ -102,7 +103,8 @@ function Intro() {
 
                             $('.introjs-prevbutton').show();
                             $('#introjs-restart').remove();
-                        }, 300);
+                            window.scroll(0,0);
+                        }, 3);
                         break;
                     case steps.length - 1: // Last item
                         setTimeout(function () {
@@ -118,8 +120,9 @@ function Intro() {
                                 introJs().exit();
                                 _showWelcomeMessage();
                             });
-                            
-                        }, 300);
+                            window.scroll(0,0);
+
+                        }, 3);
                         break;
                 }
             });

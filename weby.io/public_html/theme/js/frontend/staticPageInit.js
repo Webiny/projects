@@ -7,8 +7,12 @@ $(function () {
         });
     }).resize();
 
-    new WebyDashboard();
-    new WebyFavorites();
-    new Authorization();
-    new WebyFollowers();
+    userLogged = $('[data-role="user-logged-in"]').text();
+    if (userLogged != 'false') {
+        new WebyDashboard();
+        new WebyFavorites();
+        new WebyFollowers();
+    } else {
+        new Authorization();
+    }
 });

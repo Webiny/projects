@@ -829,6 +829,14 @@ BaseWidget.prototype = {
 		return this;
 	},
 
+	enableDragging: function(){
+		this.html().draggable("enable");
+	},
+
+	disableDragging: function(){
+		this.html().draggable("disable");
+	},
+
 	/**
 	 * Hide loading
 	 * @returns this

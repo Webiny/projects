@@ -149,6 +149,14 @@ abstract class WebyEntityProperties extends WebyEntityStorage
 	}
 
 	/**
+	 * Is Weby deleted?
+	 * @return bool
+	 */
+	public function isDeleted(){
+		return (bool) $this->_deleted;
+	}
+
+	/**
 	 * Returns all users that put this Weby into their favorites list
 	 *
 	 * @param bool $raw         Returns native array

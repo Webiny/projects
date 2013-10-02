@@ -52,10 +52,8 @@ class UsersHandler extends AbstractHandler
 
             $this->_notifyLoginNode($user->getId(), $user->getLoginIp());
 
-            $this->request()->redirect($weby->getEditorUrl());
-
             // Redirect to editor (if this is new user)
-            $this->request()->redirect($this->user()->getProfileUrl());
+            $this->request()->redirect($weby->getEditorUrl());
         } else {
 
             // If user exists, then update it's data in Weby database,
@@ -66,7 +64,9 @@ class UsersHandler extends AbstractHandler
 
             // Redirect to last visited URL
             if (isset($_COOKIE['weby_login_ref'])) {
-                $this->request()->redirect($_COOKIE['weby_login_ref']);
+                $redirectUrl = $_COOKIE['weby_login_ref'];
+                unset($_COOKIE['weby_login_ref']);
+                $this->request()->redirect($redirectUrl);
             }
             $this->request()->redirect($this->user()->getProfileUrl());
         }
@@ -140,7 +140,7 @@ class UsersHandler extends AbstractHandler
         // Let's build our message
         $msg = $mailer->getMessage();
         $msg->setSubject('Welcome to Weby.io!')
-            ->setBodyFromTemplate($config->theme_abs_path . 'templates/emails/beta-welcome.tpl')
+            ->setBodyFromTemplate($config->theme_abs_path . 'templates/emails/welcoming.tpl')
             ->setContentType('text/html')
             ->setTo($user->getEmail());
 

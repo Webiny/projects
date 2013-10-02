@@ -133,11 +133,18 @@ class ToolsHandler extends AbstractHandler
      */
     public function ajaxGetFavorites()
     {
-        $favorites = $this->user()->getFavoriteWebies(true);
-        $data = [
-            'favorites' => $this->_truncateWebyTitle(json_decode($favorites, true)),
-            'count' => UserEntity::getTotalRows()
-        ];
+        if (!$this->user()) {
+            $data = [
+                'user' => false
+            ];
+        } else {
+            $favorites = $this->user()->getFavoriteWebies(true);
+            $data = [
+                'favorites' => $this->_truncateWebyTitle(json_decode($favorites, true)),
+                'count' => UserEntity::getTotalRows(),
+                'user' => true
+            ];
+        }
         die($this->request()->query("\$callback") . '(' . json_encode($data) . ')');
     }
 
@@ -146,11 +153,18 @@ class ToolsHandler extends AbstractHandler
      */
     public function ajaxGetWebies()
     {
-        $webies = $this->user()->getWebies(true);
-        $data = [
-            'webies' => $this->_truncateWebyTitle(json_decode($webies, true)),
-            'count' => WebyEntity::getTotalRows()
-        ];
+        if (!$this->user()) {
+            $data = [
+                'user' => false
+            ];
+        } else {
+            $webies = $this->user()->getWebies(true);
+            $data = [
+                'webies' => $this->_truncateWebyTitle(json_decode($webies, true)),
+                'count' => WebyEntity::getTotalRows(),
+                'user' => true
+            ];
+        }
         die($this->request()->query("\$callback") . '(' . json_encode($data) . ')');
     }
 

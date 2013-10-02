@@ -59,9 +59,7 @@
 
                 <p class="buttons">
                     #if (isEditor){#
-                        #if (currentWeby != id){#
                         <a href="javascript: void(0);"><span class="button delete">Delete</span></a>
-                        #}#
                     #} else {#
                         <a href="javascript: void(0);"><span class="button delete">Delete</span></a>
                     #}#
