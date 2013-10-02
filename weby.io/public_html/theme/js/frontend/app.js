@@ -101,7 +101,7 @@ var AppClass = function (topOffset) {
     this.userLoggedIn = function() {
         return _userLoggedIn;
     }
-    
+
     this.isEditor = function() {
         return false;
     }

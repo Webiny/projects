@@ -73,7 +73,7 @@ $(function () {
         }
     }
 
-    $('.bootstrap').remove();
+    //$('.bootstrap').remove();
 
 
     $(function () {

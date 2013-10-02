@@ -111,6 +111,8 @@ class WebyEntity extends WebyEntityCrud
      */
     public static function listWebiesBySearch($search, $page, $limit = 9)
     {
+        $search = self::str($search);
+        $search = $search->stripTags()->caseLower();
         return self::_sqlGetWebiesBySearch($search, $page, $limit);
     }
 
