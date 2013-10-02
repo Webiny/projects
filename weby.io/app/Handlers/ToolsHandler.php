@@ -221,15 +221,21 @@ class ToolsHandler extends AbstractHandler
      */
     public function deleteWeby($webyId)
     {
-        $weby = new WebyEntity();
-        $weby->load($webyId);
+		$data = ['user' => true];
 
-        if ($weby->getUser()->getId() != $this->user()->getId()) {
-            $this->ajaxResponse(true, 'You can not delete a Weby that does not belong to you!');
-        }
+		if (!$this->user()) {
+			$data = ['user' => false];
+		} else {
+			$weby = new WebyEntity();
+			$weby->load($webyId);
 
-        $weby->delete();
-        $this->ajaxResponse(false);
+			if ($weby->getUser()->getId() == $this->user()->getId()) {
+				$weby->delete();
+			}
+		}
+
+		header('Content-type: application/json; charset=utf-8;');
+		die(json_encode($data));
     }
 
     /**

@@ -29,7 +29,7 @@
         third_party/jquery-2.0.3.min.js,
         third_party/jquery-ui-1.9.2.webyio.js,
         jQueryFix.js,
-        third_party/jquery.fancybox.pack.js
+        third_party/jquery.fancybox.pack.js,
         third_party/jquery.cookies.min.js
         {/minify}
     <script src="{$viewObject.themeWebPath}js/third_party/kendo.web.min.js" charset="utf-8"></script>
