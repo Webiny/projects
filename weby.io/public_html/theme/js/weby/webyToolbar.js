@@ -123,10 +123,14 @@ function WebyToolbar() {
 		preview: true,
 		buttons: false,
 		change: function (e) {
-			_activeWidget.setColor(e.value);
+			if(_activeWidget != null){
+				_activeWidget.setColor(e.value);
+			}
 		},
 		select: function (e) {
-			_activeWidget.setColor(e.value);
+			if(_activeWidget != null){
+				_activeWidget.setColor(e.value);
+			}
 		}
 	}).data("kendoColorPicker");
 
@@ -291,13 +295,13 @@ function WebyToolbar() {
 			_canvasHeight.value(_lastHeight);
 		}
 
-		if (_canvasWidth.value() == _lastWidth && _canvasHeight.value() == _lastHeight) {
+		if (_canvasWidth.value() > 0 && _canvasHeight.value() > 0 && _canvasWidth.value() == _lastWidth && _canvasHeight.value() == _lastHeight) {
 			return;
 		}
-		if (_canvasWidth.value() == null) {
+		if (_canvasWidth.value() == null || _canvasWidth.value() == 0) {
 			_canvasWidth.value(App.getViewportWidth());
 		}
-		if (_canvasHeight.value() == null) {
+		if (_canvasHeight.value() == null && _canvasHeight.value() == 0) {
 			_canvasHeight.value(App.getViewportHeight() - App.getTopOffset() - App.getBottomOffset());
 		}
 		App.getWeby().getBackground().applyCanvasSize(_canvasWidth.value(), _canvasHeight.value());

@@ -30,9 +30,10 @@
         third_party/jquery-ui-1.9.2.webyio.js,
         jQueryFix.js,
         third_party/jquery.fancybox.pack.js
+        third_party/jquery.cookies.min.js
         {/minify}
     <script src="{$viewObject.themeWebPath}js/third_party/kendo.web.min.js" charset="utf-8"></script>
-    {minify type="js"}
+    {minify type="js" obfuscate="true"}
         third_party/time.js,
         timePassed.js,
         weby/footer.js,
@@ -58,18 +59,19 @@
     {/block}
     <div class="header-right">
         <ul>
-                {if $viewObject.user}
-                    {include file="templates/common/searchWebies.tpl"}
-                {/if}
+            {if $viewObject.user}
+                {include file="templates/common/searchWebies.tpl"}
+            {/if}
 
-                {if $viewObject.user}
-                    {include file="templates/common/userOptions.tpl"}
-                {else}
-                    {include file="templates/pages/includes/authorization.tpl"}
-                {/if}
+            {if $viewObject.user}
+                {include file="templates/common/userOptions.tpl"}
+            {else}
+                {include file="templates/pages/includes/authorization.tpl"}
+            {/if}
         </ul>
     </div>
 </div>
+<div class="bootstrap" data-role="user-logged-in">{if $viewObject.user}true{else}false{/if}</div>
 <div id="page-content">
     {block name="content"}{/block}
 </div>

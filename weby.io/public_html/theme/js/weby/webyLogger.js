@@ -6,7 +6,7 @@ WebyLogger =
 	errorCount: 0,
 	_logInterval: 1000,
 	_errorHandler: WEB + 'tools/log',
-	_production: false,
+	_production: true,
 
 	init: function () {
 		this._initErrorObserver();

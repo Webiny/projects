@@ -362,7 +362,7 @@ BaseWidget.prototype = {
 
 		this._left = parseInt(x);
 		this._top = parseInt(y);
-		
+
 		if (typeof this._html != "undefined") {
 			var css = {top: this._top + 'px', left: this._left + 'px'};
 			if (animate) {
@@ -805,13 +805,13 @@ BaseWidget.prototype = {
 	},
 
 	showFailedToLoad: function () {
-		if(this.html('.widget-unavailable-overlay').length > 0){
+		if (this.html('.widget-unavailable-overlay').length > 0) {
 			return;
 		}
 
 		this.html().append('<div class="widget-unavailable-overlay"><p><span class="smiley-face"></span>We couldn\'t load this content!<br/>Try reloading the page.</p></div>');
 		this.body('*:not(".widget-unavailable-overlay")').remove();
-		if(this._height < 90){
+		if (this._height < 90) {
 			this.html('.widget-unavailable-overlay').html('<p><span class="smiley-face"></span>We couldn\'t load this content!</p></div>');
 		}
 		this._resize();
@@ -829,11 +829,11 @@ BaseWidget.prototype = {
 		return this;
 	},
 
-	enableDragging: function(){
+	enableDragging: function () {
 		this.html().draggable("enable");
 	},
 
-	disableDragging: function(){
+	disableDragging: function () {
 		this.html().draggable("disable");
 	},
 
@@ -918,25 +918,73 @@ BaseWidget.prototype = {
 
 	moveUp: function (distance) {
 		if (this._isContentLoaded) {
+			if(distance == 10){
+				return this.alignWidget("up");
+			}
 			this.setPosition(this._left, parseInt(this._top) - parseInt(distance));
 		}
 	},
 
 	moveRight: function (distance) {
 		if (this._isContentLoaded) {
+			if(distance == 10){
+				return this.alignWidget("right");
+			}
 			this.setPosition(parseInt(this._left) + parseInt(distance), this._top);
 		}
 	},
 
 	moveLeft: function (distance) {
 		if (this._isContentLoaded) {
+			if(distance == 10){
+				return this.alignWidget("left");
+			}
 			this.setPosition(parseInt(this._left) - parseInt(distance), this._top);
 		}
 	},
 
 	moveDown: function (distance) {
 		if (this._isContentLoaded) {
+			if(distance == 10){
+				return this.alignWidget("down");
+			}
 			this.setPosition(this._left, parseInt(this._top) + parseInt(distance));
+		}
+	},
+
+	alignWidget: function (direction) {
+		var val = 0;
+		switch (direction) {
+			case "up":
+				val = Math.round(this._top / 10) * 10;
+				if (val >= this._top) {
+					val = val - 10;
+				}
+				this.setPosition(this._left, val);
+				break;
+			case "down":
+				val = Math.round(this._top / 10) * 10;
+				if (val <= this._top) {
+					val = val + 10;
+				}
+				this.setPosition(this._left, val);
+				break;
+			case "right":
+				val = Math.round(this._left / 10) * 10;
+				if (val <= this._left) {
+					val = val + 10;
+				}
+				this.setPosition(val, this._top);
+				break;
+			case "left":
+				val = Math.round(this._left / 10) * 10;
+				if (val >= this._left) {
+					val = val - 10;
+				}
+				this.setPosition(val, this._top);
+				break;
+			default:
+				break;
 		}
 	},
 
@@ -1077,7 +1125,7 @@ BaseWidget.prototype = {
 			margin: -this._padding + 'px 0 0 -' + this._padding + 'px'
 		});
 
-		if(this._height > 90){
+		if (this._height > 90) {
 			this.html('.widget-unavailable-overlay p').css({
 				marginTop: ((this._html.outerHeight() / 2) - 70) + 'px'
 			});
@@ -1089,11 +1137,11 @@ BaseWidget.prototype = {
 		var widgetBox = this.html()[0].getBoundingClientRect();
 		var contentBox = App.getContent()[0].getBoundingClientRect();
 
-		if(widgetBox.right > contentBox.right){
+		if (widgetBox.right > contentBox.right) {
 			this.setPosition(contentBox.right - widgetBox.width - contentBox.left, this._top);
 		}
 
-		if(widgetBox.bottom > contentBox.bottom){
+		if (widgetBox.bottom > contentBox.bottom) {
 			this.setPosition(this._left, contentBox.bottom - widgetBox.height - contentBox.top);
 		}
 	},
@@ -1217,7 +1265,7 @@ BaseWidget.prototype = {
 		for (var i in overlaps) {
 			var ow = overlaps[i];
 			if (ow.getZIndex() > this.getZIndex()) {
-				if(lowestWidget != null){
+				if (lowestWidget != null) {
 					lowestWidget = ow.getZIndex() < lowestWidget.getZIndex() ? ow : lowestWidget;
 				} else {
 					lowestWidget = ow;
@@ -1241,7 +1289,7 @@ BaseWidget.prototype = {
 		for (var i in overlaps) {
 			var ow = overlaps[i];
 			if (ow.getZIndex() < this.getZIndex()) {
-				if(highestWidget != null){
+				if (highestWidget != null) {
 					highestWidget = ow.getZIndex() > highestWidget.getZIndex() ? ow : highestWidget;
 				} else {
 					highestWidget = ow;
