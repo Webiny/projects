@@ -37,7 +37,7 @@
         <div class="bootstrap" data-role="json-data">
             {literal}
             <esi:include
-                    src="/tools/weby-summary/{/literal}{$weby->getId()}{if $viewObject.user}/{$viewObject.user.id}/{else}/null/{/if}{literal}"/>{/literal}
+                    src="/tools/weby-summary/{/literal}{$weby->getId()}/UUID{literal}"/>{/literal}
         </div>
     {/if}
     <div class="bootstrap" data-role="weby-searcher">{$viewObject.webySearcher}</div>
