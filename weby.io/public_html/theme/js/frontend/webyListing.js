@@ -122,9 +122,6 @@ function ListingClass() {
         }
         TimePassed.parse();
         _animateResult();
-
-        var scrollValue = _pageContent[0].scrollHeight - _pageHolderHeights[_currentTplId][data.length]- 200;
-        _pageContent.animate({ scrollTop: scrollValue }, "slow");
     }
 
     /**
@@ -169,7 +166,7 @@ function ListingClass() {
         tmp = tmp.replace('{pageNumber}', _page);
         tmp = tmp.replace('{authorAvatarUrl}', webies[i].avatarUrl);
         tmp = tmp.replace('{authorName}', webies[i].username);
-        tmp = tmp.replace('{webyTitle}', webies[i].title);
+        tmp = tmp.replace(/{webyTitle}/g, webies[i].title);
         tmp = tmp.replace('{screenshot}', webies[i].images[_imageDimensionsMap[boxNumber]]);
         tmp = tmp.replace(/{userUrl}/g, WEB + 'user/' + webies[i].username);
         tmp = tmp.replace(/{publicUrl}/g, webies[i].publicUrl);

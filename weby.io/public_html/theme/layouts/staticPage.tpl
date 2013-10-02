@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{block name="title"}{/block}</title>
+    <title>{block name="title"}{/block} | Weby.io</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
+    {block name="meta"}{/block}
     <script type="text/javascript">
         var THEME = '{$viewObject.themeWebPath}';
         var WEB = '{$viewObject.webPath}';

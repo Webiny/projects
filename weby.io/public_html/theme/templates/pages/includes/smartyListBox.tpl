@@ -32,7 +32,7 @@
             <div id="box-{$page}-{$weby@iteration}" class="box{$boxMap[{$tplId}][$weby@index]} box" style="opacity: 0">
                 <div class="content"
                      style="background: url({$weby.images[$imageDimensionsMap[$boxMap[$tplId][$weby@index]]]}) no-repeat top left">
-                    <a class="image-weby-link" href="{$weby.publicUrl}"></a>
+                    <a class="image-weby-link" title="{$weby.title}" href="{$weby.publicUrl}"></a>
 
                     <div class="author">
                         <a class="author-photo" href="{$webPath}user/{$weby.username}"><img src="{$weby.avatarUrl}"></a>
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="weby-info">
-                    <h2><a class="header-url" href="{$weby.publicUrl}">{$weby.title}</a></h2>
+                    <h2><a class="header-url" title="{$weby.title}" href="{$weby.publicUrl}">{$weby.title}</a></h2>
                     <ul>
                         <li class="favs">
                              <span>

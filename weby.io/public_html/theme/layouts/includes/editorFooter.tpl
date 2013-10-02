@@ -1,12 +1,15 @@
 <div class="footer">
     <ul>
         <li>
-            <a href="#">About</a>
+            <a href="{$viewObject.webPath}about">About</a>
         </li>
         <li>
-            <a href="#">Terms of Service</a>
+            <a href="{$viewObject.webPath}terms-of-service">Terms of Service</a>
         </li>
-        <li >
+        <li>
+            <a href="{$viewObject.webPath}privacy-policy">Privacy policy</a>
+        </li>
+        <li>
             <a class="footer-keyboard-shortcuts" href="javascript:void(0);" data-role="keyboard-shortcuts-open">Keyboard Shortcuts</a>
         </li>
         <li class="feedback">

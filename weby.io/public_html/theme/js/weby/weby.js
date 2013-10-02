@@ -291,6 +291,13 @@ function Weby() {
 					_saveInterval = setInterval(_save, _saveIntervalTime);
 
 					App.fireEvent('weby.saved', data.data);
+				} else {
+					_webySave.setMessage('Couldn\'t save your Weby :(');
+					_labelTimeout = setTimeout(function () {
+						_webySave.hide();
+					}, 2000)
+					clearInterval(_saveInterval);
+					_saveInterval = setInterval(_save, _saveIntervalTime);
 				}
 				_saveInProgress = false;
 			}

@@ -1,8 +1,12 @@
-<div class="search-btn" data-role="open-search-field">
-    <a class="search-icon" href="javascript:void(0);"></a>
+<div class="bootstrap">
+    <div class="bootstrap" data-role="weby-searcher">{$viewObject.webySearcher}</div>
+</div>
+
+<div class="search-btn" >
+    <a data-role="open-search-field" class="search-icon" href="javascript:void(0);"></a>
 
     <div id="search-field" class="search-field">
-        <a href="javascript:void(0);" class="close-form close-search" data-role="close-search-field"></a>
+        <span class="close-form close-search" data-role="close-search-field"></span>
         <input class="search-input" data-role="webies-search-field" type="text"
                placeholder="Enter your search terms and hit enter">
         <ul class="search-results">

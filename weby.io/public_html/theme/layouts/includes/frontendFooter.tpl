@@ -1,10 +1,13 @@
 <div class="footer">
     <ul>
         <li>
-            <a href="#">About</a>
+            <a href="{$viewObject.webPath}about">About</a>
         </li>
         <li>
-            <a href="#">Terms of Service</a>
+            <a href="{$viewObject.webPath}terms-of-service">Terms of Service</a>
+        </li>
+        <li>
+            <a href="{$viewObject.webPath}privacy-policy">Privacy policy</a>
         </li>
         <li class="feedback">
             <a class="footer-feedback" href="javascript:void(0);" data-role="feedback-open">Feedback</a>

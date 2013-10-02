@@ -10,6 +10,7 @@ use Webiny\Component\StdLib\StdObject\ArrayObject\ArrayObject;
 abstract class UserEntityStorage extends EntityAbstract
 {
     use StdLibTrait, HttpTrait;
+
     protected $_id = 0;
     protected $_serviceName = '';
     protected $_serviceUserId = '';
@@ -22,6 +23,8 @@ abstract class UserEntityStorage extends EntityAbstract
     protected $_onboarding = false;
     protected $_createdOn = '';
     protected $_lastLogin = '';
+    protected $_loginIp = '';
+    protected $_geoData = '';
 
     /**
      * Saves user into the database with it's service type
@@ -30,16 +33,37 @@ abstract class UserEntityStorage extends EntityAbstract
     protected function _sqlSave()
     {
         if ($this->_id == 0) {
-            $query = "INSERT INTO {$this->_getDb()->w_user} (username, service_name, service_user_id, email, first_name, last_name, avatar_url, created_on, last_login)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id";
-            $bind = [$this->_username, $this->_serviceName, $this->_serviceUserId, $this->_email, $this->_firstName, $this->_lastName, $this->_avatarUrl];
+            $query = "INSERT INTO {$this->_getDb()->w_user}
+                        (username, service_name, service_user_id, email, first_name, last_name, avatar_url, login_ip, geo_data, created_on, last_login)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,NOW(), NOW()) RETURNING id";
+            $bind = [
+                $this->_username,
+                $this->_serviceName,
+                $this->_serviceUserId,
+                $this->_email,
+                $this->_firstName,
+                $this->_lastName,
+                $this->_avatarUrl,
+                $this->_loginIp,
+                !is_string($this->_geoData) ? json_encode($this->_geoData) : $this->_geoData
+            ];
+
             $this->_id = $this->_getDb()->execute($query, $bind)->fetchValue();
             return true;
         }
 
-        $query = "UPDATE {$this->_getDb()->w_user} SET service_name=?, service_user_id=?, first_name=?, last_name=?, avatar_url=?, last_login=NOW() WHERE id=?";
+        $query = "UPDATE {$this->_getDb()->w_user} SET
+        service_name=?, service_user_id=?, first_name=?, last_name=?, avatar_url=?, login_ip=?, last_login=NOW() WHERE id=?";
 
-        $bind = [$this->_serviceName, $this->_serviceUserId, $this->_firstName, $this->_lastName, $this->_avatarUrl, $this->_id];
+        $bind = [
+            $this->_serviceName,
+            $this->_serviceUserId,
+            $this->_firstName,
+            $this->_lastName,
+            $this->_avatarUrl,
+            $this->_loginIp,
+            $this->_id
+        ];
         return $this->_getDb()->execute($query, $bind);
     }
 
@@ -69,7 +93,8 @@ abstract class UserEntityStorage extends EntityAbstract
      * Queries the database for user's favorite Webies
      * @return \ArrayObject|bool
      */
-    protected function _sqlGetFavoriteWebies() {
+    protected function _sqlGetFavoriteWebies()
+    {
         $query = "SELECT weby, created_on, count(*) OVER() total_count FROM {$this->_getDb()->w_favorite} WHERE \"user\"=?";
         $bind = [$this->_id];
 
@@ -118,7 +143,8 @@ abstract class UserEntityStorage extends EntityAbstract
      * @param $webyId
      * @return bool|ArrayObject
      */
-    protected function _sqlDeleteFromFavorites($webyId) {
+    protected function _sqlDeleteFromFavorites($webyId)
+    {
         $query = "DELETE FROM {$this->_getDb()->w_favorite} WHERE \"user\"=? AND weby=?";
         $bind = array($this->_id, $webyId);
         return $this->_getDb()->execute($query, $bind);
@@ -130,25 +156,28 @@ abstract class UserEntityStorage extends EntityAbstract
      * @internal param $email
      * @return \ArrayObject|bool
      */
-    protected static function _sqlLoadByUsername($username) {
-        $query = "SELECT id FROM ".self::_getDb()->w_user." WHERE username=? LIMIT 1";
+    protected static function _sqlLoadByUsername($username)
+    {
+        $query = "SELECT id FROM " . self::_getDb()->w_user . " WHERE username=? LIMIT 1";
         $bind = array($username);
         return self::_getDb()->execute($query, $bind)->fetchValue();
     }
 
-	/**
-	 * Queries the database for user based on his service type (fb, g+ etc.) and service registered email
-	 * @param $email
-	 * @return \ArrayObject|bool
-	 */
-	protected static function _sqlLoadByEmail($email) {
-		$query = "SELECT * FROM ".self::_getDb()->w_user." WHERE email=? LIMIT 1";
-		$bind = array($email);
-		return self::_getDb()->execute($query, $bind)->fetchArray();
-	}
+    /**
+     * Queries the database for user based on his service type (fb, g+ etc.) and service registered email
+     * @param $email
+     * @return \ArrayObject|bool
+     */
+    protected static function _sqlLoadByEmail($email)
+    {
+        $query = "SELECT * FROM " . self::_getDb()->w_user . " WHERE email=? LIMIT 1";
+        $bind = array($email);
+        return self::_getDb()->execute($query, $bind)->fetchArray();
+    }
 
-    protected static function _sqlCheckUsernameExists($username) {
-        $query = "SELECT id FROM ".self::_getDb()->w_user." WHERE username=? LIMIT 1";
+    protected static function _sqlCheckUsernameExists($username)
+    {
+        $query = "SELECT id FROM " . self::_getDb()->w_user . " WHERE username=? LIMIT 1";
         $bind = array($username);
         return self::_getDb()->execute($query, $bind)->fetchValue();
     }
@@ -159,7 +188,8 @@ abstract class UserEntityStorage extends EntityAbstract
      * @param $limit
      * @return bool|ArrayObject
      */
-    protected function _sqlGetFollowingUsers($limit) {
+    protected function _sqlGetFollowingUsers($limit)
+    {
         $query = "SELECT followed_user, count(*) OVER() total_count FROM {$this->_getDb()->w_follow} WHERE \"user\"=? LIMIT {$limit} ";
         $bind = array($this->_id);
         return $this->_getDb()->execute($query, $bind)->fetchAll();
@@ -171,7 +201,8 @@ abstract class UserEntityStorage extends EntityAbstract
      * @param $limit
      * @return bool|ArrayObject
      */
-    protected function _sqlGetUsersFollowing($limit) {
+    protected function _sqlGetUsersFollowing($limit)
+    {
         $query = "SELECT \"user\", count(*) OVER() total_count FROM {$this->_getDb()->w_follow} WHERE followed_user=? LIMIT {$limit}";
         $bind = array($this->_id);
         return $this->_getDb()->execute($query, $bind)->fetchAll();
@@ -208,7 +239,8 @@ abstract class UserEntityStorage extends EntityAbstract
      * Toggles given user from this logged user's follow list
      * @param $id
      */
-    protected function _sqlToggleFollowing($id) {
+    protected function _sqlToggleFollowing($id)
+    {
         $query = "SELECT TOGGLE_FOLLOWING(?,?)";
         $bind = array($this->_id, $id);
         $this->_getDb()->execute($query, $bind);
@@ -218,13 +250,15 @@ abstract class UserEntityStorage extends EntityAbstract
      * Marks current user - completed onboarding
      * @return DatabaseResult
      */
-    protected function _sqlMarkOnboardingDone(){
-        $query = "UPDATE ".self::_getDb()->w_user." SET onboarding=1::bit WHERE id=?";
+    protected function _sqlMarkOnboardingDone()
+    {
+        $query = "UPDATE " . self::_getDb()->w_user . " SET onboarding=1::bit WHERE id=?";
         $bind = array($this->_id);
         return self::_getDb()->execute($query, $bind);
     }
 
-    protected function _sqlCheckIfFollowing($id) {
+    protected function _sqlCheckIfFollowing($id)
+    {
         $query = "SELECT * FROM {$this->_getDb()->w_follow} WHERE \"user\"=? AND followed_user=? LIMIT 1";
         $bind = array($this->_id, $id);
         return $this->_getDb()->execute($query, $bind)->fetchArray();

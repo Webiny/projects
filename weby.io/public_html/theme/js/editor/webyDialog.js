@@ -74,6 +74,7 @@ function WebyTitleDialog(parent) {
                     _editing = false;
                 }
             });
+            _titleInput.focus();
         });
 
         // Closing dialog

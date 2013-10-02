@@ -112,10 +112,8 @@ class PagesHandler extends AbstractHandler
      */
     public function listWebiesByUser($username, $page = 1)
     {
-        $this->username = $username;
-
         $webyUser = UserEntity::getByUsername($username);
-        $this->webyUser = $webyUser;
+        $this->user = $webyUser;
         if (!$webyUser) {
             $this->html = View::getInstance()->fetch('templates/pages/includes/smartyListEmpty.tpl');
         } else {
@@ -155,6 +153,20 @@ class PagesHandler extends AbstractHandler
     {
         $this->recentTags = WebyEntity::getRecentTags(10);
         header("HTTP/1.0 404 Not Found");
+    }
+
+    public function about()
+    {
+    }
+
+    public function termsOfService()
+    {
+        $this->recentTags = WebyEntity::getRecentTags(10);
+    }
+
+    public function privacyPolicy()
+    {
+        $this->recentTags = WebyEntity::getRecentTags(10);
     }
 
     /**

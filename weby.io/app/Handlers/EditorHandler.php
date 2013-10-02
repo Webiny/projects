@@ -49,37 +49,41 @@ class EditorHandler extends AbstractHandler
 		// Create new Weby entity, populate it and save into database
 		$weby = new WebyEntity();
 
-		// Get ID of existing Weby and load
-		$id = $requestData['id'];
-		if($id) {
-			$weby->load($id);
-			// TODO: check if weby belongs to this user
-		}
+		try {
+			// Get ID of existing Weby and load
+			$id = $requestData['id'];
+			if($id) {
+				$weby->load($id);
+				// TODO: check if weby belongs to this user
+			}
 
-		// Before populating, insert necessary new tags into database
-		if(isset($requestData['tags'])) {
-			foreach ($requestData['tags'] as &$tag) {
-				// If tag wasn't in database, insert it
-				if($tag['id'] == 0) {
-					$this->_sanitizeInput($tag['tag'], true);
-					$tag['id'] = WebyEntity::insertTag($tag['tag']);
+			// Before populating, insert necessary new tags into database
+			if(isset($requestData['tags'])) {
+				foreach ($requestData['tags'] as &$tag) {
+					// If tag wasn't in database, insert it
+					if($tag['id'] == 0) {
+						$this->_sanitizeInput($tag['tag'], true);
+						$tag['id'] = WebyEntity::insertTag($tag['tag']);
+					}
 				}
 			}
-		}
 
-		// Sanitize title and description
-		$this->_sanitizeInput($requestData['title']);
-		$this->_sanitizeInput($requestData['description']);
+			// Sanitize title and description
+			$this->_sanitizeInput($requestData['title']);
+			$this->_sanitizeInput($requestData['description']);
 
-		// Now proceed with saving Weby
-		$weby->populate($requestData);
-		$weby->setUser($this->user())->save();
+			// Now proceed with saving Weby
+			$weby->populate($requestData);
+			$weby->setUser($this->user())->save();
 
-		// Clear cache
-		$this->cache()->delete('weby.json.' . $id);
-		if($this->app()->getConfig()->varnish->enabled){
-			$varnishFlush = $this->str($this->app()->getConfig()->varnish->flush_weby);
-			system($varnishFlush->replace('{webyUrl}', $weby->getPublicUrl())->val());
+			// Clear cache
+			$this->cache()->delete('weby.json.' . $id);
+			if($this->app()->getConfig()->varnish->enabled) {
+				$varnishFlush = $this->str($this->app()->getConfig()->varnish->flush_weby);
+				system($varnishFlush->replace('{webyUrl}', $weby->getPublicUrl())->val());
+			}
+		} catch (\Exception $e) {
+			$this->ajaxResponse(true, 'Failed to save Weby!');
 		}
 
 		// Add to screenshot queue if requested
@@ -161,7 +165,10 @@ class EditorHandler extends AbstractHandler
 		$source = $weby->getImage('background')->getFile();
 		list($width, $height) = $image->open($source)->getSize()->values();
 
-		die(json_encode(['url' => $webyFile->getUrl(), 'width' => $width, 'height' => $height]));
+		die(json_encode(['url'   => $webyFile->getUrl(),
+						'width'  => $width,
+						'height' => $height
+						]));
 	}
 
 	private function _removeImage($webyId) {
@@ -177,6 +184,7 @@ class EditorHandler extends AbstractHandler
 	private function _editor() {
 		if($this->_weby == null) {
 			$this->setTemplate('dashboard');
+
 			return;
 		}
 

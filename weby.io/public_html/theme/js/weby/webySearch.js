@@ -1,7 +1,10 @@
-function WebySearchClass() {
+$(function () {
+    searchUrl = $('[data-role="weby-searcher"]').text();
+});
 
-    var _searchUrl = 'http://weby.com:8085/';
+function WebySearchClass() {
     var _searchInput = $('[data-role="webies-search-field"]');
+    var _searchUrl = searchUrl;
     var _searchBtn = $('[data-role="open-search-field"]');
     var _closeSearchBtn = $('[data-role="close-search-field"]');
     var _searchResultTpl = $('script#webies-header-search-result').html();
@@ -45,7 +48,24 @@ function WebySearchClass() {
         })
     }
 
-    _searchInput.on('input', function () {
+    var _closeSearchField = function () {
+        _searchField.hide();
+        _searchInput.val('');
+        _searchResultsHolder.empty();
+    }
+
+
+    _searchInput.on('keyup', function (e) {
+        var event = e || window.event;
+        var charCode = event.which || event.keyCode;
+        switch (charCode) {
+            case 27: // Esc key
+                _closeSearchField();
+                break;
+        }
+    })
+
+    _searchInput.on('input', function (e) {
         if (_searchInput.val().length > 2) {
             clearTimeout(_timer);
             _timer = setTimeout(function () {
@@ -62,15 +82,11 @@ function WebySearchClass() {
     });
 
     _closeSearchBtn.on('click', function () {
-
-        _searchField.fadeOut(1);
-        _searchInput.val('');
-        _searchResultsHolder.empty();
+        _closeSearchField();
     });
 
 }
 
-
 $(function () {
-    WebySearch = new WebySearchClass();
+    new WebySearchClass();
 });

@@ -110,9 +110,10 @@ class View
 			$m->setThemeWebPath($config->theme_web_path);
 			$minifiedPath = $m->minifyJS($files);
 			if(!$m->fromCache && isset($params['obfuscate']) && $params['obfuscate'] == true) {
-				exec('sudo /usr/bin/uglifyjs --overwrite "' . $minifiedPath.'"');
+				exec('/usr/bin/uglifyjs --overwrite "' . $minifiedPath . '"');
 			}
 		}
+
 		return $m->htmlTagOutput();
 	}
 
@@ -127,10 +128,10 @@ class View
 		if($count > 1000000) {
 			return '' . number_format(($count / 1000000), 1, '.', '') . 'M';
 		}
-		if($count > 1000)
+		if($count > 1000) {
 			return '' . number_format(($count / 1000), 1, '.', '') . 'K';
-		else
+		} else {
 			return '' . $count;
+		}
 	}
-
 }

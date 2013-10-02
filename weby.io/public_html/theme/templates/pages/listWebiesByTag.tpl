@@ -1,6 +1,11 @@
 {extends file="templates/pages/listing.tpl"}
 
-{block name="title"}Webies - tag{/block}
+{block name="title"}{$searchValue} - Webies{if $page>1} - Page {$page}{/if}{/block}
+{block name="meta"}
+    <meta name="description" content="{$searchValue} Webies by community users
+    {if $page>1} - Page {$page}{/if} - create and share your content instantly">
+    <meta name="robots" content="index, follow">
+{/block}
 {block name="headTitle"}
     <span class="header-icon tag"></span>
     <h2>{$searchValue}</h2>

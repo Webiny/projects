@@ -4,36 +4,39 @@ app:
     public_html: /var/www/newwebiny/projects/weby.io/public_html/
     theme_abs_path: /var/www/newwebiny/projects/weby.io/public_html/theme/
     theme_web_path: http://weby.com/theme/
-    storage_abs_path: /var/www/newwebiny/projects/weby.io/public_html/storage/
-    storage_web_path: http://weby.com/storage/
+    storage_abs_path: /var/www/newwebiny/projects/weby.io/public_html/uploads/
+    storage_web_path: http://weby.com/uploads/
     default_class: '\App\Handlers\PagesHandler'
     default_method: page404
     mode: development
     content_validators: #will be randomly switched by the app
-        - http://weby.com:8080
+        - http://mrcina.ath.cx:8080
     tag_finders: #will be randomly switched by the app
-        - http://weby.com:8079
+        - http://weby.com:8085
+    weby_searchers: #will be randomly switched by the app
+        - http://weby.com:8085
+    node_geo_ip: udp://weby.com:8086
 
 varnish:
     enabled: false
-    flush_weby: 'curl -X BAN "{webyUrl}"'
+    flush_weby: 'curl --silent -X BAN "{webyUrl}" > /dev/null 2>&1'
 
 screenshots:
     enabled: false
-    ip: [192.168.249.128, 127.0.0.1]
+    ip: [192.168.1.11]
 
 database:
-    name: postgres
-    user: root
-    password: 'paveL!'
+    name: weby.io
+    user: adrian
+    password: 4ndr055!
     host: localhost
 
 caching_ttl: # TTL times for caches (in seconds)
-    - social_share_counts: 5
+    social_share_counts: 10
 
 images:
-    dashboard: http://weby.com/theme/images/default/my-weby.jpg
-    original_screenshot: http://weby.com/theme/images/default/my-weby.jpg
+    dashboard: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
+    original_screenshot: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
     frontend_square: http://weby.com/theme/images/default/frontend_square.jpg
     frontend_vertical: http://weby.com/theme/images/default/frontend_vertical.jpg
     frontend_horizontal: http://weby.com/theme/images/default/frontend_horizontal.jpg

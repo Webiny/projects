@@ -34,19 +34,19 @@
 }
 
 .header-middle.header-middle-wrap .header-icon.userAvatar {
-    background-image: url(../images/sprite2.png);
-    background-position: -152px -3294px;
+    background: url(../images/sprite2.png) -152px -3294px;
 }
 
 .header-middle.header-middle-wrap .header-icon.following-users-webies {
-    background-image: url(../images/sprite2.png);
-    background-position: -154px -3294px;
+    background: url(../images/sprite2.png) -154px -3294px;
 }
 
 .header-middle.header-middle-wrap .header-icon.recent-webies {
-    background-image: url("../images/sprite2.png");
-    background-repeat: no-repeat;
-    background-position: -153px -3490px;
+    background: url("../images/sprite2.png") no-repeat -153px -3490px;
+}
+
+.header-middle.header-middle-wrap .header-icon.search {
+    background: url(../images/sprite2.png) no-repeat -154px -3033px;
 }
 
 

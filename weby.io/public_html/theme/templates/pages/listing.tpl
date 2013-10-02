@@ -1,6 +1,7 @@
 {extends file="layouts/staticPage.tpl"}
 
 {block name="title"}Weby editor{/block}
+{block name="meta"}{/block}
 {block name="head"}
     {minify type="css"}
         list.css

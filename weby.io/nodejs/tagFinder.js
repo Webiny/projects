@@ -9,7 +9,7 @@ var REQUEST_REFERER = false;
 // Database config
 var DB_USER = "root";
 var DB_PASS = "paveL!";
-var DB_NAME = "postgres";
+var DB_NAME = "weby.io";
 
 // Get hostIp and hostPort
 var temp = arguments[0].split(':');
@@ -111,7 +111,6 @@ function sendResponse(data, response) {
 	response.write(JSON.stringify(data));
 	response.end();
 }
-
 
 // Create server which will catch requests and process
 var server = http.createServer(function (request, response) {

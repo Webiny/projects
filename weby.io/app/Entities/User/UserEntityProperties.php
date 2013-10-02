@@ -105,6 +105,14 @@ abstract class UserEntityProperties extends UserEntityStorage
         return $this->_username;
     }
 
+    public function getLoginIp(){
+        return $this->_loginIp;
+    }
+
+    public function getGeoData(){
+        return is_string($this->_geoData) ? json_decode($this->_geoData, true) : $this->_geoData;
+    }
+
     /**
      * Checks if user has completed onboarding process
      * @return bool

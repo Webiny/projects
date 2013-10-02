@@ -14,10 +14,10 @@
             <a href="javascript:void(0);" data-role="followers-dialog-open">My followers</a>
         </li>
         <li>
-            <a href="{$viewObject.webPath}recent" data-role="">Recent Webies</a>
+            <a href="{$viewObject.webPath}recent">Recent Webies</a>
         </li>
         <li>
-            <a href="{$viewObject.webPath}following" data-role="">Followed users</a>
+            <a href="{$viewObject.webPath}following">Users you follow</a>
         </li>
         <li>
             <a href="{$viewObject.webPath}logout">Sign out</a>

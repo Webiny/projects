@@ -1,373 +1,398 @@
 /** Frontend styles**/
 .weby-details {
-    width: 118px;
-    position: fixed;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    top: 130px;
-    right: 30px;
-    background-color: #373737;
-    padding: 0 10px;
-    border-top: 3px solid #4e4e4e;
-    border-bottom: 3px solid #2d2d2d;
-    z-index: 999999;
+	width: 118px;
+	position: fixed;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	top: 130px;
+	right: 30px;
+	background-color: #373737;
+	padding: 0 10px;
+	border-top: 3px solid #4e4e4e;
+	border-bottom: 3px solid #2d2d2d;
+	z-index: 999999;
 }
 
 .weby-details .favorites-icon {
-    background-image: url("../images/sprite2.png");
-    background-repeat: no-repeat;
-    background-position: -159px -1609px;
-    float: left;
-    width: 30px;
-    height: 37px;
+	background-image: url("../images/sprite2.png");
+	background-repeat: no-repeat;
+	background-position: -159px -1609px;
+	float: left;
+	width: 30px;
+	height: 37px;
 }
 
 .weby-details .favorites-icon.clickable:hover {
-    cursor: pointer;
-    opacity: 0.95;
+	cursor: pointer;
+	opacity: 0.95;
 }
 
 .weby-details .favorites-icon.added {
-    background-image: url("../images/sprite2.png");
-    background-repeat: no-repeat;
-    background-position: -159px -2860px;
+	background-image: url("../images/sprite2.png");
+	background-repeat: no-repeat;
+	background-position: -159px -2860px;
 }
 
 .weby-details .weby-stats {
-    padding-left: 40px;
+	padding-left: 40px;
 }
 
 .weby-details .details-arrow {
-    text-align: right;
-    margin-top: 1px;
-    overflow: hidden;
-    padding-top: 3px;
-    margin-right: -7px;
-    min-height: 10px;
-    cursor: -webkit-grab;
+	text-align: right;
+	margin-top: 1px;
+	overflow: hidden;
+	padding-top: 3px;
+	margin-right: -7px;
+	min-height: 10px;
+	cursor: -webkit-grab;
 }
 
 .weby-details.ui-draggable-dragging *:hover {
-    cursor: -webkit-grabbing;
+	cursor: -webkit-grabbing;
 }
 
 .weby-details .details-arrow span.handler {
-    height: 5px;
-    width: 120px;
-    margin-bottom: 2px;
-    background-image: url("../images/handler.png");
-    background-repeat: repeat;
-    display: block;
-    float: left;
+	height: 5px;
+	width: 120px;
+	margin-bottom: 2px;
+	background-image: url("../images/handler.png");
+	background-repeat: repeat;
+	display: block;
+	float: left;
 }
 
 .weby-details .details-arrow a {
-    width: 16px;
-    height: 15px;
-    background: url("../images/sprite2.png") no-repeat -166px -1722px;
-    display: block;
-    position: absolute;
-    left: 112px;
-    top: 15px;
+	width: 16px;
+	height: 15px;
+	background: url("../images/sprite2.png") no-repeat -166px -1722px;
+	display: block;
+	position: absolute;
+	left: 112px;
+	top: 15px;
 }
 
 .weby-details .details-arrow a.shown {
-    background: #303030 url("../images/sprite2.png") no-repeat 50% -1692px;
+	background: #303030 url("../images/sprite2.png") no-repeat 50% -1692px;
 }
 
 .weby-details .details-arrow a:hover {
-    background-color: #f25b2b;
-    -moz-box-shadow: 1px 3px 3px 0px #000;
-    -webkit-box-shadow: 1px 3px 3px 0px #000;
-    box-shadow: 1px 3px 3px 0px #000;
+	background-color: #f25b2b;
+	-moz-box-shadow: 1px 3px 3px 0px #000;
+	-webkit-box-shadow: 1px 3px 3px 0px #000;
+	box-shadow: 1px 3px 3px 0px #000;
 }
 
 .weby-details .favorites-working {
-    opacity: 0.2;
+	opacity: 0.2;
 }
 
 .weby-details .favorites-working:hover {
-    opacity: 0.2 !important;
+	opacity: 0.2 !important;
 }
 
 .weby-details .loading-favorites {
-    background-image: url(../images/load.gif);
-    width: 16px;
-    height: 16px;
-    vertical-align: bottom;
-    position: absolute;
-    top: 28px;
-    left: 17px;
+	background-image: url(../images/load.gif);
+	width: 16px;
+	height: 16px;
+	vertical-align: bottom;
+	position: absolute;
+	top: 28px;
+	left: 17px;
 }
 
 .weby-details .loading-following {
-    background-image: url(../images/load.gif);
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: 62px;
-    left: 95px;
+	background-image: url(../images/load.gif);
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	top: 62px;
+	left: 95px;
 }
 
 .weby-details .favorites {
-    border-bottom: 1px solid #323232;
-    padding-bottom: 10px;
-    margin-top: 3px;
+	border-bottom: 1px solid #323232;
+	padding-bottom: 10px;
+	margin-top: 3px;
 }
 
 .weby-details .favorites p {
-    color: #fff;
-    margin: 0 0;
-    font-size: 13px;
+	color: #fff;
+	margin: 0 0;
+	font-size: 13px;
 }
 
 .weby-details .favorites p span {
-    font-size: 25px;
-    display: block;
-    line-height: 0.9;
+	font-size: 25px;
+	display: block;
+	line-height: 0.9;
 }
 
 .weby-details .favorites span.views {
-    font-size: 12px;
-    color: #fff;
-    line-height: 1.5;
-    display: block;
+	font-size: 12px;
+	color: #fff;
+	line-height: 1.5;
+	display: block;
 }
 
 .weby-details .user-info {
-    position: relative;
+	position: relative;
 }
 
 .weby-details .user-info, .weby-details .favorited-by, .weby-details .tags {
-    border-top: 1px solid #5d5d5d;
-    border-bottom: 1px solid #323232;
-    overflow: hidden;
-    padding: 10px 0;
+	border-top: 1px solid #5d5d5d;
+	border-bottom: 1px solid #323232;
+	overflow: hidden;
+	padding: 10px 0;
 }
 
 .weby-details .user-info span.user-photo {
-    width: 34px;
-    height: 34px;
-    background-image: url("../images/sprite2.png");
-    background-repeat: no-repeat;
-    background-position: 50% -430px;
-    display: inline-block;
-    float: left;
+	width: 34px;
+	height: 34px;
+	background-image: url("../images/sprite2.png");
+	background-repeat: no-repeat;
+	background-position: 50% -430px;
+	display: inline-block;
+	float: left;
 }
 
 .weby-details .user-info span.user-photo img {
-    width: 34px;
-    height: 34px;
-    display: inline-block;
+	width: 34px;
+	height: 34px;
+	display: inline-block;
 }
 
 .weby-details .user-info p.user-name {
-    float: right;
-    display: inline-block;
-    width: 74px;
-    padding-left: 10px;
-    margin: 0 0;
-    color: #fff;
-    font-size: 11px;
+	float: right;
+	display: inline-block;
+	width: 74px;
+	padding-left: 10px;
+	margin: 0 0;
+	color: #fff;
+	font-size: 11px;
+}
+
+.weby-details .user-info p.user-name a {
+	color: white;
+	text-decoration: none;
 }
 
 .weby-details .user-info a.follow-btn, .weby-details .user-info a.unfollow-btn {
-    width: 88px;
-    height: 28px;
-    text-transform: uppercase;
-    background-image: url("../images/sprite2.png");
-    background-repeat: no-repeat;
-    padding-left: 30px;
-    color: #373737;
-    font-size: 12px;
-    text-decoration: none;
-    display: block;
-    line-height: 2.6;
-    background-color: #ffffff;
-    border-bottom: 1px solid #d4d4d4;
-    margin-top: 10px;
+	width: 88px;
+	height: 28px;
+	text-transform: uppercase;
+	background-image: url("../images/sprite2.png");
+	background-repeat: no-repeat;
+	padding-left: 30px;
+	color: #373737;
+	font-size: 12px;
+	text-decoration: none;
+	display: block;
+	line-height: 2.6;
+	background-color: #ffffff;
+	border-bottom: 1px solid #d4d4d4;
+	margin-top: 10px;
 }
 
 .weby-details .user-info a.follow-btn:hover, .weby-details .user-info a.unfollow-btn:hover {
-    background-color: #f2f4f4;
+	background-color: #f2f4f4;
 }
 
 .weby-details .user-info a.follow-btn {
-    background-position: -158px -1775px;
+	background-position: -158px -1775px;
 }
 
 .weby-details .user-info a.unfollow-btn {
-    background-position: -158px -1863px;
+	background-position: -158px -1863px;
 }
 
 .weby-details .user-info div {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .weby-details h2 {
-    font-size: 16px;
-    color: #fff;
-    display: block;
-    font-weight: 400;
-    margin: 0 0;
-    padding-bottom: 10px;
+	font-size: 16px;
+	color: #fff;
+	display: block;
+	font-weight: 400;
+	margin: 0 0;
+	padding-bottom: 10px;
 }
 
 .weby-details .favorited-by ul {
-    list-style: none;
-    margin: 0 0;
-    padding: 0 0;
-    overflow: hidden;
+	list-style: none;
+	margin: 0 0;
+	padding: 0 0;
+	overflow: hidden;
 }
 
 .weby-details .favorited-by ul li {
-    display: inline-block;
-    float: left;
-    line-height: 1.5;
-    padding-bottom: 3px;
+	display: inline-block;
+	float: left;
+	line-height: 1.5;
+	padding-bottom: 3px;
 }
 
 .weby-details .favorited-by ul li a.name {
-    text-decoration: none;
-    color: #fff;
-    font-size: 12px;
-    padding-right: 5px;
-    padding-left: 5px;
-    float: left;
+	text-decoration: none;
+	color: #fff;
+	font-size: 12px;
+	padding-right: 5px;
+	padding-left: 5px;
+	float: left;
 }
 
 .weby-details .favorited-by ul li a.photo img {
-    width: 26px;
-    height: 26px;
-    display: inline-block;
-    background-color: #555;
-    float: left;
-    margin: 0 1px 0 2px;
+	width: 26px;
+	height: 26px;
+	display: inline-block;
+	background-color: #555;
+	float: left;
+	margin: 0 1px 0 2px;
 }
 
 .weby-details a.view-all {
-    display: block;
-    text-align: right;
-    text-decoration: none;
-    color: #fff;
-    font-size: 12px;
-    margin-top: 5px;
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color: #fff;
+	font-size: 12px;
+	margin-top: 5px;
 }
 
 .weby-details .popular-related-btns {
-    overflow: hidden;
-    padding: 10px 0;
+	overflow: hidden;
+	padding: 10px 0;
 }
 
 .weby-details .popular-related-btns a.view-popular-btn, .weby-details .popular-related-btns a.view-related-btn {
-    text-transform: uppercase;
-    font-size: 12px;
-    color: #fff;
-    background-color: #26b0a6;
-    border-bottom: 1px solid #20978e;
-    padding: 10px;
-    margin-bottom: 10px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
+	text-transform: uppercase;
+	font-size: 12px;
+	color: #fff;
+	background-color: #26b0a6;
+	border-bottom: 1px solid #20978e;
+	padding: 10px;
+	margin-bottom: 10px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
 }
 
 .weby-details .popular-related-btns a.view-popular-btn:hover, .weby-details .popular-related-btns a.view-related-btn:hover {
-    opacity: 0.85;
+	opacity: 0.85;
 }
 
 .header .header-middle-wrap input.edit-title-input {
-    margin-top: 8px;
-    margin-bottom: 4px;
-    line-height: 1.3;
-    font-size: 18px;
-    border: 1px solid #b7b7b9;
-    padding-left: 5px;
+	margin-top: 8px;
+	margin-bottom: 4px;
+	line-height: 1.3;
+	font-size: 18px;
+	border: 1px solid #b7b7b9;
+	padding-left: 5px;
 }
 
 .register-dialog ul {
-    list-style: none;
-    margin: 0 0;
-    padding: 10px 0 0 0;
-    overflow: hidden;
+	list-style: none;
+	margin: 0 0;
+	padding: 10px 0 0 0;
+	overflow: hidden;
 }
 
 .register-dialog ul li {
-    display: block;
-    overflow: hidden;
-    padding-top: 10px;
+	display: block;
+	overflow: hidden;
+	padding-top: 10px;
 }
 
 .register-dialog ul li a.icon {
-    width: 48px;
-    height: 45px;
-    display: inline-block;
-    float: left;
-    padding: 0 0;
-    background-image: url(../images/sprite2.png);
-    background-repeat: no-repeat;
+	width: 48px;
+	height: 45px;
+	display: inline-block;
+	float: left;
+	padding: 0 0;
+	background-image: url(../images/sprite2.png);
+	background-repeat: no-repeat;
 }
 
 .register-dialog ul li.signin-facebook a.icon {
-    background-color: #4966a1;
-    border-bottom: 3px solid #3a5181;
-    background-position: -78px -290px;
+	background-color: #4966a1;
+	border-bottom: 3px solid #3a5181;
+	background-position: -78px -290px;
 }
 
 .register-dialog ul li.signin-linkedin a.icon {
-    background-color: #1884bb;
-    border-bottom: 3px solid #146f9a;
-    background-position: -150px -290px;
+	background-color: #1884bb;
+	border-bottom: 3px solid #146f9a;
+	background-position: -150px -290px;
 }
 
 .register-dialog ul li.signin-google a.icon {
-    background-color: #dd211c;
-    border-bottom: 3px solid #be1d18;
-    background-position: -216px -290px;
+	background-color: #dd211c;
+	border-bottom: 3px solid #be1d18;
+	background-position: -216px -290px;
 }
 
 .register-dialog ul li a {
-    text-decoration: none;
-    font-size: 26px;
-    font-weight: 400;
-    float: left;
-    height: 45px;
-    line-height: 1.8;
-    padding: 0 8px;
-    background-color: #fff;
-    width: 256px;
-    display: inline-block;
-    border-bottom: 3px solid #cccccc;
+	text-decoration: none;
+	font-size: 26px;
+	font-weight: 400;
+	float: left;
+	height: 45px;
+	line-height: 1.8;
+	padding: 0 8px;
+	background-color: #fff;
+	width: 256px;
+	display: inline-block;
+	border-bottom: 3px solid #cccccc;
 }
 
 .register-dialog ul li.signin-facebook a {
-    color: #4966a1;
+	color: #4966a1;
 }
 
 .register-dialog ul li.signin-linkedin a {
-    color: #1884bb;
+	color: #1884bb;
 }
 
 .register-dialog ul li.signin-google a {
-    color: #dd211c;
+	color: #dd211c;
 }
 
 .register-dialog ul li.signin-facebook a:hover {
-    background-color: #4966a1;
-    color: #fff;
-    border-bottom: 3px solid #3a5181;
+	background-color: #4966a1;
+	color: #fff;
+	border-bottom: 3px solid #3a5181;
 }
 
 .register-dialog ul li.signin-linkedin a:hover {
-    background-color: #1884bb;
-    color: #fff;
-    border-bottom: 3px solid #146f9a;
+	background-color: #1884bb;
+	color: #fff;
+	border-bottom: 3px solid #146f9a;
 }
 
 .register-dialog ul li.signin-google a:hover {
-    background-color: #dd211c;
-    color: #fff;
-    border-bottom: 3px solid #be1d18;
+	background-color: #dd211c;
+	color: #fff;
+	border-bottom: 3px solid #be1d18;
+}
+
+/* SOUND CHECKBOX */
+.weby-details .checkbox-mute {
+	margin: 5px 0;
+	float: left;
+	display: none;
+	cursor: pointer;
+	display: block;
+}
+
+.weby-details .checkbox-mute span {
+	vertical-align: top;
+	margin: 2px 0 0 2px;
+	float: right;
+	font-size: 12px;
+}
+
+.weby-details .checkbox-mute input {
+	cursor: pointer;
 }

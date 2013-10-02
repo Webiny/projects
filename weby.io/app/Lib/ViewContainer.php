@@ -41,6 +41,12 @@ class ViewContainer implements \ArrayAccess
         $this->themeWebPath = $appCfg->theme_web_path;
         $this->storageAbsPath = $appCfg->storage_abs_path;
         $this->storageWebPath = $appCfg->storage_web_path;
+
+        // Used for defining Webies search NODE JS URL (quicker searching)
+        $webySearchers = $this->app()->getConfig()->app->weby_searchers->toArray(true);
+        $rIndex = rand(0, $webySearchers->count() - 1);
+        $this->webySearcher = $webySearchers[$rIndex];
+
         $this->mode = $appCfg->mode;
 
         // Get current user

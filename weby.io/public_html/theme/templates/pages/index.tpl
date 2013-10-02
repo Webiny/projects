@@ -19,7 +19,7 @@
             </li>
         </ul>
         <h2>
-            It's completely free! You can create unlimited number of Webies or you can watch video to see how Weby works.
+            It's completely free! You can create unlimited number of Webies right now or you can watch a short video to see how Weby works.
         </h2>
         <iframe xmlns="" width="700" height="360" src="https://www.youtube.com/embed/7VYzq1CZ61A?wmode=opaque" frameborder="0" allowfullscreen=""></iframe>
         <h2>

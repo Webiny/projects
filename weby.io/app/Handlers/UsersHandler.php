@@ -25,6 +25,8 @@ class UsersHandler extends AbstractHandler
         // Get data from OAuth service
         $serviceData = $this->request()->session('oauth_user')->get('oauth2_user');
         $serviceData->serviceUserId = $serviceData->profileId;
+        $serviceData->loginIp = $this->request()->getClientIp();
+
         // Load user by email
         $user = UserEntity::getByEmail($serviceData->email);
 
@@ -48,6 +50,8 @@ class UsersHandler extends AbstractHandler
             Stats::getInstance()->updateRegisteredUsersCount();
             Stats::getInstance()->updateWebiesStats($this->user());
 
+            $this->_notifyLoginNode($user->getId(), $user->getLoginIp());
+
             $this->request()->redirect($weby->getEditorUrl());
 
             // Redirect to editor (if this is new user)
@@ -58,15 +62,14 @@ class UsersHandler extends AbstractHandler
             // Saving, so we can sync the data with our database data
             $user->populate($serviceData)->save();
             Stats::getInstance()->updateUsersLoginCount($user);
+            $this->_notifyLoginNode($user->getId(), $user->getLoginIp());
 
             // Redirect to last visited URL
             if (isset($_COOKIE['weby_login_ref'])) {
-            $this->request()->redirect($_COOKIE['weby_login_ref']);
+                $this->request()->redirect($_COOKIE['weby_login_ref']);
             }
             $this->request()->redirect($this->user()->getProfileUrl());
-
         }
-
     }
 
     /**
@@ -144,5 +147,21 @@ class UsersHandler extends AbstractHandler
         // Send it
         $mailer->setDecorators($data);
         $mailer->send($msg);
+    }
+
+    private function _notifyLoginNode($id, $ip)
+    {
+        try {
+            $errno = false;
+            $fp = fsockopen($this->app()->getConfig()->app->node_geo_ip, $errno, $errstr);
+            if (!$fp) {
+                return;
+            }
+
+            fwrite($fp, json_encode(['userId' => $id, 'ip' => $ip]));
+            fclose($fp);
+        } catch (Exception $e) {
+            return;
+        }
     }
 }

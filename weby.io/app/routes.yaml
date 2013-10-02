@@ -5,12 +5,14 @@ routes:
     # PUBLIC PAGES
     - ['', \App\Handlers\PagesHandler, index]
     - ['about', \App\Handlers\PagesHandler, about]
+    - ['terms-of-service', \App\Handlers\PagesHandler, termsOfService]
+    - ['privacy-policy', \App\Handlers\PagesHandler, privacyPolicy]
 
     # WEBIES LISTING
     - ['/^following\/?(\d+)?$/', \App\Handlers\PagesHandler, listFollowingWebies] #search recently created Webies
     - ['/^recent\/?(\d+)?$/', \App\Handlers\PagesHandler, listRecentWebies] #search recently created Webies
     - ['/^tag\/(\S+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByTag] #search Webies by tag
-    - ['/^search\/(\S+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesBySearch] #search Webies
+    - ['/^search\/(.+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesBySearch] #search Webies
     - ['user/intro-done', \App\Handlers\UsersHandler, markOnboardingDone]
     - ['/^user\/([\.a-z0-9_-]*)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByUser] #search Webies by user
 
@@ -64,7 +66,7 @@ routes:
     - ['backend/stats/ajax-get-active-users-stats', \App\Handlers\StatsHandler, ajaxGetActiveUsersStats]
 
     # GLOBAL ROUTES
-    - ['/^([\.a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]{13})\/embed/', \App\Handlers\PagesHandler, viewWebyEmbed] #embed Weby
-    - ['/^([\.a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]{13})$/', \App\Handlers\PagesHandler, viewWeby] #frontend Weby
-    - ['/^([\.a-z0-9_-]*)\/([a-z0-9]{13})$/', \App\Handlers\EditorHandler, route] #backend editor router
-    - ['/^([\.a-z0-9_-]*)$/', \App\Handlers\EditorHandler, route] #backend editor router
+    - ['/^([\.a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]{13})\/embed\/?$/', \App\Handlers\PagesHandler, viewWebyEmbed] #embed Weby
+    - ['/^([\.a-z0-9_-]*)\/([a-z0-9_-]*)\/([a-z0-9]{13})\/?$/', \App\Handlers\PagesHandler, viewWeby] #frontend Weby
+    - ['/^([\.a-z0-9_-]*)\/([a-z0-9]{13})\/?$/', \App\Handlers\EditorHandler, route] #backend editor router
+    - ['/^([\.a-z0-9_-]*)\/?$/', \App\Handlers\EditorHandler, route] #backend editor router

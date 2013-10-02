@@ -12,6 +12,7 @@ function WebyVideoBackground(el) {
 	var _infoMessage = $('#doc-video .info-message');
 	var _volumeControl = $('[data-role="video-volume-control"]');
 	var _volumeSlider = $('[data-role="k-slider-video-volume"]');
+	var _muteSound = $('[data-role="video-background-mute"]');
 
 	this.setVideo = function (video) {
 		_video = video;
@@ -162,6 +163,25 @@ function WebyVideoBackground(el) {
 				}
 			}
 		});
+
+		/**
+		 * Mute sound control
+		 */
+		if(_muteSound.length > 0){
+			if(_volume > 0){
+				_muteSound.parent().show();
+				_muteSound.parent().click(function(){
+					if(_muteSound.is(':checked')){
+						_player.setVolume(0);
+					} else {
+						_player.setVolume(_volume);
+					}
+				});
+			} else {
+				_muteSound.next().text('Muted by author.');
+				_muteSound.attr("disabled", true).css('opacity', '0.3')
+			}
+		}
 	};
 
 	var _getWidth = function () {

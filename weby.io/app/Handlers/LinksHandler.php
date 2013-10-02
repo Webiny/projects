@@ -20,6 +20,9 @@ class LinksHandler extends AbstractHandler
 		$url = $this->getRealPath($url);
 		$doc = new \DOMDocument();
 		$html = $this->file_get_contents_utf8($url);
+		if(!$html) {
+			$this->ajaxResponse(true, 'Couldn\'t parse link!');
+		}
 		$this->loadHtml($doc, $html);
 
 		$title = $this->readTitle($doc);
@@ -38,9 +41,13 @@ class LinksHandler extends AbstractHandler
 	}
 
 	private function file_get_contents_utf8($fn) {
-		$string = file_get_contents($fn);
+		$string = shell_exec('wget -O - "' . $fn . '"');
 
-		return mb_convert_encoding($string, 'HTML-ENTITIES', "UTF-8");
+		if(!$string || empty($string)) {
+			return false;
+		}
+
+		return @mb_convert_encoding($string, 'HTML-ENTITIES', "UTF-8");
 	}
 
 	private function loadHtml($doc, $html) {
@@ -154,6 +161,8 @@ class LinksHandler extends AbstractHandler
 		}
 
 		// Parse base URL and convert to local variables: $scheme, $host, $path
+		$scheme = $host = $path = '';
+
 		extract(parse_url($base));
 
 		// If no path, use /

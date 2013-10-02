@@ -1,0 +1,13 @@
+{
+	"name": "weby-io",
+	"version": "0.1.0",
+	"description": "Weby.io set of tools",
+	"author": "Pavel Denisjuk <pavel@webiny.com>",
+	"dependencies": {
+		"pg": "2.6.2",
+		"http-proxy": "0.10.3"
+	},
+	"engines": {
+		"node": ">= 0.8.0"
+	}
+}

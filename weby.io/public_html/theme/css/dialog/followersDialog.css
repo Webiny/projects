@@ -168,6 +168,11 @@
     margin-top: 5px;
 }
 
+#followers-dialog .followers-pager .k-pager-numbers .k-state-selected {
+    border: none;
+    background: #dc420e none;
+}
+
 #followers-dialog .followers-pager .k-pager-numbers .k-state-selected,
 #followers-dialog .followers-pager .k-pager-numbers .k-link {
     color: #fff;

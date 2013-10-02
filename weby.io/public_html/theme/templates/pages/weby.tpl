@@ -14,7 +14,7 @@
     {if $weby.user.serviceName == 'google'}
         <link rel="author" href="https://plus.google.com/{$weby.user.serviceUserId}">
     {else}
-        {*<link href="https://plus.google.com/TREBA-NAM-GPLUS" rel="publisher"/>*}
+    {*<link href="https://plus.google.com/TREBA-NAM-GPLUS" rel="publisher"/>*}
     {/if}
     <link data-page-subject="true" href="{$weby->getImage('original-screenshot')}" rel="image_src"/>
     {include file="templates/pages/includes/appIncludes.tpl"}
@@ -35,18 +35,23 @@
         <div class="bootstrap" data-role="json-data">{$weby->getSummaryData()}</div>
     {else}
         <div class="bootstrap" data-role="json-data">
-            {literal}<esi:include src="/tools/weby-summary/{/literal}{$weby->getId()}{if $viewObject.user}/{$viewObject.user.id}/{else}/null/{/if}{literal}"/>{/literal}
+            {literal}
+            <esi:include
+                    src="/tools/weby-summary/{/literal}{$weby->getId()}{if $viewObject.user}/{$viewObject.user.id}/{else}/null/{/if}{literal}"/>{/literal}
         </div>
     {/if}
+    <div class="bootstrap" data-role="weby-searcher">{$viewObject.webySearcher}</div>
+    {include file="templates/pages/includes/dynTemplates.tpl"}
 
 {/block}
+
 {block name="headerRightTools"}
-    {if $viewObject.user}
+    {if !$viewObject.user}
         {include file="templates/common/searchWebies.tpl"}
     {/if}
 
     {include file="templates/common/socialShare.tpl"}
-    {if $viewObject.user}
+    {if !$viewObject.user}
         {include file="templates/common/userOptions.tpl" empty="true"}
     {else}
         {include file="templates/pages/includes/authorization.tpl"}
