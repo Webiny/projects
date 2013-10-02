@@ -3,13 +3,13 @@
     <title>Weby.io Newsletter</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body style="background: #fff; color: #666; padding: 20px 0; margin: 0; font: 14px/1em 'Source Sans Pro', sans-serif">
+<body style="line-spacing: 140%; background: #fff; color: #666; padding: 20px 0; margin: 0; font: 14px/1em 'Source Sans Pro', sans-serif">
 
 <table cellpadding="0" cellspacing="0" align="center" style="width: 616px; margin: 0 auto 0 auto; padding:20px;">
     <tbody>
     <tr>
         <td valign="top" style="width:170px; float:left; vertical-align:baseline;">
-            <a href="http://weby.io/" style="display: inline-block;"><img src="http://mailer.weby.io/uploads/logo.png"
+            <a href="http://www.weby.io/" style="display: inline-block;"><img src="http://mailer.weby.io/uploads/logo.png"
                                                                           alt="Weby" border="0"></a>
         </td>
         <td valign="top" style="float:right; vertical-align:baseline;">
@@ -35,27 +35,17 @@
                 <li>Create your content by visiting your <a style="color: #f26233; text-decoration: none;" href="http://www.weby.io/{username}">dashboard</a></li>
                 <li>You can create unlimited number of Webies - here are some ideas:
                     <ul>
-                        <li>Education / classroom materials</li>
-                        <li>Presentations</li>
                         <li>Fan pages</li>
-                        <li>Product introductions</li>
-                        <li>Funny</li>
-                        <li>Writing</li>
-                        <li>Organizing content</li>
-                        <li>Visual link bookmarking</li>
                         <li>Photo albums</li>
                         <li>Recipe book</li>
-                        <li>Step by step visual guides</li>
-                        <li>Movies to watch</li>
                         <li>Trip plan</li>
-                        <li>visual CV</li>
                         <li>...and much more - you are only limited by your own imagination :)</li>
                     </ul>
                 <li>After you create your Weby - hit share buttons and show it to the world</li>
                 <li>Find cool Webies and great authors by clicking on <a style="color: #f26233; text-decoration: none;" href="http://www.weby.io/recent">"Recent Webies"</a></li>
             </ul>
             Have a great time creating your Webies!
-            <br/>
+            <br/><br/>
         </td>
     </tr>
     <tr>

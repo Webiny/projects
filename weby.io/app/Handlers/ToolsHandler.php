@@ -75,6 +75,7 @@ class ToolsHandler extends AbstractHandler
             $this->_createSize($weby, $storage, 215, 180, 'frontend-square');
             $this->_createSize($weby, $storage, 215, 512, 'frontend-vertical');
             $this->_createSize($weby, $storage, 515, 180, 'frontend-horizontal');
+            $this->_createSize($weby, $storage, 398, 208, 'open-graph');
 
             $queue->complete($webyId)->processQueue();
         } catch (\Exception $e) {

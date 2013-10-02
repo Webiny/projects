@@ -40,6 +40,7 @@ images:
     frontend_square: http://weby.com/theme/images/default/frontend_square.jpg
     frontend_vertical: http://weby.com/theme/images/default/frontend_vertical.jpg
     frontend_horizontal: http://weby.com/theme/images/default/frontend_horizontal.jpg
+    open_graph: http://weby.com/theme/images/default/open_graph.jpg
 
 other:
     user_inactive_period: 5 #Sets the number of days which need to pass from users last sign in to proclaim him as inactive

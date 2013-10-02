@@ -133,6 +133,7 @@ class UsersHandler extends AbstractHandler
         $data = [
             $user->getEmail() => [
                 '{fullname}' => $user->getFirstName() . ' ' . $user->getLastName(),
+                '{username}' => $user->getUsername(),
                 '{email}' => $user->getEmail()
             ]
         ];

@@ -20,7 +20,7 @@ function FavoritesLoading() {
     this.setMessage(_initialMessage);
 }
 
-function WebyFavorites() {
+function WebyFavorites(modal) {
 
     var $this = this;
     var _currentWebyId = '';
@@ -28,6 +28,8 @@ function WebyFavorites() {
     var _deleteDialog = $('.delete-confirmation');
     var _loading = new FavoritesLoading();
     var _template = kendo.template($('#favorites-list-item-tpl').html());
+
+    var _modal = typeof modal == "undefined" ? false : true;
 
     /**
      * Load data into DataSource
@@ -143,14 +145,10 @@ function WebyFavorites() {
     // Bind My favorites
     $('[data-role="favorites-dialog-open"]').click(function (e) {
         e.preventDefault();
-        $this.open();
+        $this.open(_modal);
     });
 
     this.open = function (modal) {
-        if (typeof modal == "undefined") {
-            modal = false;
-        }
-
         $.fancybox($('#favorites-dialog'), {
             modal: modal,
             type: 'inline',

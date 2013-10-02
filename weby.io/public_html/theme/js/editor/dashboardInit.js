@@ -21,6 +21,8 @@ var dashboard = null;
 
 $(function () {
 	dashboard = new WebyDashboard();
+	favorites = new WebyFavorites(true);
+	followers = new WebyFollowers(true);
 
 	if(checkBrowser("browser.editor", function(){
 		dashboard.open(true);

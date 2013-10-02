@@ -6,7 +6,7 @@
     <meta property="og:site_name" content="Weby.io"/>
     <meta property="og:title" content="{$weby.title}"/>
     <meta property="og:url" content="{$weby.publicUrl}"/>
-    <meta property="og:image" content="{$weby->getImage('original-screenshot')}"/>
+    <meta property="og:image" content="{$weby->getImage('open-graph')}"/>
     <meta property="og:description" content="{$weby.description|default:'Created with Weby.io'}"/>
     {if !$weby.metaFollow}
         <meta name="robots" content="noindex, nofollow">

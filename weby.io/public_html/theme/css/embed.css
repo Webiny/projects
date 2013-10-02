@@ -117,6 +117,7 @@ body {
 	height: 100%;
 	position:absolute;
 	z-index:1;
+	top:98px;
 }
 
 .embed-footer {

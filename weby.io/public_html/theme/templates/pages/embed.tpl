@@ -2,6 +2,21 @@
 
 {block name="title"}{$weby.title}{/block}
 {block name="head"}
+    <meta name="description" content="{$weby.description|default:'Created with Weby.io'}"/>
+    <meta property="og:site_name" content="Weby.io"/>
+    <meta property="og:title" content="{$weby.title}"/>
+    <meta property="og:url" content="{$weby.publicUrl}"/>
+    <meta property="og:image" content="{$weby->getImage('open-graph')}"/>
+    <meta property="og:description" content="{$weby.description|default:'Created with Weby.io'}"/>
+    {if !$weby.metaFollow}
+        <meta name="robots" content="noindex, nofollow">
+    {/if}
+    {if $weby.user.serviceName == 'google'}
+        <link rel="author" href="https://plus.google.com/{$weby.user.serviceUserId}">
+    {else}
+    {*<link href="https://plus.google.com/TREBA-NAM-GPLUS" rel="publisher"/>*}
+    {/if}
+    <link data-page-subject="true" href="{$weby->getImage('original-screenshot')}" rel="image_src"/>
     {include file="templates/common/linkWidgetTemplates.tpl"}
     <script type="text/javascript" id="initScript">
         var weby = {$weby->toJson()};

@@ -133,7 +133,7 @@ class EditorHandler extends AbstractHandler
 			$this->_weby = new WebyEntity();
 			$this->_weby->load($webyId);
 
-			if(!$this->_weby->getId() || $this->_weby->isDeleted()) {
+			if(!$this->_weby->getId()) {
 				$this->request()->redirect($this->user()->getProfileUrl());
 			}
 

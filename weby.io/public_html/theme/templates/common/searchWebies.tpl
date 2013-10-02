@@ -8,7 +8,7 @@
     <div id="search-field" class="search-field">
         <span class="close-form close-search" data-role="close-search-field"></span>
         <input class="search-input" data-role="webies-search-field" type="text"
-               placeholder="Enter your search terms and hit enter">
+               placeholder="Search for Webies">
         <ul class="search-results">
         </ul>
     </div>

@@ -20,7 +20,7 @@ function FollowersLoading() {
     this.setMessage(_initialMessage);
 }
 
-function WebyFollowers() {
+function WebyFollowers(modal) {
 
     var $this = this;
     var _currentWebyId = '';
@@ -28,6 +28,8 @@ function WebyFollowers() {
     var _deleteDialog = $('.delete-confirmation');
     var _loading = new FollowersLoading();
     var _template = kendo.template($('#followers-list-item-tpl').html());
+
+    var _modal = typeof modal == "undefined" ? false : true;
 
     /**
      * Load data into DataSource
@@ -143,7 +145,7 @@ function WebyFollowers() {
         $this.open();
     });
 
-    this.open = function (modal) {
+    this.open = function (_modal) {
         if (typeof modal == "undefined") {
             modal = false;
         }
