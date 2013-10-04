@@ -1,6 +1,8 @@
 <?php
-namespace App\Lib;
+namespace App\Lib\Traits;
 
+
+use App\Lib\Database;
 
 trait DatabaseTrait {
 

@@ -5,11 +5,12 @@ namespace App\Handlers;
 use App\AppTrait;
 use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use App\Lib\AbstractHandler;
+use App\Lib\Traits\HelperTrait;
 use App\Lib\Screenshot\ScreenshotQueue;
 use App\Lib\Stats\Stats;
-use App\Lib\UserTrait;
+use App\Lib\Traits\UserTrait;
 use App\Lib\View;
 use Webiny\Component\Cache\CacheTrait;
 use Webiny\Component\Http\HttpTrait;
@@ -19,14 +20,13 @@ use Webiny\Component\Security\Authentication\Providers\Http\Http;
 use Webiny\Component\Security\SecurityTrait;
 use Webiny\Component\StdLib\StdLibTrait;
 use Webiny\Component\StdLib\StdObject\StdObjectWrapper;
-use Webiny\Component\Storage\Directory\LocalDirectory;
 use Webiny\Component\Storage\File\LocalFile;
 use Webiny\Component\Storage\StorageTrait;
 
 class EditorHandler extends AbstractHandler
 {
 	use AppTrait, StdLibTrait, DatabaseTrait, CacheTrait, SecurityTrait, HttpTrait, UserTrait, StorageTrait,
-		LoggerTrait;
+		LoggerTrait, HelperTrait;
 
 	/**
 	 * @var WebyEntity
@@ -65,15 +65,15 @@ class EditorHandler extends AbstractHandler
 				foreach ($requestData['tags'] as &$tag) {
 					// If tag wasn't in database, insert it
 					if($tag['id'] == 0) {
-						$this->_sanitizeInput($tag['tag'], true);
+						$this->helper()->sanitizeInput($tag['tag'], true);
 						$tag['id'] = WebyEntity::insertTag($tag['tag']);
 					}
 				}
 			}
 
 			// Sanitize title and description
-			$this->_sanitizeInput($requestData['title']);
-			$this->_sanitizeInput($requestData['description']);
+			$this->helper()->sanitizeInput($requestData['title']);
+			$this->helper()->sanitizeInput($requestData['description']);
 
 			// Now proceed with saving Weby
 			$weby->populate($requestData);
@@ -81,10 +81,7 @@ class EditorHandler extends AbstractHandler
 
 			// Clear cache
 			$this->cache()->delete('weby.json.' . $id);
-			if($this->app()->getConfig()->varnish->enabled) {
-				$varnishFlush = $this->str($this->app()->getConfig()->varnish->flush_weby);
-				system($varnishFlush->replace('{webyUrl}', $weby->getPublicUrl())->val());
-			}
+			$this->helper()->flushWebyCache($weby);
 		} catch (\Exception $e) {
 			$this->ajaxResponse(true, 'Failed to save Weby!');
 		}
@@ -101,7 +98,7 @@ class EditorHandler extends AbstractHandler
 		}
 
 		$data = [
-			'time'        => date('Y-m-d H:i:s'),
+			'time'        => strtotime(date('Y-m-d H:i:s')),
 			'title'       => $weby->getTitle(),
 			'description' => $weby->getDescription(),
 			'publicUrl'   => $weby->getPublicUrl(),
@@ -168,17 +165,11 @@ class EditorHandler extends AbstractHandler
 		$source = $weby->getImage('background')->getFile();
 		list($width, $height) = $image->open($source)->getSize()->values();
 
-		die(json_encode(['url'   => $webyFile->getUrl(),
+		$url = $webyFile->getUrl();
+		die(json_encode(['url'   => $this->url($url)->getPath(),
 						'width'  => $width,
 						'height' => $height
 						]));
-	}
-
-	private function _removeImage($webyId) {
-		$userDir = new LocalDirectory($this->user()->getUsername(), $this->storage('local'));
-		foreach ($userDir->filter($webyId . '-background*') as $file) {
-			$file->delete();
-		}
 	}
 
 	/**

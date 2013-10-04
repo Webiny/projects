@@ -43,5 +43,4 @@ $(function () {
             dashboard.open(true);
         }, 50);
     });
-
 });

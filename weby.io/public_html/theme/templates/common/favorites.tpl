@@ -48,7 +48,7 @@
             </div>
             <div class="weby-actions right">
                 <p>Added
-                    <time class="passed" datetime="${addedToFavoritesTime}">${addedToFavoritesTime}</time>
+                    <time class="passed" datetime="${addedToFavoritesTimeUnix}">${addedToFavoritesTimeUnix}</time>
                 </p>
                 <p>
                     <span class="tag-info">${hits} hits</span>

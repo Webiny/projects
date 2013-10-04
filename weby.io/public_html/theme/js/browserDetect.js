@@ -126,6 +126,7 @@ function checkBrowser(cookieKey, onClose) {
 	var version = BrowserDetect.version;
 
 	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		return true;
 		// Mobile browser
 		window.location = '/mobile-browser/';
 		return false;

@@ -12,7 +12,7 @@ namespace App\Lib\Screenshot;
 
 use App\AppTrait;
 use App\Entities\Weby\WebyEntity;
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use Webiny\Component\StdLib\StdLibTrait;
 
 /**

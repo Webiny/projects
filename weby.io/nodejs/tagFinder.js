@@ -7,9 +7,10 @@ var url = require('url');
 var REQUEST_REFERER = false;
 
 // Database config
-var DB_USER = "root";
-var DB_PASS = "paveL!";
+var DB_USER = "adrian";
+var DB_PASS = "4ndr055!";
 var DB_NAME = "weby.io";
+
 
 // Get hostIp and hostPort
 var temp = arguments[0].split(':');

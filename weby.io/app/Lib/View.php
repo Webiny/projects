@@ -109,7 +109,7 @@ class View
 			$m->jsFolder = 'js/';
 			$m->setThemeWebPath($config->theme_web_path);
 			$minifiedPath = $m->minifyJS($files);
-			if(!$m->fromCache && isset($params['obfuscate']) && $params['obfuscate'] == true) {
+			if(!$m->fromCache && isset($params['obfuscate']) && $params['obfuscate'] == true && $config->mode == 'production') {
 				system('/usr/bin/uglifyjs --overwrite "' . $minifiedPath . '"');
 			}
 		}

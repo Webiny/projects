@@ -4,7 +4,7 @@ namespace App\Handlers;
 
 use App\AppTrait;
 use App\Lib\AbstractHandler;
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use Webiny\Component\Mailer\MailerTrait;
 
 class CronHandler extends AbstractHandler

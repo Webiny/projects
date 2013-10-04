@@ -50,7 +50,7 @@ abstract class WebyEntityCrud extends WebyEntityProperties
         if (empty($this->_id)) {
             $this->_createStorageFolder = true;
         }
-        $this->_slug = $this->_toSlug($this->_title);
+        $this->_slug = $this->helper()->toSlug($this->_title);
     }
 
     protected function _onBeforePopulate(&$data)

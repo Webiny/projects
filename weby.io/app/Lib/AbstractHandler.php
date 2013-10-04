@@ -83,17 +83,4 @@ abstract class AbstractHandler
         header('Content-type: application/json; charset=utf-8;');
         die(json_encode($response));
     }
-
-    /**
-     * Sanitizing input (strip slashes, trim, replace spaces
-     */
-    protected function _sanitizeInput(&$input, $toLower = false)
-    {
-        $input = $this->str($input)->trim()->stripTags()->val();
-        $input = preg_replace('/[ ]+/', ' ', $input);
-        if ($toLower) {
-            $input = strtolower($input);
-        }
-    }
-
 }

@@ -179,16 +179,17 @@ function WebyVideoBackground(el) {
 			if(_volume > 0){
 				_muteSound.show();
 				_muteSound.click(function(){
-					if(_muteSound.hasClass('checked')){
+					if(!_muteSound.hasClass('checked')){
 						if(_player != null){
 							_player.setVolume(0);
 						}
+						_muteSound.addClass('checked');
 					} else {
 						if(_player != null){
 							_player.setVolume(_volume);
 						}
+						_muteSound.removeClass('checked');
 					}
-					_muteSound.toggleClass('checked');
 				});
 			} else {
 				_muteSound.text('Muted by author.');

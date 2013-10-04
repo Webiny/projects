@@ -40,7 +40,7 @@
 		settings: {
 			refreshMillis: 60000,
 			allowFuture: false,
-			localeTitle: false,
+			localeTitle: true,
 			cutoff: 0,
 			strings: {
 				prefixAgo: null,
@@ -119,7 +119,14 @@
 		},
 		datetime: function(elem) {
 			var iso8601 = $t.isTime(elem) ? $(elem).attr("datetime") : $(elem).attr("title");
-			return $t.parse(iso8601);
+
+			// Fix for Unix timestamps
+			var serverNow = new Date(iso8601 * 1000);
+			var date = [serverNow.getFullYear(), serverNow.getMonth() + 1, serverNow.getDate()];
+			var time = [serverNow.getHours(), serverNow.getMinutes(), serverNow.getSeconds()];
+			var formattedTime = date.join('-') + ' ' + time.join(':');
+
+			return $t.parse(formattedTime);
 		},
 		isTime: function(elem) {
 			// jQuery's `is()` doesn't play well with HTML5 in IE

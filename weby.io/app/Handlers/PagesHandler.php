@@ -5,10 +5,10 @@ namespace App\Handlers;
 use App\AppTrait;
 use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
-use App\HelperTrait;
+use App\Lib\Traits\HelperTrait;
 use App\Lib\AbstractHandler;
 use App\Lib\Stats\Stats;
-use App\Lib\UserTrait;
+use App\Lib\Traits\UserTrait;
 use App\Lib\View;
 use Webiny\Component\Http\HttpTrait;
 use Webiny\Component\Security\Authentication\Providers\Http\Http;
@@ -78,7 +78,7 @@ class PagesHandler extends AbstractHandler
 		$weby->load($id);
 
 		// Will check if requested Weby and URL params are valid
-		$this->_checkRequest($weby, $user, $slug, $id);
+		$this->_checkRequest($weby, $user, $slug, $id, true);
 
 		// Assign whole weby to $this, so we can pass it to view
 		$this->weby = $weby;
@@ -94,6 +94,16 @@ class PagesHandler extends AbstractHandler
     public function listRecentWebies($page = 1)
     {
         $data = WebyEntity::listRecentWebies($page, $this->_listLimit);
+        $this->_listWebies($data, $page);
+    }
+
+    /**
+     * Lists Webies from certain user
+     * @param int $page
+     */
+    public function listPopularWebies($page = 1)
+    {
+        $data = WebyEntity::listPopularWebies($page, $this->_listLimit);
         $this->_listWebies($data, $page);
     }
 
@@ -198,7 +208,7 @@ class PagesHandler extends AbstractHandler
             $data['count'] = $result->count();
 
             $data['count'] = $result[0]['total_count'];
-            $data['pagination'] = $this->_getNavigation($data['count'], $page, $this->_listLimit);
+            $data['pagination'] = $this->helper()->getNavigation($data['count'], $page, $this->_listLimit);
             $data['webPath'] = $this->app()->getConfig()->app->web_path;
             foreach ($result as $w) {
                 $weby = new WebyEntity();
@@ -223,15 +233,16 @@ class PagesHandler extends AbstractHandler
         }
     }
 
-    /**
-     * Used for checking request, if user has edited a URL, we will automatically redirect them to correct one
+	/**
+	 * Used for checking request, if user has edited a URL, we will automatically redirect them to correct one
 	 *
-     * @param $weby WebyEntity
-     * @param $user String
-     * @param $slug String
-     * @param $id String
-     */
-    private function _checkRequest($weby, $user, $slug, $id)
+	 * @param      $weby WebyEntity
+	 * @param      $user String
+	 * @param      $slug String
+	 * @param      $id   String
+	 * @param bool $embed
+	 */
+    private function _checkRequest($weby, $user, $slug, $id, $embed = false)
     {
         // We will need config for latter use of paths
         $cfg = $this->app()->getConfig()->app;
@@ -244,8 +255,8 @@ class PagesHandler extends AbstractHandler
         // If user edited username or title, redirect him to proper URL via 301 header data
         if ($weby->getSlug() != $slug || $weby->getUser()->getUsername() != $user) {
             $url = $cfg->web_path . $weby->getUser()->getUsername() . '/' . $weby->getSlug() . '/' . $id . '/';
-            if ($this->request()->query('embed', false)) {
-                $url .= '?embed=true';
+            if ($embed) {
+                $url .= 'embed/';
             }
             $this->request()->redirect($url, 301);
         }

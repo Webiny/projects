@@ -51,7 +51,7 @@
             </div>
             <div class="weby-actions right">
                 <p>Edited
-                    <time class="passed" datetime="${modified_on}">${modified_on}</time>
+                    <time class="passed" datetime="${modified_on_unix}">${modified_on_unix}</time>
                 </p>
                 <p>
                     <span class="tag-info">${hits} hits</span>

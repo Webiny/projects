@@ -11,6 +11,7 @@ routes:
     # WEBIES LISTING
     - ['/^following\/?(\d+)?$/', \App\Handlers\PagesHandler, listFollowingWebies] #search recently created Webies
     - ['/^recent\/?(\d+)?$/', \App\Handlers\PagesHandler, listRecentWebies] #search recently created Webies
+    - ['/^popular\/?(\d+)?$/', \App\Handlers\PagesHandler, listPopularWebies] #search recently created Webies
     - ['/^tag\/(\S+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesByTag] #search Webies by tag
     - ['/^search\/(.+)\/?(\d+)?$/', \App\Handlers\PagesHandler, listWebiesBySearch] #search Webies
     - ['user/intro-done', \App\Handlers\UsersHandler, markOnboardingDone]

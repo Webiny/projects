@@ -390,7 +390,7 @@ function WebyTitleDialog(parent) {
                     e.preventDefault();
                 }
                 break;
-            case 40: // Arrow key (up)
+            case 40: // Arrow key (down)
                 if (_tagsList.find('li').length > 0) {
                     e.preventDefault();
                     var suggestedTags = _tagsList.find('li');
@@ -407,7 +407,7 @@ function WebyTitleDialog(parent) {
                     }
                 }
                 break;
-            case 38: // Arrow key (down)
+            case 38: // Arrow key (up)
                 if (_tagsList.find('li').length > 0) {
                     e.preventDefault();
                     var suggestedTags = _tagsList.find('li');

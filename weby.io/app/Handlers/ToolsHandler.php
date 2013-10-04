@@ -6,9 +6,10 @@ use App\AppTrait;
 use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
 use App\Lib\AbstractHandler;
-use App\Lib\Screenshot;
+use App\Lib\Screenshot\Photographer;
 use App\Lib\Stats\Stats;
-use App\Lib\UserTrait;
+use App\Lib\Traits\HelperTrait;
+use App\Lib\Traits\UserTrait;
 use App\Lib\View;
 use Webiny\Component\Cache\CacheTrait;
 use Webiny\Component\Http\HttpTrait;
@@ -21,7 +22,7 @@ use App\Lib\Logger as WebyLogger;
 
 class ToolsHandler extends AbstractHandler
 {
-	use HttpTrait, LoggerTrait, UserTrait, StorageTrait, StdLibTrait, ImageTrait, AppTrait, CacheTrait;
+    use HttpTrait, LoggerTrait, UserTrait, StorageTrait, StdLibTrait, ImageTrait, AppTrait, CacheTrait, HelperTrait;
 
     /**
      * Log JS exception
@@ -46,50 +47,38 @@ class ToolsHandler extends AbstractHandler
     public function takeScreenshot($webyId)
     {
 
-		if(!$this->app()->getConfig()->screenshots->enabled){
-			$this->request()->redirect($this->app()->getConfig()->app->web_path);
-		}
+        // Check if screenshooting is enabled and the IP is allowed to make this request
 
-		$ips = $this->app()->getConfig()->screenshots->ip->toArray(true);
+        if (!$this->app()->getConfig()->screenshots->enabled) {
+            $this->request()->redirect($this->app()->getConfig()->app->web_path);
+        }
+
+        $ips = $this->app()->getConfig()->screenshots->ip->toArray(true);
 
         if (!$ips->inArray($this->request()->getClientIp())) {
             $this->request()->redirect($this->app()->getConfig()->app->web_path);
         }
 
+        // Load Weby and take screenshots
         $weby = new WebyEntity();
         $weby->load($webyId);
 
-        $screenshot = new Screenshot\Screenshot();
-        $queue = new Screenshot\ScreenshotQueue();
-
+        // Make Weby images
         $storage = $this->storage('local');
-
-        $key = $weby->getStorageFolder() . '/original-screenshot-' . time() . '.jpg';
-        $path = $storage->getAbsolutePath($key);
-        try {
-            $screenshot->takeScreenshot($weby, $path);
-            $weby->getImage('original-screenshot')->setKey($key)->save();
-
-            // Create different image sizes
-            $this->_createSize($weby, $storage, 90, 81, 'dashboard');
-            $this->_createSize($weby, $storage, 215, 180, 'frontend-square');
-            $this->_createSize($weby, $storage, 215, 512, 'frontend-vertical');
-            $this->_createSize($weby, $storage, 515, 180, 'frontend-horizontal');
-            $this->_createSize($weby, $storage, 398, 208, 'open-graph');
-
-            $queue->complete($webyId)->processQueue();
-        } catch (\Exception $e) {
-            $queue->abort($webyId, $e->getMessage())->processQueue();
+        $photographer = new Photographer($weby, $storage);
+        if ($photographer->takeScreenshots()) {
+            $this->helper()->flushWebyCache($weby);
         }
         die();
     }
 
-	public function webySummary($webyId) {
-		$weby = new WebyEntity();
-		$weby->load($webyId);
-		Stats::getInstance()->updateWebyHits($weby);
-		die($weby->getSummaryData());
-	}
+    public function webySummary($webyId)
+    {
+        $weby = new WebyEntity();
+        $weby->load($webyId);
+        Stats::getInstance()->updateWebyHits($weby);
+        die($weby->getSummaryData());
+    }
 
     /**
      * Sends general feedback to email (addresses are in config.yaml)
@@ -222,21 +211,21 @@ class ToolsHandler extends AbstractHandler
      */
     public function deleteWeby($webyId)
     {
-		$data = ['user' => true];
+        $data = ['user' => true];
 
-		if (!$this->user()) {
-			$data = ['user' => false];
-		} else {
-			$weby = new WebyEntity();
-			$weby->load($webyId);
+        if (!$this->user()) {
+            $data = ['user' => false];
+        } else {
+            $weby = new WebyEntity();
+            $weby->load($webyId);
 
-			if ($weby->getUser()->getId() == $this->user()->getId()) {
-				$weby->delete();
-			}
-		}
+            if ($weby->getUser()->getId() == $this->user()->getId()) {
+                $weby->delete();
+            }
+        }
 
-		header('Content-type: application/json; charset=utf-8;');
-		die(json_encode($data));
+        header('Content-type: application/json; charset=utf-8;');
+        die(json_encode($data));
     }
 
     /**
@@ -245,7 +234,7 @@ class ToolsHandler extends AbstractHandler
     public function ajaxSearchTags()
     {
         $search = $this->request()->post('search');
-        $this->_sanitizeInput($search, true);
+        $this->helper()->sanitizeInput($search, true);
         $result = WebyEntity::searchTags($search, true, true);
         header('Content-type: application/json; charset=utf-8;');
         die($result);
@@ -289,15 +278,4 @@ class ToolsHandler extends AbstractHandler
 
         return $webies;
     }
-
-	private function _createSize($weby, $storage, $width, $height, $tag)
-	{
-		$key = $weby->getStorageFolder() . '/' . $tag . '-' . time() . '.jpg';
-		$imageObj = $this->image($weby->getImage('original-screenshot')->getFile());
-		$thumbImage = new LocalFile($key, $storage);
-		if ($imageObj->thumbnail($width, $height, 'crop')->save($thumbImage)) {
-			$weby->getImage($tag)->setKey($key)->save();
-		}
-	}
-
 }

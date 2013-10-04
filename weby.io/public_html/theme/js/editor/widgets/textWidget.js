@@ -24,8 +24,8 @@ function TextWidget() {
 	}
 
 	this.onDeactivate = function () {
-		//this.body(".text-editable").blur();
-		//this.html().draggable("disable");
+		this.body(".text-editable").blur();
+		this.html().draggable("disable");
 	}
 
 	this.remove = function () {

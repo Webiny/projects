@@ -8,6 +8,7 @@ use Webiny\Component\Http\HttpTrait;
 use Webiny\Component\Http\Request;
 use Webiny\Component\Security\SecurityTrait;
 use Webiny\Component\StdLib\SingletonTrait;
+use App\Lib\Traits\UserTrait;
 
 class ViewContainer implements \ArrayAccess
 {

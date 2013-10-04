@@ -123,6 +123,8 @@ function WebyDetails() {
                     }
                     _favoritedBy.show();
                 }
+
+                App.getFavorites().refreshDataSource();
                 _processingFavorites = false;
 
             }

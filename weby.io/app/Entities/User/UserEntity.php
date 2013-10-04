@@ -180,6 +180,7 @@ class UserEntity extends UserEntityCrud
 					'title'       => $weby->getTitle(),
 					'slug'        => $weby->getSlug(),
 					'modified_on' => date('Y-m-d H:i:s', strtotime($weby->getModifiedOn())),
+					'modified_on_unix' => strtotime($weby->getModifiedOn()),
 					'public_url'  => $weby->getPublicUrl(),
 					'editor_url'  => $weby->getEditorUrl(),
 					'hits'        => $weby->getTotalHits(),
@@ -233,6 +234,7 @@ class UserEntity extends UserEntityCrud
 					'hits'                 => $weby->getTotalHits(),
 					'favorites'            => $weby->getFavoriteCount(),
 					'addedToFavoritesTime' => $weby->getAddedToFavoritesTime(),
+					'addedToFavoritesTimeUnix' => strtotime($weby->getAddedToFavoritesTime()),
 					'tags'                 => $weby->getTags(true),
 				];
 			}
@@ -353,8 +355,8 @@ class UserEntity extends UserEntityCrud
 	 */
 	public
 	function getFollowingUsersCount($limit = 5) {
+        
 		$this->getUsersFollowing($limit);
-
 		return $this->_usersFollowingCount;
 	}
 

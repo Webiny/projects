@@ -454,7 +454,7 @@ body.unselectable * {
     margin-bottom: 10px;
 }
 
-.header-right .search-btn .search-field ul.search-results li:hover {
+.header-right .search-btn .search-field ul.search-results li.hovered {
     background-color: #f7f7f7;
 }
 
@@ -539,7 +539,7 @@ body.unselectable * {
     background-color: #f7f7f7;
 }
 
-.header-right .search-btn .search-field ul.search-results li.view-all-results:hover {
+.header-right .search-btn .search-field ul.search-results li.view-all-results.hovered {
     background-color: #f3f3f3;
 }
 
@@ -664,7 +664,7 @@ body.unselectable * {
 }
 
 span.weby-tag-blue {
-    background-image: url(http://dev.weby.io/theme/css/../images/sprite2.png);
+    background-image: url(../images/sprite2.png);
     background-repeat: no-repeat;
     color: #fff;
     font-size: 12px;

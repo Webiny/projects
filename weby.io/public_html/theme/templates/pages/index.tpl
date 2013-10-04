@@ -2,6 +2,7 @@
 
 {block name="title"}Welcome to Weby.io{/block}
 {block name="head"}
+    <meta name="google-site-verification" content="c1ZgG65qu0JVEN7F0qCKjXvOmTm0kKW98bosOA_GaPM" />
 {/block}
 {block name="content"}
     <div class="container">

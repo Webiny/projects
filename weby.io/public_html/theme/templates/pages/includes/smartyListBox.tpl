@@ -56,7 +56,7 @@
                             Views
                         </li>
                         <li class="date">
-                            <time class="passed" datetime="{$weby.createdOn}">{$weby.createdOn}</time>
+                            <time class="passed" datetime="{$weby.createdOnUnix}">{$weby.createdOnUnix}</time>
                         </li>
                     </ul>
                 </div>

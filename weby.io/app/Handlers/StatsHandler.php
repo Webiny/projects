@@ -3,7 +3,7 @@
 namespace App\Handlers;
 
 use App\Lib\AbstractHandler;
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use App\Lib\Stats\Stats;
 use App\Lib\Stats\StatsEvents;
 use App\Lib\View;

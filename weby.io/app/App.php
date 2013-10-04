@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use App\Lib\Router;
 use App\Lib\Database;
 use Webiny\Component\Config\ConfigObject;

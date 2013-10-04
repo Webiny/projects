@@ -3,7 +3,7 @@
 namespace App\Entities\Weby;
 
 use App\AppTrait;
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use Webiny\Component\StdLib\StdLibTrait;
 use Webiny\Component\Storage\File\LocalFile;
 use Webiny\Component\Storage\StorageTrait;

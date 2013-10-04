@@ -102,6 +102,9 @@ var AppClass = function (topOffset) {
         return _userLoggedIn;
     }
 
+    this.getFavorites = function() {
+        return _favorites;
+    }
     this.isEditor = function() {
         return false;
     }

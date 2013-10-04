@@ -1,20 +1,20 @@
 app:
-    abs_path: /var/www/newwebiny/projects/weby.io/app/
-    web_path: http://weby.com/
-    public_html: /var/www/newwebiny/projects/weby.io/public_html/
-    theme_abs_path: /var/www/newwebiny/projects/weby.io/public_html/theme/
-    theme_web_path: http://weby.com/theme/
-    storage_abs_path: /var/www/newwebiny/projects/weby.io/public_html/storage/
-    storage_web_path: http://weby.com/storage/
+    abs_path: /www/webiny/projects/weby.io/app/
+    web_path: http://pavel910.homeftp.net/
+    public_html: /www/webiny/projects/weby.io/public_html/
+    theme_abs_path: /www/webiny/projects/weby.io/public_html/theme/
+    theme_web_path: http://pavel910.homeftp.net/theme/
+    storage_abs_path: /www/webiny/projects/weby.io/public_html/storage/
+    storage_web_path: http://pavel910.homeftp.net/storage/
     default_class: '\App\Handlers\PagesHandler'
     default_method: page404
     mode: development
     content_validators: #will be randomly switched by the app
-        - http://weby.com:8080
+        - http://mrcina.ath.cx:8080
     tag_finders: #will be randomly switched by the app
-        - http://weby.com:8079
-    weby_searchers: #will be randomly switched by the app
-        - http://weby.com:8079
+        - http://mrcina.ath.cx:8085
+    weby_searchers:
+        - http://mrcina.ath.cx:8085
     node_geo_ip: udp://weby.com:8086
 
 varnish:
@@ -23,10 +23,16 @@ varnish:
 
 screenshots:
     enabled: false
-    ip: [192.168.249.128, 127.0.0.1]
+    ip: [192.168.1.11, 127.0.0.1]
+    dimensions:
+        dashboard: [90, 81]
+        frontend_square: [215, 180]
+        frontend_vertical: [215, 512]
+        frontend_horizontal: [515, 180]
+        open_graph: [398, 208]
 
 database:
-    name: postgres
+    name: weby.io
     user: root
     password: 'paveL!'
     host: localhost
@@ -35,12 +41,12 @@ caching_ttl: # TTL times for caches (in seconds)
     - social_share_counts: 5
 
 images:
-    dashboard: http://weby.com/theme/images/default/my-weby.jpg
-    original_screenshot: http://weby.com/theme/images/default/my-weby.jpg
-    frontend_square: http://weby.com/theme/images/default/frontend_square.jpg
-    frontend_vertical: http://weby.com/theme/images/default/frontend_vertical.jpg
-    frontend_horizontal: http://weby.com/theme/images/default/frontend_horizontal.jpg
-    open_graph: http://weby.com/theme/images/default/open_graph.jpg
+    dashboard: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
+    original_screenshot: http://pavel910.homeftp.net/theme/images/default/my-weby.jpg
+    frontend_square: http://pavel910.homeftp.net/theme/images/default/frontend_square.jpg
+    frontend_vertical: http://pavel910.homeftp.net/theme/images/default/frontend_vertical.jpg
+    frontend_horizontal: http://pavel910.homeftp.net/theme/images/default/frontend_horizontal.jpg
+    open_graph: http://pavel910.homeftp.net/theme/images/default/open_graph.jpg
 
 other:
     user_inactive_period: 5 #Sets the number of days which need to pass from users last sign in to proclaim him as inactive

@@ -18,7 +18,7 @@
 {* Webies search result template *}
 <script type="weby/tpl" id="webies-header-search-result">
     {literal}
-        <li>
+        <li class="result-item">
             <a href="{webyUrl}">
                 </span>
                     <span class="search-img">

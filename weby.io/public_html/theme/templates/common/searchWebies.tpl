@@ -19,7 +19,7 @@
 
 {literal}
     <script type="weby/tpl" id="webies-header-search-result">
-        <li>
+        <li class="result-item">
             <a href="{webyUrl}">
                 </span>
                     <span class="search-img">

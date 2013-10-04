@@ -94,11 +94,9 @@ function Weby() {
 		}
 	};
 
-	this.disableSave = function(){
+	this.disableSave = function () {
 		clearInterval(_saveInterval);
-		$(window).bind("beforeunload", function () {
-			return;
-		});
+		$(window).unbind("beforeunload");
 	}
 
 	/**
@@ -290,7 +288,9 @@ function Weby() {
 					_counter = {};
 					_unknownFileTypes = [];
 					_invalidUrls = [];
-					_webySave.setMessage('Last saved: <time class="passed" datetime="'+data.data.time+'">'+data.data.time+'</time>');
+
+					// Set time
+					_webySave.setMessage('Last saved: <time class="passed" datetime="' + data.data.time + '">' + data.data.time + '</time>');
 					clearInterval(_saveInterval);
 					_saveInterval = setInterval(_save, _saveIntervalTime);
 
@@ -347,12 +347,12 @@ function Weby() {
 
 			// Bind load events
 			if (html.find('.widget-body iframe').length > 0) {
-				html.find('iframe').load(_checkLoading).error(function(){
+				html.find('iframe').load(_checkLoading).error(function () {
 					widget.showFailedToLoad();
 					_checkLoading();
 				});
 			} else if (html.find('.widget-body img').length > 0) {
-				html.find('img').load(_checkLoading).error(function(){
+				html.find('img').load(_checkLoading).error(function () {
 					widget.showFailedToLoad();
 					_checkLoading();
 				});

@@ -12,6 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=10"/>
     <title>{block name="title"}{/block} | Weby.io</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width, height=device-height">
     <meta charset="utf-8">
     {minify type="css"}
         font.css,

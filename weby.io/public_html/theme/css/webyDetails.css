@@ -103,7 +103,7 @@
 }
 
 .weby-details .loading-following {
-	background-image: url(../images/load.gif);
+	background-image: url(../images/load_green.gif);
 	width: 16px;
 	height: 16px;
 	position: absolute;

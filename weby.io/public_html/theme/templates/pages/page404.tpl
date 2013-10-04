@@ -13,7 +13,7 @@
                 Oop, this weby no longer exists!
             </h2>
             <p>
-                Check out the most popular webies by tags:
+                Check out Webies by recent by tags:
             </p>
             <div class="tags">
                 {foreach from=$recentTags item=tag}

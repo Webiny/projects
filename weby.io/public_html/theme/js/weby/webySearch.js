@@ -31,7 +31,7 @@ function WebySearchClass() {
             _searchResultsHolder.append(tpl);
         }
         if (data.length > 0) {
-            _searchResultsHolder.append('<li class="view-all-results"><a href="' + WEB + 'search/' + _searchInput.val() + '">View all &raquo;</a></li>');
+            _searchResultsHolder.append('<li class="view-all-results result-item"><a href="' + WEB + 'search/' + _searchInput.val() + '"><span class="view-all">View all &raquo;</span></a></li></span>');
         } else {
             _searchResultsHolder.append('<li class="view-all-results">No Webies found</li>');
         }
@@ -57,10 +57,48 @@ function WebySearchClass() {
     _searchInput.on('keyup', function (e) {
         var event = e || window.event;
         var charCode = event.which || event.keyCode;
-
         switch (charCode) {
             case 27: // Esc key
                 _closeSearchField();
+                break;
+            case 40: // Down key
+                if (_searchResultsHolder.find('li.result-item').length > 0) {
+                    e.preventDefault();
+                    var suggestedWebies = _searchResultsHolder.find('li.result-item');
+                    var currentPosition = -1;
+                    suggestedWebies.each(function (i, e) {
+                        if ($(this).hasClass('hovered')) {
+                            currentPosition = i;
+                            return false;
+                        }
+                    });
+                    if ((currentPosition + 1) < suggestedWebies.length) {
+                        $(suggestedWebies[currentPosition]).removeClass('hovered');
+                        $(suggestedWebies[currentPosition + 1]).addClass('hovered');
+                    }
+                }
+                break;
+            case 38: // Arrow key (up)
+                if (_searchResultsHolder.find('li.result-item').length > 0) {
+                    e.preventDefault();
+                    var suggestedWebies = _searchResultsHolder.find('li.result-item');
+                    var currentPosition = -1;
+                    suggestedWebies.each(function (i, e) {
+                        if ($(this).hasClass('hovered')) {
+                            currentPosition = i;
+                            return false;
+                        }
+                    });
+                    if (currentPosition > 0) {
+                        $(suggestedWebies[currentPosition]).removeClass('hovered');
+                        $(suggestedWebies[currentPosition - 1]).addClass('hovered');
+                    }
+                }
+                break;
+            case 13:
+                e.preventDefault();
+                _searchResultsHolder.find('li.result-item.hovered span.view-all').click();
+                _searchResultsHolder.find('li.result-item.hovered img').click();
                 break;
         }
     });
@@ -74,6 +112,11 @@ function WebySearchClass() {
         } else {
             _searchResultsHolder.empty();
         }
+    });
+
+    _searchResultsHolder.on('mouseover', 'li.result-item', function () {
+        _searchResultsHolder.find('li.result-item').removeClass('hovered');
+        $(this).addClass('hovered');
     });
 
     _searchBtn.on('click', function () {

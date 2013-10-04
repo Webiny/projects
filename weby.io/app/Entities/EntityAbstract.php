@@ -3,7 +3,7 @@
 namespace App\Entities;
 
 use App\App;
-use App\Lib\DatabaseTrait;
+use App\Lib\Traits\DatabaseTrait;
 use Webiny\Component\StdLib\StdLibTrait;
 
 abstract class EntityAbstract implements \ArrayAccess

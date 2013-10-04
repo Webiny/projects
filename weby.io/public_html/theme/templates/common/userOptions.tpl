@@ -5,6 +5,9 @@
     <span class="dropdown-arrow"></span>
     <ul>
         <li>
+            <a href="{$viewObject.webPath}editor/create">Create a Weby</a>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-role="dashboard-dialog-open">My Webies</a>
         </li>
         <li>
@@ -14,7 +17,7 @@
             <a href="javascript:void(0);" data-role="followers-dialog-open">My followers</a>
         </li>
         <li>
-            <a href="{$viewObject.webPath}recent">Recent Webies</a>
+            <a href="{$viewObject.webPath}popular">Popular Webies</a>
         </li>
         <li>
             <a href="{$viewObject.webPath}following">Users you follow</a>

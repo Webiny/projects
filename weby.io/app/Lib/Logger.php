@@ -1,6 +1,7 @@
 <?php
 namespace App\Lib;
 use Webiny\Component\StdLib\SingletonTrait;
+use App\Lib\Traits\DatabaseTrait;
 
 /**
  * This class is used when an error occures while user is using our site
@@ -12,10 +13,6 @@ class Logger
 {
     use DatabaseTrait, SingletonTrait;
 
-
-    public function init() {
-
-    }
     /**
      * Logs(saves) an error into database for further reviewing
      * @param $message

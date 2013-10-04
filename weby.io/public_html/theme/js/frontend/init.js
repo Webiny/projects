@@ -18,6 +18,7 @@ $(function () {
     // Load config data
     weby = JSON.parse($('[data-role="weby"]').html());
     data = JSON.parse($('[data-role="json-data"]').html());
+	$('[data-role="user-logged-in"]').text(data.currentUser ? 1 : 0);
 
     // Add and fill weby details field
     var webyDetails = new kendo.template($('#weby-details-tpl').html());
@@ -46,7 +47,7 @@ $(function () {
 
     // Now render properly header interface, we check which interface was cached
     // First, if 'user-not-logged' version was cached
-    if ($('[data-role="authorize"]').length) {
+    if ($('[data-role="authorize"]').length > 0) {
         // Now, if we have valid user, we insert missing elements else we leave everything intact
         if (data.currentUser) {
             $('.register-btn').remove();
@@ -54,6 +55,7 @@ $(function () {
             new WebySearchClass();
             $('#webies-header-search-results').remove();
             $('.header-right ul:first').append(userMenu(data.currentUser));
+            $('li.dropdown .username').text(data.currentUser.name);
         } else {
             new Authorization(true);
         }
@@ -61,8 +63,8 @@ $(function () {
         // If there is no authorize button, then that means we have 'user-logged' cached version
         if (data.currentUser) {
             $('li.dropdown .user-photo').css({
-                                            backgroundImage: 'url(' + data.currentUser.avatar + ')',
-                                            backgroundPosition: 'top left'});
+                backgroundImage: 'url(' + data.currentUser.avatar + ')',
+                backgroundPosition: 'top left'});
             $('li.dropdown .username').text(data.currentUser.name);
         } else {
             $('.search-btn').remove();
@@ -73,11 +75,7 @@ $(function () {
         }
     }
 
-    //$('.bootstrap').remove();
-
-
-    $(function () {
-        App = new AppClass();
-        App.init();
-    });
+	App = new AppClass();
+	App.init();
+	$('.bootstrap').remove();
 });

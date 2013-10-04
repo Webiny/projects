@@ -108,7 +108,7 @@
             <a data-role="flip-weby-details" href="javascript: void(0);" class="view-all">&laquo; view less tags</a>
         </div>
         </div>
-        <label class="checkbox-mute" data-role="video-background-mute">Mute sound</label>
+        <label class="checkbox-mute" data-role="video-background-mute" title="Mute background video sound">Mute sound</label>
         </div>
     </script>
     <script type="weby/tpl" id="user-favorited">
