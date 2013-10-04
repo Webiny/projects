@@ -20,17 +20,20 @@ function DashboardLoading() {
 	this.setMessage(_initialMessage);
 }
 
-function WebyDashboard() {
+function WebyDashboard(modal) {
+
+    var _modal = typeof modal == 'undefined' ? false : true;
 
 	var $this = this;
+    var _currentWebyId = '';
+    var _dialog = $("#dashboard-dialog");
+    var _deleteDialog = $('.delete-confirmation');
+    var _loading = new DashboardLoading();
 
-	var _currentWebyId = '';
-	var _dialog = $("#dashboard-dialog");
-	var _deleteDialog = $('.delete-confirmation');
-	var _loading = new DashboardLoading();
 	var _template = kendo.template($('#webies-list-item-tpl').html());
+    var _onClose = function(){};
 
-	var webiesDataSource = new kendo.data.DataSource({
+    var webiesDataSource = new kendo.data.DataSource({
 		type: "odata",
 		serverPaging: true,
 		pageSize: 3,
@@ -123,6 +126,15 @@ function WebyDashboard() {
 		webiesDataSource.sync();
 	}
 
+    /**
+     * Store callback into private property
+     * @param callable
+     */
+    this.onClose = function(callable) {
+        _onClose = callable;
+        return this;
+    }
+
 	_dialog.find('.webies-pager').kendoPager({
 		dataSource: webiesDataSource,
 		buttonCount: 10,
@@ -162,7 +174,7 @@ function WebyDashboard() {
 	// Bind My Webies
 	$('[data-role="dashboard-dialog-open"]').click(function (e) {
 		e.preventDefault();
-		$this.open();
+		$this.open(_modal);
 	});
 
 	this.open = function (modal) {
@@ -175,8 +187,9 @@ function WebyDashboard() {
 			type: 'inline',
 			height: 456,
 			width: 772,
-			autoSize: false
-		});
+			autoSize: false,
+            afterClose: _onClose
+        });
 		TimePassed.parse();
 	}
 

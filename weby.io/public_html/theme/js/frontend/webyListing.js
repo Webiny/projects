@@ -172,7 +172,7 @@ function ListingClass() {
         tmp = tmp.replace(/{publicUrl}/g, webies[i].publicUrl);
         tmp = tmp.replace('{favoritedCount}', webies[i].favoritedCount);
         tmp = tmp.replace('{hitsCount}', webies[i].hitsCount);
-        tmp = $(tmp.replace(/{createdOn}/g, webies[i].createdOn));
+        tmp = $(tmp.replace(/{createdOnUnix}/g, webies[i].createdOn));
 
 
         // Append and animate

@@ -12,7 +12,7 @@
     {/block}
 {block name="content"}
     <div class="bootstrap">
-        <div data-role="search-url">{$viewObject.webPath}recent/</div>
+        <div data-role="search-url">{$viewObject.webPath}search/</div>
         <div data-role="search-value">{$searchValue}</div>
         <div data-role="search-page">{$page}</div>
     </div>

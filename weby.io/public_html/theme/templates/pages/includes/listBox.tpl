@@ -28,7 +28,7 @@
                         Views
                     </li>
                     <li class="date">
-                        <time class="passed" datetime="${createdOnUnix}">{createdOnUnix}</time>
+                        <time class="passed" datetime="{createdOnUnix}">{createdOnUnix}</time>
                     </li>
                 </ul>
             </div>
