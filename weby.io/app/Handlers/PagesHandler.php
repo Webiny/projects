@@ -61,8 +61,6 @@ class PagesHandler extends AbstractHandler
 		$this->weby = $weby;
 		$this->shareCount = $weby->getShareCount();
 
-		$this->helper()->logUserAction($this->user(), 'Viewing <strong><a href="'.$weby->getPublicUrl().'" target="blank">' . $weby->getTitle() . '</a></strong>');
-
 		$this->setTemplate('weby');
 		Stats::getInstance()->updateWebyHits($weby);
 	}

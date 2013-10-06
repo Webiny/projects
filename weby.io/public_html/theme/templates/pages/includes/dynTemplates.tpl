@@ -53,9 +53,11 @@
         <span class="username">#= name #</span>
         <span class="dropdown-arrow"></span>
         <ul>
+            {/literal}
             <li>
                 <a href="{$viewObject.webPath}editor/create">Create a Weby</a>
             </li>
+            {literal}
             <li>
                 <a href="javascript:void(0);" data-role="dashboard-dialog-open">My Webies</a>
             </li>
@@ -65,6 +67,7 @@
             <li>
                 <a href="javascript:void(0);" data-role="followers-dialog-open">My followers</a>
             </li>
+            {/literal}
             <li>
                 <a href="{$viewObject.webPath}popular">Popular Webies</a>
             </li>
@@ -74,6 +77,7 @@
             <li>
                 <a href="{$viewObject.webPath}logout">Sign out</a>
             </li>
+            {literal}
         </ul>
     </li>
     {/literal}

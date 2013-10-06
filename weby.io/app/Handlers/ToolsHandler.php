@@ -76,6 +76,7 @@ class ToolsHandler extends AbstractHandler
     {
         $weby = new WebyEntity();
         $weby->load($webyId);
+		$this->helper()->logUserAction($this->user(), 'Viewing <strong><a href="'.$weby->getPublicUrl().'" target="blank">' . $weby->getTitle() . '</a></strong>');
         Stats::getInstance()->updateWebyHits($weby);
         die($weby->getSummaryData());
     }
