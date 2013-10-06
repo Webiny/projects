@@ -25,6 +25,7 @@ abstract class UserEntityStorage extends EntityAbstract
     protected $_lastLogin = '';
     protected $_loginIp = '';
     protected $_geoData = '';
+	protected $_signinCount = 0;
 
     /**
      * Saves user into the database with it's service type
@@ -34,8 +35,8 @@ abstract class UserEntityStorage extends EntityAbstract
     {
         if ($this->_id == 0) {
             $query = "INSERT INTO {$this->_getDb()->w_user}
-                        (username, service_name, service_user_id, email, first_name, last_name, avatar_url, login_ip, geo_data, created_on, last_login)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,NOW(), NOW()) RETURNING id";
+                        (username, service_name, service_user_id, email, first_name, last_name, avatar_url, login_ip, geo_data, created_on, last_login, signin_count)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), 1) RETURNING id";
             $bind = [
                 $this->_username,
                 $this->_serviceName,

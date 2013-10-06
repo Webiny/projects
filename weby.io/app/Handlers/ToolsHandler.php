@@ -115,6 +115,8 @@ class ToolsHandler extends AbstractHandler
         $mailer->setDecorators($mailData);
         $mailer->send($msg);
 
+		$this->helper()->logUserAction($this->user(), 'Just sent some feedback!');
+
         $this->ajaxResponse(false);
     }
 

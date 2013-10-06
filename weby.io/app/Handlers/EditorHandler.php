@@ -37,6 +37,8 @@ class EditorHandler extends AbstractHandler
 		$weby = new WebyEntity();
 		$weby->setUser($this->user())->save();
 
+		$this->helper()->logUserAction($this->user(), 'Created a new <a href="'.$weby->getPublicUrl().'" target="blank">Weby</a>');
+
 		// Update stats
 		Stats::getInstance()->updateWebiesStats($this->user());
 
@@ -178,7 +180,7 @@ class EditorHandler extends AbstractHandler
 	private function _editor() {
 		if($this->_weby == null) {
 			$this->setTemplate('dashboard');
-
+			$this->helper()->logUserAction($this->user(), 'Viewing his dashboard');
 			return;
 		}
 
@@ -186,6 +188,8 @@ class EditorHandler extends AbstractHandler
 
 		$this->weby = $this->_weby;
 		$this->editor = true;
+
+		$this->helper()->logUserAction($this->user(), 'Editing Weby <strong><a href="'.$this->_weby->getPublicUrl().'" target="blank">' . $this->_weby->getTitle() . '</a></strong>');
 
 		$tmp = $this->app()->getConfig()->get('disabled_tools', []);
 		if(!$this->isArray($tmp)) {

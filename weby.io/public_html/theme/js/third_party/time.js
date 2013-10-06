@@ -121,6 +121,8 @@
 			var iso8601 = $t.isTime(elem) ? $(elem).attr("datetime") : $(elem).attr("title");
 
 			// Fix for Unix timestamps
+			// NOTE: if giving PHP timestamps - no extra actions are required
+			// If timestamp is acquired from new Date().getTime() you need to divide it by 1000
 			var serverNow = new Date(iso8601 * 1000);
 			var date = [serverNow.getFullYear(), serverNow.getMonth() + 1, serverNow.getDate()];
 			var time = [serverNow.getHours(), serverNow.getMinutes(), serverNow.getSeconds()];

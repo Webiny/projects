@@ -72,6 +72,22 @@ abstract class UserEntityProperties extends UserEntityStorage
         return $this->_lastName;
     }
 
+	/**
+	 * Get last login
+	 * @return string
+	 */
+	public function getLastLogin(){
+		return $this->_lastLogin;
+	}
+
+	/**
+	 * Get number of user logins
+	 * @return int
+	 */
+	public function getLoginCount(){
+		return $this->_signinCount;
+	}
+
     /**
      * @return string
      */

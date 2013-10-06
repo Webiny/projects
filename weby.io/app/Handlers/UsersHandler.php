@@ -7,6 +7,7 @@ use App\Entities\User\UserEntity;
 use App\Entities\Weby\WebyEntity;
 use App\Lib\AbstractHandler;
 use App\Lib\Stats\Stats;
+use App\Lib\Traits\HelperTrait;
 use App\Lib\Traits\UserTrait;
 use App\Lib\View;
 use Webiny\Component\Http\HttpTrait;
@@ -15,7 +16,7 @@ use Webiny\Component\StdLib\StdObject\StringObject\StringObject;
 
 class UsersHandler extends AbstractHandler
 {
-    use AppTrait, HttpTrait, UserTrait, MailerTrait;
+    use AppTrait, HttpTrait, UserTrait, MailerTrait, HelperTrait;
 
     /**
      * This will insert logged user into the database on first login to Weby.io
@@ -44,23 +45,23 @@ class UsersHandler extends AbstractHandler
 
             // Create new Weby for our new user and redirect him to it
             $weby = new WebyEntity();
-            $weby->setUser($this->user())->save();
+            $weby->setUser($user)->save();
 
             // Now update users stats
             Stats::getInstance()->updateRegisteredUsersCount();
-            Stats::getInstance()->updateWebiesStats($this->user());
+            Stats::getInstance()->updateWebiesStats($user);
 
-            $this->_notifyLoginNode($user->getId(), $user->getLoginIp());
+            $this->helper()->logUserLogin($user);
 
             // Redirect to editor (if this is new user)
             $this->request()->redirect($weby->getEditorUrl());
         } else {
-
+			$serviceData->username = $user->getUsername();
             // If user exists, then update it's data in Weby database,
             // Saving, so we can sync the data with our database data
             $user->populate($serviceData)->save();
             Stats::getInstance()->updateUsersLoginCount($user);
-            $this->_notifyLoginNode($user->getId(), $user->getLoginIp());
+			$this->helper()->logUserLogin($user);
 
             // Redirect to last visited URL
             if (isset($_COOKIE['weby_login_ref'])) {
@@ -77,6 +78,7 @@ class UsersHandler extends AbstractHandler
      */
     public function markOnboardingDone()
     {
+		$this->helper()->logUserAction($this->user(), 'Completed his onboarding!');
         $this->user()->markOnboardingDone();
         die();
     }
@@ -93,9 +95,11 @@ class UsersHandler extends AbstractHandler
 
         // If we got a valid favorite, that means we are deleting it
         if ($this->user()->inFavorites($weby)) {
+			$this->helper()->logUserAction($this->user(), 'Unfavorited <strong><a target="_blank" href="'.$weby->getPublicUrl().'">'.$weby->getTitle().'</a></strong>');
             $this->user()->deleteFromFavorites($weby);
         } else {
             // In other case, we are creating a new favorite
+			$this->helper()->logUserAction($this->user(), 'Favorited <strong><a target="_blank" href="'.$weby->getPublicUrl().'">'.$weby->getTitle().'</a></strong>');
             $this->user()->addToFavorites($weby);
         }
 
@@ -148,20 +152,5 @@ class UsersHandler extends AbstractHandler
         // Send it
         $mailer->setDecorators($data);
         $mailer->send($msg);
-    }
-
-    private function _notifyLoginNode($id, $ip)
-    {
-        try {
-            $fp = @fsockopen($this->app()->getConfig()->app->node_geo_ip, $errno, $errstr);
-            if (!$fp) {
-                return;
-            }
-
-            fwrite($fp, json_encode(['userId' => $id, 'ip' => $ip]));
-            fclose($fp);
-        } catch (Exception $e) {
-            return;
-        }
     }
 }
