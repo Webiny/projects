@@ -33,7 +33,7 @@ class Helper
 		}
 	}
 
-	public function logUserAction(UserEntity $user, $logMessage) {
+	public function logUserAction($user, $logMessage) {
 		if(!$user){
 			return;
 		}

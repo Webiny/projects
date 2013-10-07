@@ -1,0 +1,13 @@
+body {
+    background-image: url(../../images/used.jpg);
+}
+
+.centered-counter {
+    display: block;
+    margin: 75px auto 0 auto;
+    width: auto;
+    color: white;
+    text-align: center;
+    font-size: 300px;
+    font-weight: bold;
+}

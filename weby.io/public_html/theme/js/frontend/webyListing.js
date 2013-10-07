@@ -11,7 +11,6 @@ $(function () {
     searchValue = $('[data-role="search-value"]').text();
     searchPage = $('[data-role="search-page"]').text();
     initialResultCount = $('.box').length;
-
 });
 
 /**
@@ -120,8 +119,8 @@ function ListingClass() {
         for (var i in data) {
             _insert(i, _currentTplId, data);
         }
-        TimePassed.parse();
         _animateResult();
+        TimePassed.parse();
     }
 
     /**
@@ -172,7 +171,7 @@ function ListingClass() {
         tmp = tmp.replace(/{publicUrl}/g, webies[i].publicUrl);
         tmp = tmp.replace('{favoritedCount}', webies[i].favoritedCount);
         tmp = tmp.replace('{hitsCount}', webies[i].hitsCount);
-        tmp = $(tmp.replace(/{createdOnUnix}/g, webies[i].createdOn));
+        tmp = $(tmp.replace(/{createdOnUnix}/g, webies[i].createdOnUnix));
 
 
         // Append and animate

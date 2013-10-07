@@ -71,7 +71,9 @@ class StatsEvents
             self::$W_LINKEDIN_ADDED => 'LinkedIn',
             self::$W_TWITTER_ADDED => 'Tweet',
             self::$W_VINE_ADDED => 'Vine',
-            self::$W_FLICKER_ADDED => 'Flickr'
+            self::$W_FLICKER_ADDED => 'Flickr',
+            self::$W_GOOGLEPLUS_ADDED => 'Google Plus',
+            self::$W_WEBY_ADDED = 'Weby Embed'
         ];
 
         return $map[$numericRepresentation];

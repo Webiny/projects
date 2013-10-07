@@ -20,13 +20,23 @@ class StatsHandler extends AbstractHandler
     public function index()
     {
     }
+    public function live()
+    {
+
+    }
+
+    public function ajaxGetTotalUsersCount()
+    {
+        $total = Stats::getInstance()->getTotalUsersCount();
+        $this->ajaxResponse(false, '', ['count' => $total]);
+    }
 
     /**
      * Routes stats request to specific method
      */
     public function ajaxGetStats()
     {
-        $event = $this->str($this->request()->query('stat'))->replace('_', ' ')->caseWordUpper()->replace(' ', '');
+        $event = $this->str($this->request()->post('stat'))->replace('_', ' ')->caseWordUpper()->replace(' ', '');
         $methodName = '_get' . $event->val();
         $this->$methodName();
     }
@@ -36,17 +46,25 @@ class StatsHandler extends AbstractHandler
      */
     public function ajaxGetWeekStats()
     {
-        $event = $this->request()->query('event');
+        $event = $this->request()->query('stat');
 
         $days = array(0 => 'Mon', 1 => 'Tue', 2 => 'Wed', 3 => 'Thu', 4 => 'Fri', 5 => 'Sat', 6 => 'Sun');
         $weekStats = Stats::getInstance()->getCurrentWeekStatsForEvent($event);
 
+        $data = [];
         if ($weekStats) {
-            $formattedWeekStats = array();
+            $data['chart']['columns'] = [
+                ['type' => 'string', 'title' => 'Day'],
+                ['type' => 'number', 'title' => 'Count']
+            ];
+
             foreach ($weekStats as $k => $v) {
-                $formattedWeekStats[$days[$k]] = $v;
+                $data['chart']['rows'][] = [
+                    'day' => $days[$k],
+                    'count' => (int)$v
+                ];
             }
-            $this->ajaxResponse(false, 'Week', $formattedWeekStats);
+            $this->ajaxResponse(false, '', $data);
         }
         $this->ajaxResponse(true, 'No data present.');
     }
@@ -56,10 +74,25 @@ class StatsHandler extends AbstractHandler
      */
     public function ajaxGetMonthStats()
     {
-        $event = $this->request()->query('event');
-        $wStats = Stats::getInstance();
-        $monthStats = $wStats->getCurrentMonthStatsForEvent($event);
-        $this->ajaxResponse(false, 'Month', $monthStats);
+        $event = $this->request()->query('stat');
+        $monthStats = Stats::getInstance()->getCurrentMonthStatsForEvent($event);
+        $data = [];
+        if ($monthStats) {
+            $data['chart']['columns'] = [
+                ['type' => 'number', 'title' => 'Day'],
+                ['type' => 'number', 'title' => 'Count']
+            ];
+
+            foreach ($monthStats as $k => $v) {
+                $data['chart']['rows'][] = [
+                    'day' => (int)$k,
+                    'count' => (int)$v
+                ];
+            }
+            $this->ajaxResponse(false, '', $data);
+        }
+        $this->ajaxResponse(true, 'No data present.');
+
     }
 
     /**
@@ -67,145 +100,203 @@ class StatsHandler extends AbstractHandler
      */
     public function ajaxGetYearStats()
     {
-        $event = $this->request()->query('event');
+        $event = $this->request()->query('stat');
         $months = array(
             1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'May', 6 => 'Jun',
             7 => 'Jul', 8 => 'Sep', 9 => 'Aug', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
-        $wStats = Stats::getInstance();
-        $yearStats = $wStats->getCurrentYearStatsForEvent($event);
-        $formatted = array();
-        foreach ($yearStats as $k => $v) {
-            $formatted[$months[$k]] = $v;
-        }
+        $yearStats = Stats::getInstance()->getCurrentYearStatsForEvent($event);
 
-        $this->ajaxResponse(false, 'Year', $formatted);
+        $data = [];
+        if ($yearStats) {
+            $data['chart']['columns'] = [
+                ['type' => 'string', 'title' => 'Month'],
+                ['type' => 'number', 'title' => 'Count']
+            ];
+            foreach ($yearStats as $k => $v) {
+                $data['chart']['rows'][] = [
+                    'month' => $months[$k],
+                    'count' => (int)$v
+                ];
+            }
+            $this->ajaxResponse(false, '', $data);
+        }
+        $this->ajaxResponse(true, 'No data present.');
     }
 
-    public function ajaxGetWidgetUsageStats()
+    /**
+     * General statistics on registered users
+     */
+    private function _getRegisteredUsers()
     {
-        $period = $this->request()->query('period');
-        $wStats = Stats::getInstance();
-
-        $view = View::getInstance();
-
-        $stats['title'] = 'Widgets by usage';
-
-        switch ($period) {
-            case 'today':
-                $stats['widgets'] = $wStats->getCurrentDayTopWidgets();
-                break;
-            case 'week':
-                $stats['widgets'] = $wStats->getCurrentWeekTopWidgets();
-                break;
-            case 'month':
-                $stats['widgets'] = $wStats->getCurrentMonthTopWidgets();
-                break;
-            case 'year':
-                $stats['widgets'] = $wStats->getCurrentYearTopWidgets();
-                break;
-        }
-
-        foreach ($stats['widgets'] as $w) {
-            $w['widgetName'] = StatsEvents::getToolName($w['event']);
-        }
-
-        if ($stats['widgets']->count()) {
-            $this->ajaxResponse(false, '', [$view->fetch('templates/stats/includes/usage_widgets.tpl', $stats)]);
-        }
-        $this->ajaxResponse(true, '', [$view->fetch('templates/stats/includes/no_data.tpl', $stats)]);
-
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::USER_REGISTERED));
     }
 
-    public function ajaxGetActiveUsersStats()
+    /**
+     * Widgets: General statistics on created Webies
+     */
+    private function _getCreatedWebies()
     {
-        $period = $this->request()->query('period');
-        $wStats = Stats::getInstance();
-        $view = View::getInstance();
-
-        $stats['title'] = 'Widgets by usage';
-
-        switch ($period) {
-            case 'today':
-                $stats['users'] = $wStats->getCurrentDayTopUsers();
-                break;
-            case 'week':
-                $stats['users'] = $wStats->getCurrentWeekTopUsers();
-                break;
-            case 'month':
-                $stats['users'] = $wStats->getCurrentMonthTopUsers();
-                break;
-            case 'year':
-                $stats['users'] = $wStats->getCurrentYearTopUsers();
-                break;
-        }
-
-        if ($stats['users']->count()) {
-            $this->ajaxResponse(false, '', [$view->fetch('templates/stats/includes/active_users.tpl', $stats)]);
-        }
-        $this->ajaxResponse(true, '', [$view->fetch('templates/stats/includes/no_data.tpl', $stats)]);
-
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::WEBY_CREATED));
     }
 
-    public function ajaxGetTopUsersStats()
+    /**
+     * Widgets: General statistics on added widgets
+     */
+    private function _getWidgetGeneral()
     {
-        $period = $this->request()->query('period');
-        $view = View::getInstance();
-
-        $stats['title'] = 'Widgets by usage';
-        $stats['users'] = Stats::getInstance()->getTopUsers($period[0], false, 1, 10);
-
-
-        if ($stats['users']->count()) {
-            $this->ajaxResponse(false, '', [$view->fetch('templates/stats/includes/top_users.tpl', $stats)]);
-        }
-        $this->ajaxResponse(true, '', [$view->fetch('templates/stats/includes/no_data.tpl', $stats)]);
-
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_ADDED));
     }
 
-    public function ajaxGetTopWebiesStats()
+    /**
+     * Widgets: Text added stats
+     */
+    private function _getWidgetText()
     {
-        $period = $this->request()->query('period');
-        $wStats = Stats::getInstance();
-        $view = View::getInstance();
-
-        $stats['title'] = 'Widgets by usage';
-
-        switch ($period) {
-            case 'today':
-                $stats['webies'] = $wStats->getCurrentDayTopWebies();
-                break;
-            case 'week':
-                $stats['webies'] = $wStats->getCurrentWeekTopWebies();
-                break;
-            case 'month':
-                $stats['webies'] = $wStats->getCurrentMonthTopWebies();
-                break;
-            case 'year':
-                $stats['webies'] = $wStats->getCurrentYearTopWebies();
-                break;
-        }
-
-        $stats['webPath'] = $this->app()->getConfig()->app->web_path;
-        if ($stats['webies']->count()) {
-            $this->ajaxResponse(false, '', [$view->fetch('templates/stats/includes/top_webies.tpl', $stats)]);
-        }
-        $this->ajaxResponse(true, '', [$view->fetch('templates/stats/includes/no_data.tpl', $stats)]);
-
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_TEXT_ADDED));
     }
 
-    private function _get_widget_usage_stats()
+    /**
+     * Widgets: Link added stats
+     */
+    private function _getWidgetLink()
     {
-        $this->_getPeriodSelector('Widgets by usage', 'widget_usage');
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_LINK_ADDED));
     }
 
-    private function _getTopUser()
+    /**
+     * Widgets: Video added stats
+     */
+    private function _getWidgetVideo()
     {
-        $this->_getPeriodSelector('Top users', 'top_users');
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_VIDEO_ADDED));
     }
 
-    private function _getTopWebies()
+    /**
+     * Widgets: Map added stats
+     */
+    private function _getWidgetMap()
     {
-        $this->_getPeriodSelector('Top webies', 'top_webies');
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_MAP_ADDED));
+    }
+
+    /**
+     * Widgets: Instagram added stats
+     */
+    private function _getWidgetInstagram()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_INSTAGRAM_ADDED));
+    }
+
+    /**
+     * Widgets: Pinterest added stats
+     */
+    private function _getWidgetPinterest()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_PINTEREST_ADDED));
+    }
+
+    /**
+     * Widgets: Facebook added stats
+     */
+    private function _getWidgetFacebook()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_FACEBOOK_ADDED));
+    }
+
+    /**
+     * Widgets: Slideshare added stats
+     */
+    private function _getWidgetSlideshare()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_SLIDESHARE_ADDED));
+    }
+
+    /**
+     * Widgets: GoogleDrive added stats
+     */
+    private function _getWidgetGoogledrive()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_GOOGLEDRIVE_ADDED));
+    }
+
+    /**
+     * Widgets: SkyDrive added stats
+     */
+    private function _getWidgetSkydrive()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_SKYDRIVE_ADDED));
+    }
+
+    /**
+     * Widgets: Soundcloud added stats
+     */
+    private function _getWidgetSoundcloud()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_SOUNDCLOUD_ADDED));
+    }
+
+    /**
+     * Widgets: LinkedIn added stats
+     */
+    private function _getWidgetLinkedin()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_LINKEDIN_ADDED));
+    }
+
+    /**
+     * Widgets: Tweets added stats
+     */
+    private function _getWidgetTweet()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_TWITTER_ADDED));
+    }
+
+    /**
+     * Widgets: Vine added stats
+     */
+    private function _getWidgetVine()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_VINE_ADDED));
+    }
+
+    /**
+     * Widgets: Flickr added stats
+     */
+    private function _getWidgetFlickr()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_FLICKER_ADDED));
+    }
+
+    /**
+     * Widgets: GooglePlus added stats
+     */
+    private function _getWidgetGoogleplus()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_GOOGLEPLUS_ADDED));
+    }
+
+    /**
+     * Widgets: wEBY added stats
+     */
+    private function _getWidgetWeby()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::$W_WEBY_ADDED));
+    }
+
+    /**
+     * OAuth: Facebook sign-ins stats
+     */
+    private function _getOauthFacebook()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::OAUTH_SIGN_IN_BY_FACEBOOK));
+    }
+
+    /**
+     * OAuth: Google sign-ins stats
+     */
+    private function _getOauthGoogle()
+    {
+        $this->ajaxResponse(false, '', $this->_getPeriodicalData(StatsEvents::OAUTH_SIGN_IN_BY_GOOGLE));
     }
 
     /** Users: general number of active users */
@@ -222,172 +313,90 @@ class StatsHandler extends AbstractHandler
         $this->ajaxResponse(false, '', $view->fetch('templates/stats/includes/active_users.tpl', $stats));
     }
 
-    /**
-     * Widgets: General statistics on created Users
-     */
-    private function _getRegisteredUsers()
+    private function _getWidgetUsage()
     {
-        $this->_getStandardDataView(StatsEvents::USER_REGISTERED, 'Users registered');
+        $method = 'getCurrent' . ucfirst($this->request()->post('period')) . 'TopWidgets';
+        $stats = Stats::getInstance()->$method();
+
+        $data['grid']['columns'] = [
+            ['field' => 'widget', 'title' => 'Widget'],
+            ['field' => 'count', 'title' => 'Count']
+        ];
+
+        foreach ($stats as $w) {
+            $data['grid']['rows'][] = [
+                'widget' => StatsEvents::getToolName($w['event']),
+                'count' => (int)$w['value']
+            ];
+        }
+
+        $data['chart']['columns'] = [
+            ['type' => 'string', 'title' => 'Widgets'],
+            ['type' => 'number', 'title' => 'Count']
+        ];
+
+        $data['chart']['rows'] = $data['grid']['rows'];
+        $data['chart']['type'] = 'column';
+
+        $this->ajaxResponse(false, ucfirst($this->request()->post('period')), $data);
     }
 
-    /**
-     * Widgets: General statistics on created Webies
-     */
-    private function _getCreatedWebies()
+    public function _getTopUsers()
     {
-        $this->_getStandardDataView(StatsEvents::WEBY_CREATED, 'Webies created');
+
+        $method = 'getCurrent' . ucfirst($this->request()->post('period')) . 'TopUsers';
+        $stats = Stats::getInstance()->$method();
+
+        $data['grid']['columns'] = [
+            ['field' => 'user', 'title' => 'User'],
+            ['field' => 'count', 'title' => 'Count']
+        ];
+
+        foreach ($stats as $u) {
+            $data['grid']['rows'][] = [
+                'user' => $u['username'],
+                'count' => (int)$u['value']
+            ];
+        }
+
+        $data['chart']['columns'] = [
+            ['type' => 'string', 'title' => 'Users'],
+            ['type' => 'number', 'title' => 'Count']
+        ];
+
+        $data['chart']['rows'] = $data['grid']['rows'];
+        $data['chart']['type'] = 'column';
+
+        $this->ajaxResponse(false, ucfirst($this->request()->post('period')), $data);
     }
 
-    /**
-     * Widgets: General statistics on added widgets
-     */
-    private function _getWidgetGeneral()
+    public function _getTopWebies()
     {
-        $this->_getStandardDataView(StatsEvents::$W_ADDED, 'Created widgets');
-    }
+        $method = 'getCurrent' . ucfirst($this->request()->post('period')) . 'TopWebies';
+        $stats = Stats::getInstance()->$method();
 
-    /**
-     * Widgets: Text added stats
-     */
-    private function _getWidgetText()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_TEXT_ADDED, 'Widgets: Text added');
-    }
+        $data['grid']['columns'] = [
+            ['field' => 'weby', 'title' => 'Weby'],
+            ['field' => 'count', 'title' => 'Hits']
+        ];
 
-    /**
-     * Widgets: Link added stats
-     */
-    private function _getWidgetLink()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_LINK_ADDED, 'Widgets: Link added');
-    }
+        foreach ($stats as $w) {
+            $data['grid']['rows'][] = [
+                'weby' => $w['title'],
+                'count' => (int)$w['value']
+            ];
+        }
 
-    /**
-     * Widgets: Video added stats
-     */
-    private function _getWidgetVideo()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_VIDEO_ADDED, 'Widgets: Video added');
-    }
+        $data['chart']['columns'] = [
+            ['type' => 'string', 'title' => 'Weby'],
+            ['type' => 'number', 'title' => 'Count']
+        ];
 
-    /**
-     * Widgets: Map added stats
-     */
-    private function _getWidgetMap()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_MAP_ADDED, 'Widgets: Google map added');
-    }
+        $data['chart']['rows'] = $data['grid']['rows'];
+        $data['chart']['type'] = 'column';
 
-    /**
-     * Widgets: Instagram added stats
-     */
-    private function _getWidgetInstagram()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_INSTAGRAM_ADDED, 'Widgets: Instagram added');
-    }
+        $this->ajaxResponse(false, ucfirst($this->request()->post('period')), $data);
 
-    /**
-     * Widgets: Pinterest added stats
-     */
-    private function _getWidgetPinterest()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_PINTEREST_ADDED, 'Widgets: Pinterest added');
-    }
-
-    /**
-     * Widgets: Facebook added stats
-     */
-    private function _getWidgetFacebook()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_FACEBOOK_ADDED, 'Widgets: Facebook added');
-    }
-
-    /**
-     * Widgets: Slideshare added stats
-     */
-    private function _getWidgetSlideshare()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_SLIDESHARE_ADDED, 'Widgets: Slideshare added');
-    }
-
-    /**
-     * Widgets: GoogleDrive added stats
-     */
-    private function _getWidgetGoogledrive()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_GOOGLEDRIVE_ADDED, 'Widgets: Google drive added');
-    }
-
-    /**
-     * Widgets: SkyDrive added stats
-     */
-    private function _getWidgetSkydrive()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_SKYDRIVE_ADDED, 'Widgets: SkyDrive added');
-    }
-
-    /**
-     * Widgets: Soundcloud added stats
-     */
-    private function _getWidgetSoundcloud()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_SOUNDCLOUD_ADDED, 'Widgets: Soundcloud added');
-    }
-
-    /**
-     * Widgets: LinkedIn added stats
-     */
-    private function _getWidgetLinkedin()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_LINKEDIN_ADDED, 'Widgets: Linked In added');
-    }
-
-    /**
-     * Widgets: Tweets added stats
-     */
-    private function _getWidgetTweet()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_TWITTER_ADDED, 'Widgets: Twitter added');
-    }
-
-    /**
-     * Widgets: Vine added stats
-     */
-    private function _getWidgetVine()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_VINE_ADDED, 'Widgets: Vine added');
-    }
-
-    /**
-     * Widgets: Flickr added stats
-     */
-    private function _getWidgetFlickr()
-    {
-        $this->_getStandardDataView(StatsEvents::$W_FLICKER_ADDED, 'Widgets: Flickr added');
-    }
-
-    /**
-     * OAuth: Facebook sign-ins stats
-     */
-    private function _getOauthFacebook()
-    {
-        $this->_getStandardDataView(StatsEvents::OAUTH_SIGN_IN_BY_FACEBOOK, 'OAuth: Sign in with Facebook');
-    }
-
-    /**
-     * OAuth: Google sign-ins stats
-     */
-    private function _getOauthGoogle()
-    {
-        $this->_getStandardDataView(StatsEvents::OAUTH_SIGN_IN_BY_GOOGLE, 'OAuth: Sign in with Google');
-    }
-
-    /**
-     * OAuth: LinkedIn sign-ins stats
-     */
-    private function _getOauthLinkedin()
-    {
-        $this->_getStandardDataView(StatsEvents::OAUTH_SIGN_IN_BY_LINKEDIN, 'OAuth: Sign in with Linked In');
     }
 
     /**
@@ -405,25 +414,22 @@ class StatsHandler extends AbstractHandler
     }
 
     /**
-     * Shows standard template with periods stats and chart
-     * @param $event
-     * @param $title
-     * @param $template
+     * Prepares data for showing in the table (used only for standard d, w, m and y data
      */
-    private function _getStandardDataView($event, $title, $template = 'standard_data_presentation')
+    private function _getPeriodicalData($event)
     {
-        $view = View::getInstance();
+        $map = ['d' => 'Day', 'w' => 'Week', 'm' => 'Month', 'y' => 'Year'];
+        $stats = Stats::getInstance()->getStatsForEvent($event);
 
-        $wStats = Stats::getInstance();
-        $stats = $wStats->getStatsForEvent($event);
-        $stats['overallStats'] = $wStats->getOverallStatsForEvent($event);
-        $stats['title'] = $title;
-        $stats['event'] = $event;
-        $stats['dayOfWeek'] = date('N');
-        $stats['dayOfMonth'] = date('j');
-        $stats['monthOfYear'] = date('m');
+        $data['grid']['columns'] = [
+            ['field' => 'period', 'title' => 'Period'],
+            ['field' => 'count', 'title' => 'Count']
+        ];
 
-        $this->ajaxResponse(false, '', $view->fetch('templates/stats/includes/' . $template . '.tpl', $stats));
+        foreach ($stats as $period => $value) {
+            $data['grid']['rows'][] = ['period' => $map[$period], 'count' => $value];
+        }
+        return $data;
     }
 
 }

@@ -63,10 +63,9 @@ class UsersHandler extends AbstractHandler
             Stats::getInstance()->updateUsersLoginCount($user);
 			$this->helper()->logUserLogin($user);
 
-            // Redirect to last visited URL
-            if (isset($_COOKIE['weby_login_ref'])) {
-                $redirectUrl = $_COOKIE['weby_login_ref'];
-                unset($_COOKIE['weby_login_ref']);
+            $redirectUrl = $this->request()->cookie()->get('login_ref');
+            $this->request()->cookie()->delete('login_ref');
+            if($redirectUrl) {
                 $this->request()->redirect($redirectUrl);
             }
             $this->request()->redirect($this->user()->getProfileUrl());

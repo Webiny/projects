@@ -2,10 +2,10 @@ function Authorization(open) {
 
     var open = typeof open == 'undefined' ? false : true;
 
-    var _webyDetails = $('[data-role="authorize"]');
+    var _authorize = $('[data-role="authorize"]');
     var _authorizationDialog = $('#authorization-dialog');
 
-    _webyDetails.click(function() {
+    _authorize.click(function() {
         $.fancybox(_authorizationDialog, {
             type: 'inline',
             autoSize: false,
@@ -16,7 +16,7 @@ function Authorization(open) {
     });
 
     if (open) {
-        _webyDetails.click();
+        _authorize.click();
     }
 }
 

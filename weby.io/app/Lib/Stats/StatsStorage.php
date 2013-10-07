@@ -50,6 +50,10 @@ class StatsStorage
         }
     }
 
+    protected function _sqlGetTotalUsersCount() {
+        $query = 'SELECT count(*) OVER() total_count FROM ' . $this->db()->w_user;
+        return $this->db()->execute($query, [])->fetchValue();
+    }
     /**
      * // TODO: add support for pagination and changing years
      * SQL for getting 'Top Webies' stats - list ordered by number of hits (total = hits + embedded_hits)

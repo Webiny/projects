@@ -34,7 +34,8 @@ class Stats extends StatsStorage
         $this->_currentMonthDaysNumber = date('t');
     }
 
-    public function updateUsersLoginCount(UserEntity $user) {
+    public function updateUsersLoginCount(UserEntity $user)
+    {
         $this->_sqlUpdateUsersLogin($user->getId());
     }
 
@@ -151,6 +152,11 @@ class Stats extends StatsStorage
         return $formatted;
     }
 
+    public function getTotalUsersCount()
+    {
+        return $this->_sqlGetTotalUsersCount();
+    }
+
     /**
      * Gets top users for current day
      * @return Array
@@ -224,17 +230,39 @@ class Stats extends StatsStorage
     }
 
     /**
-     * Gets top users for current day
-     * @param $type
-     * @param $value
-     * @param $page
-     * @param $limit
+     * Gets top widgets for current day
      * @return Array
      */
-    public function getTopUsers($type, $value = false, $page = 1, $limit = 10)
+    public function getCurrentDayTopUsers()
     {
-        $value = !$value ? $this->_getCurrentPeriodValue($type) : $value;
-        return $this->_sqlGetTopUsers($type, $value, $page, $limit);
+        return $this->_sqlGetTopUsers(StatsEvents::DAY, $this->_currentDay);
+    }
+
+    /**
+     * Gets top widgets for current week
+     * @return Array
+     */
+    public function getCurrentWeekTopUsers()
+    {
+        return $this->_sqlGetTopUsers(StatsEvents::WEEK, $this->_currentWeek);
+    }
+
+    /**
+     * Gets top widgets for current month
+     * @return Array
+     */
+    public function getCurrentMonthTopUsers()
+    {
+        return $this->_sqlGetTopUsers(StatsEvents::MONTH, $this->_currentMonth);
+    }
+
+    /**
+     * Gets top widgets for current year
+     * @return Array
+     */
+    public function getCurrentYearTopUsers()
+    {
+        return $this->_sqlGetTopUsers(StatsEvents::YEAR, $this->_currentYear);
     }
 
     /**

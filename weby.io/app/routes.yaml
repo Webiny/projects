@@ -57,6 +57,8 @@ routes:
 
     # BACKEND ROUTES
     - ['backend/main', \App\Handlers\StatsHandler, index]
+    - ['backend/live', \App\Handlers\StatsHandler, live]
+    - ['backend/stats/live/users', \App\Handlers\StatsHandler, ajaxGetTotalUsersCount]
     - ['backend/stats/ajax-get-week-stats', \App\Handlers\StatsHandler, ajaxGetWeekStats]
     - ['backend/stats/ajax-get-month-stats', \App\Handlers\StatsHandler, ajaxGetMonthStats]
     - ['backend/stats/ajax-get-year-stats', \App\Handlers\StatsHandler, ajaxGetYearStats]

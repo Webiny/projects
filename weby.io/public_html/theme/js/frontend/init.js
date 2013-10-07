@@ -20,6 +20,10 @@ $(function () {
     data = JSON.parse($('[data-role="json-data"]').html());
 	$('[data-role="user-logged-in"]').text(data.currentUser ? 1 : 0);
 
+    if($.cookies.get('weby_login_ref') != null) {
+        $.cookies.set('weby_login_ref', null);
+    }
+
     // Add and fill weby details field
     var webyDetails = new kendo.template($('#weby-details-tpl').html());
     $('#weby-details-tpl').remove();
